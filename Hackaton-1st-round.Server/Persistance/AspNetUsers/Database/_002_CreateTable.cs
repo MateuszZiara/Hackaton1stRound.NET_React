@@ -24,7 +24,7 @@ public class _002_CreateTable : Migration
             .WithColumn(nameof(Models.AspNetUsers.AspNetUsers.FirstName)).AsString().NotNullable()
             .WithColumn(nameof(Models.AspNetUsers.AspNetUsers.LastName)).AsString().NotNullable()
             .WithColumn(nameof(Models.AspNetUsers.AspNetUsers.UserRank)).AsInt32().NotNullable()
-            .WithColumn("TeamEntity_FK").AsGuid().NotNullable();
+            .WithColumn("TeamEntity_FK").AsGuid().Nullable();
             Create.ForeignKey("TeamEntity_FK").FromTable("AspNetUsers").ForeignColumn("TeamEntity_FK").ToTable("TeamEntity").PrimaryColumn("id");
 
     }
