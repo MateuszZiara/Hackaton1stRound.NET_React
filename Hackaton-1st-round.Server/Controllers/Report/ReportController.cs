@@ -65,6 +65,20 @@ namespace Hackaton_1st_round.Server.Controllers.Report
             }
 
         }
+        [HttpPut("update/{id}")]
+        public ActionResult<Models.Report.Report> Edit(Guid id, string? Url = null, Guid? TeamEntity_FK2 = null)
+        {
+            Guid guid = Guid.NewGuid();
+            if (TeamEntity_FK2 == null)
+            {
+
+                guid = Guid.Empty;
+            }
+            else
+                guid = TeamEntity_FK2.Value;
+
+            return _ReportService.Edit(id, Url, TeamEntity_FK2);
+        }
 
         [HttpDelete("{id}")]
         public ActionResult DeleteAddressEntity(Guid id)

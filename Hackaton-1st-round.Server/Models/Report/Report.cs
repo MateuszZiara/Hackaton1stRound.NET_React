@@ -19,5 +19,5 @@ public class Report
     public virtual Guid id { get; set; }
     public virtual string Url { get; set; }
 
-    public virtual Guid TeamEntity_FK2 { get; set; }
+    public virtual Guid? TeamEntity_FK2 { get; set; }
 }
