@@ -2,8 +2,50 @@ import { Image, Container, Title, Button, Group, Text, List, ThemeIcon, rem } fr
 import { IconCheck } from '@tabler/icons-react';
 import heroImage from '../../../public/heroImage.webp';
 import classes from './Hero.module.css';
+import React, {useEffect, useState} from "react";
+import {checkUserLoggedIn} from "../../features/getCookies/getCookies";
 
 export function Hero() {
+    
+        const [loggedIn, setLoggedIn] = useState(null);
+
+        useEffect(() => {
+            const fetchData = async () => {
+                try {
+                    const isLoggedIn = await checkUserLoggedIn();
+                    setLoggedIn(isLoggedIn);
+                } catch (error) {
+                    console.error('Error checking user login status:', error);
+                    setLoggedIn(false); // Ustawienie na false w przypadku błędu
+                }
+            };
+
+            fetchData();
+        }, []);
+        function buttonHandler()
+        {
+       
+            if(loggedIn)
+            {
+                //Przejscie do stronki    
+            }
+            else
+                window.location.href = "/pag";
+            
+        }
+    function buttonHandlerSend()
+    {
+
+        if(loggedIn)
+        {
+            //Przejscie do stronki    
+        }
+        else
+            window.location.href = "/pag";
+
+    }
+    
+    
     return (
         <Container size="md">
             <div className={classes.inner}>
@@ -37,11 +79,11 @@ export function Hero() {
                     </List>
                     </div>
                     <Group mt={30}>
-                        <Button radius="xl" size="md" className={classes.control}>
+                        <Button radius="xl" size="md" className={classes.control} onClick ={buttonHandler}>
                             Zarejestruj zespół
                         </Button>
-                        <Button variant="default" radius="xl" size="md" className={classes.control}>
-                            Zaloguj się
+                        <Button variant="default" radius="xl" size="md" className={classes.control} onClick ={buttonHandlerSend}>
+                            Wyślij zgłoszenie
                         </Button>
                     </Group>
                 </div>

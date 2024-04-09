@@ -69,7 +69,6 @@ export default function Auth(props: PaperProps) {
     }
 
     async function handleLogin() {
-        console.log("test");
         const url = "https://localhost:7071/login?useCookies=true&useSessionCookies=true";
         const data = {
 
