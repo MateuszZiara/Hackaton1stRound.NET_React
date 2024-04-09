@@ -23,11 +23,13 @@ public class NHibernateHelper
                 _sessionFactory = Fluently.Configure()
                     .Database(
                         MsSqlConfiguration.MsSql2012.ConnectionString(
-                            "Server=localhost\\SQLEXPRESS;Database=Kwiaciarnia;Integrated Security=SSPI;Application Name=Kwiaciarnia;TrustServerCertificate=true;")
-                    ) //TODO NAZWA DLA BAZY DANYCH NA TEN MOMENT TO Kwiaciarnia 
+                            "Server=localhost\\SQLEXPRESS;Database=Hackaton;Integrated Security=SSPI;Application Name=Hackaton;TrustServerCertificate=true;")
+                    ) //TODO NAZWA DLA BAZY DANYCH NA TEN MOMENT TO Hackaton 
                     /* .Mappings(m =>
                          m.FluentMappings.AddFromAssemblyOf<KlientEntity>()
                      ) Przykład mapowania TODO NIE ZAPOMINAĆ O MAPOWANIACH KOLEDZY*/
+                    .Mappings(m =>
+                         m.FluentMappings.AddFromAssemblyOf<Models.TeamEntity.TeamEntity>())
                     .ExposeConfiguration(cfg => new SchemaUpdate(cfg).Execute(false, true))
                     .BuildSessionFactory();
 
