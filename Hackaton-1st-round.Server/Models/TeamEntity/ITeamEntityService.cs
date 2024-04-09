@@ -2,5 +2,6 @@
 {
     public interface ITeamEntityService
     {
+        public TeamEntity Edit(Guid id, string? TeamName, string? TeamDesc);
     }
 }
