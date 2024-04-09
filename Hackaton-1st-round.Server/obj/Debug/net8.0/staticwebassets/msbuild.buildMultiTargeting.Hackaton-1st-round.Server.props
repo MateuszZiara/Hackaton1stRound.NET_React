@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Hackaton-1st-round.Server.props" />
+</Project>

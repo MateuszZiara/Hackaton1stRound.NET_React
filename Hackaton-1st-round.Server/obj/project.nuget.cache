@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "h3MflCRsg7SbqvWRi7gquU4HFsluYyk8Bii+X4HhfdMKZeqszHB6dLV+BTOSycqa4dl6/ddeQNZd0iY0844Oeg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Pawel\\source\\repos\\hackatonPre\\team9repo\\Hackaton-1st-round.Server\\Hackaton-1st-round.Server.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Pawel\\.nuget\\packages\\microsoft.aspnetcore.spaproxy\\8.0.3\\microsoft.aspnetcore.spaproxy.8.0.3.nupkg.sha512",
+    "C:\\Users\\Pawel\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "C:\\Users\\Pawel\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\Pawel\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
+    "C:\\Users\\Pawel\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.4.0\\swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
+    "C:\\Users\\Pawel\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.4.0\\swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",
+    "C:\\Users\\Pawel\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.4.0\\swashbuckle.aspnetcore.swaggerui.6.4.0.nupkg.sha512"
+  ],
+  "logs": []
+}
