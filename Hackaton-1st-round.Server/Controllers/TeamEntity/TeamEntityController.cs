@@ -66,6 +66,12 @@ namespace Hackaton_1st_round.Server.Controllers.TeamEntity
 
         }
 
+        [HttpPut("update/{id}")]
+        public ActionResult<Models.TeamEntity.TeamEntity> Edit(Guid id, string TeamName = null, string TeamDesc = null)
+        {
+            return _teamEntityRepository.Edit(id, TeamName, TeamDesc);
+        }
+        
         [HttpDelete("{id}")]
         public ActionResult DeleteAddressEntity(Guid id)
         {

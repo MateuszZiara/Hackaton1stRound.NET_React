@@ -2,5 +2,6 @@
 {
     public interface ITeamEntityRepository
     {
+        public TeamEntity Edit(Guid id, string? TeamName, string? TeamDesc);
     }
 }
