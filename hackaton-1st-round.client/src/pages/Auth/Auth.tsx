@@ -60,7 +60,7 @@ export default function Auth(props: PaperProps) {
             }
             else {
                 await handleLogin();
-                window.location.href = "/main";
+                window.location.href = "/";
             }
 
         } catch (error) {
@@ -93,7 +93,7 @@ export default function Auth(props: PaperProps) {
                 const errorMessage = await response.text();
                 throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorMessage}`);
             } else {
-                window.location.href = "/main";
+                window.location.href = "/";
             }
 
         } catch (error) {
