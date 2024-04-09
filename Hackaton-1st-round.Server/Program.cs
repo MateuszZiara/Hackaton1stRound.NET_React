@@ -39,7 +39,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(
-        "Server=localhost\\SQLEXPRESS;Database=Kwiaciarnia;Integrated Security=SSPI;Application Name=Kwiaciarnia; TrustServerCertificate=true;"));
+        "Server=localhost\\SQLEXPRESS;Database=Hackaton;Integrated Security=SSPI;Application Name=Hackaton; TrustServerCertificate=true;"));
 builder.Services.AddAuthorization();
 builder.Services.AddIdentityApiEndpoints<AspNetUsers>()
     .AddEntityFrameworkStores<DataContext>();

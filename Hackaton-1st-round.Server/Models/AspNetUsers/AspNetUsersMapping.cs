@@ -10,6 +10,7 @@ public class AspNetUsersMapping : ClassMap<AspNetUsers>
         Id(x => x.Id);
         Map(x => x.FirstName);
         Map(x => x.LastName);
+        Map(x => x.TeamEntity_FK);
         Map(x => x.UserRank).CustomType<UserRank>();
         Map(x => x.UserName);
         Map(x => x.NormalizedUserName);
@@ -25,7 +26,6 @@ public class AspNetUsersMapping : ClassMap<AspNetUsers>
         Map(x => x.LockoutEnd);
         Map(x => x.LockoutEnabled);
         Map(x => x.AccessFailedCount);
-        Map(x => x.TeamEntity_FK);
         Table(_tablename);
     }
 }

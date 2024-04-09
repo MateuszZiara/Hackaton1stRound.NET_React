@@ -35,13 +35,13 @@ export default function Auth(props: PaperProps) {
         },
     });
     async function handleRegister() {
-        const url = "https://localhost:7142/api/AspNetUsers";
+        const url = "https://localhost:7071/api/AspNetUsers/registerCustom";
         const data = {
 
             FirstName: form.values.firstName,
             LastName: form.values.lastName,
             Email: form.values.email,
-            Password: form.values.password,
+            PasswordHash: form.values.password,
         }
 
         try {
@@ -69,7 +69,8 @@ export default function Auth(props: PaperProps) {
     }
 
     async function handleLogin() {
-        const url = "https://localhost:7142/login?useCookies=true&useSessionCookies=true";
+        console.log("test");
+        const url = "https://localhost:7071/login?useCookies=true&useSessionCookies=true";
         const data = {
 
             email: form.values.email,

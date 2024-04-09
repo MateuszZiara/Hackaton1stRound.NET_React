@@ -1,9 +1,15 @@
+using System.Security.Cryptography;
 using Hackaton_1st_round.Server.Models.AspNetUsers;
 
 namespace Hackaton_1st_round.Server.Persistance.AspNetUsers;
 
 public class AspNetUsersRepository : IAspNetUsersRepository
 {
+    public bool VerifyPassword(string Password)
+    {
+        if (Password.Length <  8) return false;
+        return true;
+    }
     public Models.AspNetUsers.AspNetUsers Edit(Guid id, string? email, string? phoneNumber, string? firstName,
         string? lastName)
     {

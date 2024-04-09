@@ -10,4 +10,9 @@ public class AspNetUsersService : IAspNetUsersService
     {
         return _aspNetUsersRepository.Edit(id, email, phoneNumber, firstName, lastName);
     }
+
+    public bool VerifyPassword(string Password)
+    {
+        return _aspNetUsersRepository.VerifyPassword(Password);
+    }
 }
