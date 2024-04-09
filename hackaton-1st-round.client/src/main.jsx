@@ -11,14 +11,15 @@ import Auth from './pages/Auth/Auth.tsx';
 import Home from './pages/Index/Home.tsx';
 import MainPage from './pages/Temp/MainPage.tsx';
 import BuyFlower from './pages/BuyFlower/BuyFlower.tsx';
+import {Err404} from "@/pages/404/Err404.tsx";
 
 // Tworzenie motywu Mantine
 const theme = createTheme({
-    fontFamily: 'Open Sans, sans-serif',
-    primaryColor: 'green',
+
+    primaryColor: 'red',
     focusRing: 'always',
     defaultRadius: 'md',
-    defaultGradient: {from: 'green', to: 'lime', deg: 45}
+    defaultGradient: {from: 'red', to: 'pink', deg: 45}
 });
 // Routing
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -29,6 +30,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 <Route path="/pag" element={<Auth />} />
                 <Route path="/main" element={<MainPage />} />
                 <Route path="/buyflower" element={<BuyFlower />} />
+                <Route path="/404" element={<Err404 />} />
             </Routes>
         </BrowserRouter>
     </MantineProvider>

@@ -23,7 +23,8 @@ export default function Auth(props: PaperProps) {
     const form = useForm({
         initialValues: {
             email: '',
-            name: '',
+            firstName: '',
+            lastName: '',
             password: '',
             terms: true,
         },
@@ -36,11 +37,11 @@ export default function Auth(props: PaperProps) {
     async function handleRegister() {
         const url = "https://localhost:7142/api/AspNetUsers";
         const data = {
-            UserName: form.values.email,
+
+            FirstName: form.values.firstName,
+            LastName: form.values.lastName,
             Email: form.values.email,
             Password: form.values.password,
-
-
         }
 
         try {
@@ -103,7 +104,7 @@ export default function Auth(props: PaperProps) {
     
     const headers = {'Content-Type':'application/json',
         'Access-Control-Allow-Origin':'*',
-        'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS,GET'}
+        'Access-Control-Allow-Methods':'POST,OPTIONS'}
     async function getCookies() {
         const response = await fetch("https://localhost:7142/api/AspNetUsers/info", {
             credentials: 'include',
@@ -139,46 +140,56 @@ export default function Auth(props: PaperProps) {
     return (
             <Paper radius="md" p="xl" withBorder {...props}>
                 <Text size="lg" fw={500}>
-                    Welcome to Mantine, {type} with
+                    {type === 'register'
+                        ? 'Zapraszamy!'
+                        : "Witamy ponownie!"}
                 </Text>
 
-                <Divider label="Or continue with email" labelPosition="center" my="lg" />
+                <Divider labelPosition="center" my="lg" />
 
                 <form onSubmit={form.onSubmit(() => { })}>
                     <Stack>
                         {type === 'register' && (
-                            <TextInput
-                                label="Name"
-                                placeholder="Your name"
-                                value={form.values.name}
-                                onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
+                                <TextInput
+                                label="Imie"
+                                placeholder="Podaj imię"
+                                value={form.values.firstName}
+                                onChange={(event) => form.setFieldValue('firstName', event.currentTarget.value)}
                                 radius="md"
                             />
                         )}
-
+                        {type === 'register' && (
+                            <TextInput
+                                label="Nazwisko"
+                                placeholder="Podaj nazwisko"
+                                value={form.values.lastName}
+                                onChange={(event) => form.setFieldValue('lastName', event.currentTarget.value)}
+                                radius="md"
+                            />
+                        )}
                         <TextInput
                             required
-                            label="Email"
-                            placeholder="hello@mantine.dev"
+                            label="Adres email"
+                            placeholder="hackaton@tu.kielce.pl"
                             value={form.values.email}
                             onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
-                            error={form.errors.email && 'Invalid email'}
+                            error={form.errors.email && 'Podany adres jest nieprawidłowy'}
                             radius="md"
                         />
 
                         <PasswordInput
                             required
-                            label="Password"
-                            placeholder="Your password"
+                            label="Hasło"
+                            placeholder="Twoje hasło"
                             value={form.values.password}
                             onChange={(event) => form.setFieldValue('password', event.currentTarget.value)}
-                            error={form.errors.password && 'Password should include at least 6 characters'}
+                            error={form.errors.password && 'Hasło powinno zawierać minimum 8 znaków'}
                             radius="md"
                         />
 
                         {type === 'register' && (
                             <Checkbox
-                                label="I accept terms and conditions"
+                                label="Akceptuje regulamin serwisu."
                                 checked={form.values.terms}
                                 onChange={(event) => form.setFieldValue('terms', event.currentTarget.checked)}
                             />
@@ -187,22 +198,14 @@ export default function Auth(props: PaperProps) {
                     <Group justify="space-between" mt="xl">
                         <Anchor component="button" type="button" c="dimmed" onClick={() => toggle()} size="xs">
                             {type === 'register'
-                                ? 'Already have an account? Login'
-                                : "Don't have an account? Register"}
+                                ? 'Posiadasz konto? Zaloguj się'
+                                : "Nie posiadasz konta? Zarejestruj się"}
                         </Anchor>
                         <Button type="submit" radius="xl" onClick={type === 'register' ? handleRegister : handleLogin}>
-                            {upperFirst(type)}
+                            {type==='register'? "Rejestracja" :"Logowanie"}
                         </Button>
                     </Group>
                 </form>
-                <Stack spacing="md">
-                    {users.map((user) => (
-                        <div key={user.id}>
-                            <Text>{user.name}</Text>
-                            <Text>{user.surname}</Text>
-                        </div>
-                    ))}
-                </Stack>
             </Paper>
     );
 }

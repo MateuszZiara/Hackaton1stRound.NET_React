@@ -2,8 +2,8 @@ import {Container, Text, Button, Group, Flex} from '@mantine/core';
 import classes from "./Home.module.css";
 import { HeaderMenu } from "../../layouts/Header/HeaderMenu";
 import {useEffect} from "react";
-import CarouselHome from "../../components/CarouselHome/CarouselHome";
 import {Footer} from "../../layouts/Footer/Footer";
+import {Hero} from "../../components/Hero/Hero";
 
 
 export default function Home() {
@@ -34,41 +34,25 @@ export default function Home() {
             const isLoggedIn = await getCookies();
             if (isLoggedIn) {
                 window.location.href = "/main";
-            } else {
-
             }
         };
         checkCookies();
     }, []);
-    const handleGetStartedClick = () => {
-        window.location.href = "/pag";
-    };
+
 
     return (
         <Flex
-            mih={50}
-            gap="lg"
+            gap="sm"
             justify="center"
-            align="center"
+            align="stretch"
             direction="column"
-            wrap="wrap"
+            wrap="nowrap"
         >
-            <div className={classes.footer}>
-                <HeaderMenu/>
+            <div>
+                <HeaderMenu />
             </div>
             <div>
-                <CarouselHome/>
-            </div>
-            <div style={{ textAlign: "left", width: "100%" }}> {/* Ensure the button takes full width */}
-                <Button
-                    size="xl"
-                    className={classes.control}
-                    variant="filled"
-                    onClick={handleGetStartedClick} // Add onClick event handler
-                    style={{ marginLeft: 0 }} // Reset any default margin for the button
-                >
-                    Get started
-                </Button>
+                <Hero/>
             </div>
             <div style={{textAlign: "center", width: "100%"}}>
                 <Footer/>
