@@ -1,4 +1,6 @@
-﻿namespace Hackaton_1st_round.Server.Controllers.AspNetUsers;
+﻿using Hackaton_1st_round.Server.Persistance.AspNetUsers;
+
+namespace Hackaton_1st_round.Server.Controllers.AspNetUsers;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
     [ApiController]
     public class AspNetUsersController : ControllerBase
     {
+        private AspNetUsersService _aspNetUsersService = new AspNetUsersService();
         [HttpGet]
         public ActionResult<IEnumerable<Models.AspNetUsers.AspNetUsers>> GetAll()
         {
@@ -33,6 +36,14 @@ using Microsoft.AspNetCore.Mvc;
             }
         }
 
+        [HttpPut("update/{id}")]
+        public ActionResult<Models.AspNetUsers.AspNetUsers> Edit(Guid id, string? email = null,
+            string? phoneNumber = null, string? firstName = null,
+            string? lastName = null)
+        {
+            return _aspNetUsersService.Edit(id, email, phoneNumber, firstName,lastName);
+        }
+        
         [HttpPost]
         public ActionResult<Models.AspNetUsers.AspNetUsers> CreateAddressEntity([FromBody] Models.AspNetUsers.AspNetUsers aspNetUsers)
         {
