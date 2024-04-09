@@ -1,1 +1,2 @@
 C:\Users\Pawel\source\repos\hackatonPre\team9repo\hackaton-1st-round.client\obj\Debug\hackaton-1st-round.client.esproj.CoreCompileInputs.cache
+C:\Users\coons\Desktop\Hackaton\team9repo\hackaton-1st-round.client\obj\Debug\hackaton-1st-round.client.esproj.CoreCompileInputs.cache

@@ -1,13 +1,13 @@
 {
   "Version": 1,
-  "Hash": "opN6FpxDmFMAPvQDFZ4SmfA3tC+G3VWM/KL0I6c4PT4=",
+  "Hash": "zHq7aZkxVTig3EQiLxdFlOdX3uRf8L/D+FQLR7B1o+M=",
   "Source": "Hackaton-1st-round.Server",
   "BasePath": "_content/Hackaton-1st-round.Server",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [
     {
-      "Identity": "C:\\Users\\Pawel\\source\\repos\\hackatonPre\\team9repo\\hackaton-1st-round.client\\hackaton-1st-round.client.esproj",
+      "Identity": "C:\\Users\\coons\\Desktop\\Hackaton\\team9repo\\hackaton-1st-round.client\\hackaton-1st-round.client.esproj",
       "Version": 2,
       "Source": "hackaton-1st-round.client",
       "GetPublishAssetsTargets": "GetCurrentProjectPublishStaticWebAssetItems",
