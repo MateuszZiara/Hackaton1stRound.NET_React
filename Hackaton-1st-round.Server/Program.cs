@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Diagnostics;
+using Hackaton_1st_round.Server.Models.AspNetUsers;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,14 +36,14 @@ builder.Services.AddCors(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-/*
+
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(
         "Server=localhost\\SQLEXPRESS;Database=Kwiaciarnia;Integrated Security=SSPI;Application Name=Kwiaciarnia; TrustServerCertificate=true;"));
 builder.Services.AddAuthorization();
 builder.Services.AddIdentityApiEndpoints<AspNetUsers>()
     .AddEntityFrameworkStores<DataContext>();
-*/
+
 builder.Services.AddFluentMigratorCore() // Move FluentMigrator registration here
     .ConfigureRunner(c =>
     {
@@ -53,7 +54,7 @@ builder.Services.AddFluentMigratorCore() // Move FluentMigrator registration her
     .AddLogging(config => config.AddFluentMigratorConsole());
 
 var app = builder.Build();
-//app.MapIdentityApi<AspNetUsers>();
+app.MapIdentityApi<AspNetUsers>();
 using var scope = app.Services.CreateScope();
 var migrator = scope.ServiceProvider.GetService<IMigrationRunner>();
 
@@ -87,7 +88,7 @@ app.MapFallbackToFile("/index.html");
 
 app.Run();
 
-/*class DataContext : IdentityDbContext<AspNetUsers>
+class DataContext : IdentityDbContext<AspNetUsers>
 {
     public DataContext(DbContextOptions<DataContext> options) : base(options){}
-}*/
+}
