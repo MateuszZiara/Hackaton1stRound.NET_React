@@ -55,17 +55,17 @@ builder.Services.AddFluentMigratorCore() // Move FluentMigrator registration her
 var app = builder.Build();
 //app.MapIdentityApi<AspNetUsers>();
 using var scope = app.Services.CreateScope();
-//var migrator = scope.ServiceProvider.GetService<IMigrationRunner>();
+var migrator = scope.ServiceProvider.GetService<IMigrationRunner>();
 
-//if (migrator != null)
-//{
-   // migrator.ListMigrations();
-   // migrator.MigrateUp();
-//}
-//else
-//{
-  //  throw new Exception("Migration fault");
-//}
+if (migrator != null)
+{
+   migrator.ListMigrations();
+    migrator.MigrateUp();
+}
+else
+{
+   throw new Exception("Migration fault");
+}
 app.UseCors("AllowAllOrigins");
 app.UseDefaultFiles();
 app.UseStaticFiles();

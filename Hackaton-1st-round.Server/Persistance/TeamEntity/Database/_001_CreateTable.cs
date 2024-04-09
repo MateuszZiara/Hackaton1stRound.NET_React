@@ -22,7 +22,7 @@ namespace Hackaton_1st_round.Server.Models.TeamEntity.Database
                 Create.Table(tableName)
                     .WithColumn(nameof(TeamEntity.id)).AsGuid().NotNullable().PrimaryKey()
                     .WithColumn(nameof(TeamEntity.TeamName)).AsString().NotNullable()
-                    .WithColumn(nameof(TeamEntity.TeamDesc)).AsDouble().NotNullable()
+                    .WithColumn(nameof(TeamEntity.TeamDesc)).AsString().NotNullable()
                 ;
             }
         }
