@@ -30,6 +30,10 @@ public class NHibernateHelper
                      ) Przykład mapowania TODO NIE ZAPOMINAĆ O MAPOWANIACH KOLEDZY*/
                     .Mappings(m =>
                          m.FluentMappings.AddFromAssemblyOf<Models.TeamEntity.TeamEntity>())
+                    .Mappings(m =>
+                         m.FluentMappings.AddFromAssemblyOf<Models.AspNetUsers.AspNetUsers>())
+                    .Mappings(m =>
+                         m.FluentMappings.AddFromAssemblyOf<Models.Report.Report>())
                     .ExposeConfiguration(cfg => new SchemaUpdate(cfg).Execute(false, true))
                     .BuildSessionFactory();
 

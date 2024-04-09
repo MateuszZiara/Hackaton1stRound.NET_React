@@ -1,0 +1,14 @@
+/* Home.module.css */
+.header {
+    position: absolute;
+top: 5%; left: 0; right: 0
+}
+
+.footer {
+    position: relative;
+    left: 0; right: 0
+}
+
+.ma{
+    align-items: center;
+}
