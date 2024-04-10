@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { TextInput, Button, Paper, Text, List, ListItem, Avatar } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import {checkUserLoggedIn, gethasTeam} from "../../../features/getCookies/getCookies";
+import {Await} from "react-router";
 
 
 export function YourTeam() {
@@ -111,13 +112,32 @@ export function YourTeam() {
         setTeamName(dataTeamDetails.teamName);
         setTeamDescription(dataTeamDetails.teamDesc);
     };
+    const fetchUsers = async () => {
+        const responseUserDetails = await fetch("https://localhost:7071/api/AspNetUsers/GetUsersFromTeamCookies",{
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': 'true'
+            }
 
-    const fetchUsers = () => {
+        });
+        const userData = await responseUserDetails.json();
+        const users = userData.map(user => ({
+            id: user.Id,
+            name: user.firstName,
+            surname: user.lastName
+        }));
+
+        setUsers(users);
+    }
+
+    /*const fetchUsers = () => {
         setUsers([
             { id: 1, name: 'John', surname: 'Doe' },
             { id: 2, name: 'Jane', surname: 'Doe' },
         ]);
-    };
+    };*/
 
     
 
