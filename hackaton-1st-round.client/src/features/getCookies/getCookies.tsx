@@ -17,6 +17,18 @@ export async function checkUserLoggedIn() {
     }
 }
 
+export async function logout() {
+    const response = await fetch("https://localhost:7071/api/AspNetUsers/logout", {
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Credentials': 'true'
+        }
+    });
+    window.location.href = "/pag";
+}
+
 export function useRedirectIfLoggedIn() {
     useEffect(() => {
         const redirectIfLoggedIn = async () => {
