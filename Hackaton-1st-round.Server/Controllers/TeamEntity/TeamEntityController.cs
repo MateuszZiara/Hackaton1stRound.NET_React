@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Cors;
+﻿using System.Security.Claims;
+using Hackaton_1st_round.Server.Controllers.AspNetUsers;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Hackaton_1st_round.Server.Models.TeamEntity;
 using Hackaton_1st_round.Server.Persistance.TeamEntity;
@@ -38,6 +40,50 @@ namespace Hackaton_1st_round.Server.Controllers.TeamEntity
             }
         }
 
+        [HttpPost("createTeamByUser")]
+        public ActionResult<Models.TeamEntity.TeamEntity> CreateTeamByUser([FromBody] Models.TeamEntity.TeamEntity teamEntity)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    var user = HttpContext.User;
+                    if (user.Identity != null && user.Identity.IsAuthenticated)
+                    {
+                        // Retrieve user ID from claims
+                        var userIdClaim = user.FindFirst(ClaimTypes.NameIdentifier);
+                        if (userIdClaim == null)
+                        {
+                            throw new Exception("User ID claim not found.");
+                        }
+
+                        // Parse user ID
+                        if (!Guid.TryParse(userIdClaim.Value, out Guid userId))
+                        {
+                            throw new Exception("Invalid user ID format.");
+                        }
+
+                        // Retrieve user entity by ID
+
+                        var userEntity = session.Get<Models.AspNetUsers.AspNetUsers>(userIdClaim.Value);
+                        if (userEntity == null)
+                        {
+                            throw new Exception("User not found.");
+                        }
+                        session.Save(teamEntity);
+                        var query = session.Query<Models.AspNetUsers.AspNetUsers>().Where(x => x.Id == userEntity.Id)
+                            .ToList();
+                        query[0].TeamEntity_FK = teamEntity.id;
+                        session.Save(query[0]);
+                        transaction.Commit();
+                        return CreatedAtAction(nameof(GetById), new { id = teamEntity.id }, teamEntity);
+                    }
+                }
+            }
+
+            throw new Exception("There is problem with your cookies settings contact with administrator");
+        }
+        
         [HttpPost]
         public ActionResult<Models.TeamEntity.TeamEntity> CreateAddressEntity([FromBody] Models.TeamEntity.TeamEntity teamEntity)
         {
@@ -65,6 +111,7 @@ namespace Hackaton_1st_round.Server.Controllers.TeamEntity
             }
 
         }
+        
 
         [HttpPut("update/{id}")]
         public ActionResult<Models.TeamEntity.TeamEntity> Edit(Guid id, string TeamName = null, string TeamDesc = null)
