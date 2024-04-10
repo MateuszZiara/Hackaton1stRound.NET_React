@@ -1,4 +1,5 @@
 import {useEffect, useState} from "react";
+import {IconHome2} from "@tabler/icons-react";
 
 export async function checkUserLoggedIn() {
     const response = await fetch("https://localhost:7071/api/AspNetUsers/info", {
@@ -59,3 +60,4 @@ export function useRedirectIfLoggedIn() {
         redirectIfLoggedIn();
     }, []);
 }
+

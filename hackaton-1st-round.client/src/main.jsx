@@ -10,7 +10,7 @@ import { MantineProvider, createTheme } from '@mantine/core';
 import Auth from './pages/Auth/Auth.tsx';
 import Home from './pages/Index/Home.tsx';
 import {Err404} from "@/pages/404/Err404.tsx";
-import Panel from "@/pages/UserPanel/Panel.tsx";
+import Panel from "@/pages/Panel/Panel.tsx";
 
 // Tworzenie motywu Mantine
 const theme = createTheme({
