@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {TextInput, Button, Paper, Text, List, ListItem, Avatar, Modal} from '@mantine/core';
+import {TextInput, Textarea, Button, Paper, Text, List, ListItem, Avatar, Modal, Title, FileInput} from '@mantine/core';
 import { useForm } from '@mantine/form';
 import {checkUserLoggedIn, gethasTeam} from "../../../features/getCookies/getCookies";
 import {Await} from "react-router";
@@ -17,7 +17,13 @@ export function YourTeam() {
             TeamName: '',
             TeamDescription: '',
             invitation: '',
-        },}
+        },
+            validate: {
+                TeamName: (val) => (val && val.length > 2 ? null : 'Pole musi zawierać więcej niż 2 znaki'),
+                TeamDescription: (val) => (val && val.length > 30 ? null : 'Opis musi zawierać więcej niż 30 znaków'),
+            },
+
+        }
     )
 
     async function SendInvite() {
@@ -165,37 +171,67 @@ export function YourTeam() {
         ]);
     };*/
 
-    
+    var numberOfTeammates = 2;
+    const addUser = (numberOfTeammates < 4 ?
+            (
+                <div>
+                <Title order={2} pb={30}>Dodaj członków do zespołu.</Title>
+            <form onSubmit={form.onSubmit(() => {
+            })}>
+                <div style={{marginBottom: '16px'}}>
+                    <Text pb={20}>Aby dodać członka, musi mieć on konto na portalu.</Text>
+                    <TextInput
+                        required
+                        label="Dodaj adres email członka zespołu"
+                        placeholder="hackaton@tu.kielce.pl"
+                        value={form.values.invitation}
+                        onChange={(event) => form.setFieldValue('invitation', event.currentTarget.value)}
+                        error={form.errors.invitation && 'Podany adres jest nieprawid�owy'}
+                        radius="md"
+                    />
+                </div>
+                <Button type="submit" onClick={SendInvite}>Zaproś znajomego</Button>
+            </form>
+                </div>
+    ) : (
+        <Text>Zebrałeś cały zespół. Aby usunąć członka, musisz poprosić o jego opuszczenie. Może on opuścić zespół po zalogowaniu się na portal.</Text>
+            )
+)
 
     return (
-        <Paper padding="md" style={{ maxWidth: 600, margin: 'auto' }}>
+        <Paper padding="md" style={{maxWidth: 900, margin: 'auto'}}>
             {!hasTeam ? (
-                <form onSubmit={form.onSubmit(() => { })}>
+                <form onSubmit={form.onSubmit(() => {
+                })}>
+                    <Title order={2} pb={"30"}>Utwórz swój zespół!</Title>
                     <TextInput
-                        label="Team Name"
-                        placeholder="Enter team name"
+                        label="Nazwa zespołu"
+                        placeholder="Podaj nazwę zespołu"
                         value={form.values.TeamName}
                         onChange={(event) => form.setFieldValue('TeamName', event.currentTarget.value)}
                         required
-                        style={{ marginBottom: '16px' }}
+                        style={{marginBottom: '16px'}}
                     />
-                    <TextInput
-                        label="Team Description"
-                        placeholder="Enter team description"
+                    <Textarea
+                        label="Opis zespołu"
+                        placeholder="Dodaj opis zespołu"
                         value={form.values.TeamDescription}
                         onChange={(event) => form.setFieldValue('TeamDescription', event.currentTarget.value)}
                         required
                         multiline
                         style={{ marginBottom: '16px' }}
                     />
-                    <Button type="submit" onClick = {handleRegister}>Send</Button>           
+                    <Button type="submit" onClick = {handleRegister}>Załóż zespół</Button>
                 </form>
 
             ) : (
                 <>
-                    <Text style={{ marginBottom: '16px' }}>Team Name: {teamName}</Text>
-                    <Text style={{ marginBottom: '16px' }}>Team Description: {teamDescription}</Text>
-                    <List style={{ marginBottom: '16px' }}>
+                    <Title order={2} pb={"30"}>Oto twój zespół!</Title>
+                    <div style={{textAlign: "left"}}>
+                    <Text style={{ marginBottom: '16px' }}>Nazwa zespołu: {teamName}</Text>
+                    <Text style={{ marginBottom: '16px' }}>Opis zespołu: {teamDescription}</Text>
+                        <Title order={3} pb={"30"}>Członkowie zespołu</Title>
+                        <List style={{ marginBottom: '16px' }}>
                         {users.map((user) => (
                             <ListItem key={user.id}>
                                 <Avatar style={{ marginRight: '8px' }}>{user.name.charAt(0)}</Avatar>
@@ -203,20 +239,21 @@ export function YourTeam() {
                             </ListItem>
                         ))}
                         </List>
-                        <form onSubmit={form.onSubmit(() => { })}>
-                            <div style={{ marginBottom: '16px' }}>
-                                <TextInput
-                                    required
-                                    label="Add your friend by email"
-                                    placeholder="hackaton@tu.kielce.pl"
-                                    value={form.values.invitation}
-                                    onChange={(event) => form.setFieldValue('invitation', event.currentTarget.value)}
-                                    error={form.errors.invitation && 'Podany adres jest nieprawid�owy'}
-                                    radius="md"
-                                />
-                            </div>
-                            <Button type="submit" onClick={SendInvite}>Invite friend</Button>
-                        </form>
+                    </div>
+                    {addUser}
+
+
+
+
+
+
+                    <form onSubmit={form.onSubmit(()=> { })}>
+                        <FileInput
+                            accept="file/pdf"
+                            label="Dodaj wniosek"
+                            placeholder="Dozwolone rodzaje plików: .pdf"
+                        />
+                    </form>
                     
 
                 </>
