@@ -209,6 +209,10 @@ using Microsoft.AspNetCore.Mvc;
                 {
                     var findedUserFromEmail = session.Query<Models.AspNetUsers.AspNetUsers>()
                         .Where(x => x.Email == email).ToList();
+                    if (findedUserFromEmail[0].TeamEntity_FK != null)
+                    {
+                        throw new Exception("This user has got a team");
+                    }
                     if (findedUserFromEmail.Count > 1)
                     {
                         throw new Exception("There is more than 1 user in database with this email");

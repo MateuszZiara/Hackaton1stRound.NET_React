@@ -70,6 +70,11 @@ namespace Hackaton_1st_round.Server.Controllers.TeamEntity
                         {
                             throw new Exception("User not found.");
                         }
+
+                        var checkName = session.Query<Models.TeamEntity.TeamEntity>()
+                            .Where(x => x.TeamName == teamEntity.TeamName).ToList();
+                        if (checkName.Count > 0)
+                            throw new Exception("There is a team with this name");
                         session.Save(teamEntity);
                         var query = session.Query<Models.AspNetUsers.AspNetUsers>().Where(x => x.Id == userEntity.Id)
                             .ToList();
