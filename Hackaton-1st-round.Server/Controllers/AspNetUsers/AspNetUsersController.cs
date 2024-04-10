@@ -126,7 +126,73 @@ using Microsoft.AspNetCore.Mvc;
                 return Unauthorized();
             }
         }
+
+        [HttpGet("info/object")]
+        public Models.AspNetUsers.AspNetUsers GetUserInfoAsObject()
+        {
+            // Check if user is authenticated
+            var user = HttpContext.User;
+            if (user.Identity != null && user.Identity.IsAuthenticated)
+            {
+                // Retrieve user ID from claims
+                var userIdClaim = user.FindFirst(ClaimTypes.NameIdentifier);
+                if (userIdClaim == null)
+                {
+                    throw new Exception("User ID claim not found.");
+                }
+
+                // Parse user ID
+                if (!Guid.TryParse(userIdClaim.Value, out Guid userId))
+                {
+                    throw new Exception("Invalid user ID format.");
+                }
+
+                // Retrieve user entity by ID
+                using (var session = NHibernateHelper.OpenSession())
+                {
+                    var userEntity = session.Get<Models.AspNetUsers.AspNetUsers>(userIdClaim.Value);
+                    if (userEntity == null)
+                    {
+                        throw new Exception("User not found.");
+                    }
+
+                    return userEntity;
+                }
+            }
+            else
+            {
+                // User is not authenticated
+                throw new Exception("Not authorized");
+            }
+        }
         
+        [HttpPut("addToTeam/{email}")]
+        public ActionResult<Models.AspNetUsers.AspNetUsers> AddToTeam(string email)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    var findedUserFromEmail = session.Query<Models.AspNetUsers.AspNetUsers>()
+                        .Where(x => x.Email == email).ToList();
+                    if (findedUserFromEmail.Count > 1)
+                    {
+                        throw new Exception("There is more than 1 user in database with this email");
+                    }
+
+                    if (findedUserFromEmail.Count == 0)
+                    {
+                        throw new Exception("There is no user with this email in the database");
+                    }
+
+                    Models.AspNetUsers.AspNetUsers cookieUser = GetUserInfoAsObject();
+                    findedUserFromEmail[0].TeamEntity_FK = cookieUser.TeamEntity_FK;
+                    session.SaveOrUpdate(findedUserFromEmail[0]);
+                    transaction.Commit();
+                    return findedUserFromEmail[0];
+                }
+            }
+        }
         [HttpPost("registerCustom")]
         public ActionResult<Models.AspNetUsers.AspNetUsers> Register([FromBody] Models.AspNetUsers.AspNetUsers testEntity)
         {
@@ -179,6 +245,8 @@ using Microsoft.AspNetCore.Mvc;
             }
 
         }
+        
+        
         
         
         [HttpDelete("{id}")]
