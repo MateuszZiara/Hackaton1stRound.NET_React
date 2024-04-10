@@ -32,6 +32,10 @@ export function Err404() {
         return () => clearInterval(intervalId);
     }, []);
 
+    function redirect()
+    {
+        window.location.href = "/";
+    }
     return (
         <Container className={classes.root}>
             <div className={classes.inner}>
@@ -43,7 +47,7 @@ export function Err404() {
                         Poczekaj {remainingSeconds} sekund aby automatycznie się przenieść na stronę główną.
                     </Text>
                     <Group justify="center">
-                        <Button size="md" variant="outline">Przenieś mnie już teraz</Button>
+                        <Button size="md" variant="outline"onClick = { redirect}>Przenieś mnie już teraz</Button>
                     </Group>
                 </div>
             </div>

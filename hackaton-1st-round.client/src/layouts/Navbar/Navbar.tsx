@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import {Center, Tooltip, UnstyledButton, Stack, rem, Avatar, MenuLabel} from '@mantine/core';
 import {
     IconHome2,
@@ -13,6 +13,8 @@ import {
 } from '@tabler/icons-react';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import classes from './Navbar.module.css';
+import {logout} from "../../features/getCookies/getCookies";
+import {checkUserLoggedIn} from "../../features/getCookies/getCookies";
 
 interface NavbarLinkProps {
     icon: typeof IconHome2;
@@ -20,6 +22,7 @@ interface NavbarLinkProps {
     active?: boolean;
     onClick?(): void;
 }
+
 
 function NavbarLink({ icon: Icon, label, active, onClick }: NavbarLinkProps) {
     return (
@@ -42,7 +45,26 @@ const mockdata = [
 
 export function Navbar() {
     const [active, setActive] = useState(2);
+    const [loggedIn, setLoggedIn] = useState(null);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const isLoggedIn = await checkUserLoggedIn();
+                setLoggedIn(isLoggedIn);
+                if(!isLoggedIn)
+                {
+                    window.location.href = "/404";
+                }
+            } catch (error) {
+                console.error('Error checking user login status:', error);
+                setLoggedIn(false); // Ustawienie na false w przypadku błędu
+            }
+        };
 
+        fetchData();
+    }, []);
+    
+    
     const links = mockdata.map((link, index) => (
         <NavbarLink
             {...link}
@@ -66,7 +88,7 @@ export function Navbar() {
 
             <Stack justify="center" gap={10}>
                 <Avatar variant={"outline"} color={"white"} w={50} h={50} label={"aa"}>AW</Avatar>
-                <NavbarLink icon={IconLogout} label="Logout" />
+                <NavbarLink icon={IconLogout} label="Logout" onClick={logout}/>
             </Stack>
         </nav>
     );
