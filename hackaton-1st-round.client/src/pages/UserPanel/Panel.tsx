@@ -3,7 +3,9 @@ import { useState } from 'react';
 import { Flex } from "@mantine/core";
 import { Navbar } from "../../layouts/Navbar/Navbar";
 import { MainPage } from "../../components/User/MainPage/MainPage";
-import {UserSettings} from "../../components/User/Settings/UserSettings"; // Import komponentu Teams
+import {UserSettings} from "../../components/User/Settings/UserSettings";
+import YourTeam from "../../components/User/YourTeam/YourTeam";
+
 
 export default function Panel() {
     const [activePage, setActivePage] = useState("home"); // Domyślnie wyświetlany będzie komponent Home
@@ -14,7 +16,7 @@ export default function Panel() {
             case "home":
                 return <MainPage />;
             case "teams":
-                return <UserSettings />;
+                return <YourTeam />;
             case "settings":
                 return <UserSettings />;
             default:

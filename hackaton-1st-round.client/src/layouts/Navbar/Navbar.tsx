@@ -24,6 +24,9 @@ function NavbarLink({ icon: Icon, label, onClick }: NavbarLinkProps) {
 }
 
 export function Navbar({ setActivePage }: { setActivePage: (index: string) => void }) {
+    
+    
+    
     const [loggedIn, setLoggedIn] = useState(null);
     useEffect(() => {
         const fetchData = async () => {

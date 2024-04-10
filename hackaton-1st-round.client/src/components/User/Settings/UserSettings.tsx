@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { ActionIcon, Card, Group, Switch, Text, useComputedColorScheme, useMantineColorScheme } from '@mantine/core';
 import classes from './UserSettings.module.css';
-
 export function UserSettings() {
     const { setColorScheme } = useMantineColorScheme();
     const computedColorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true });
-
+    
     const [data, setData] = useState([
         {
             title: 'Motyw aplikacji',

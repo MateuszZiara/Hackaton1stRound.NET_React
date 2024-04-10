@@ -165,6 +165,40 @@ using Microsoft.AspNetCore.Mvc;
                 throw new Exception("Not authorized");
             }
         }
+
+        [HttpGet("GetUsersFromTeamCookies")]
+
+        public ActionResult<IEnumerable<Models.AspNetUsers.AspNetUsers>> GetFromTeam()
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    Models.AspNetUsers.AspNetUsers userCookies = GetUserInfoAsObject();
+                    var query = session.Query<Models.AspNetUsers.AspNetUsers>().Where(x => x.TeamEntity_FK == userCookies.TeamEntity_FK)
+                        .ToList();
+                    return query;
+                }
+            }
+
+            return null;
+        }
+        [HttpGet("GetUsersFromTeamId/{id}")]
+
+        public ActionResult<IEnumerable<Models.AspNetUsers.AspNetUsers>> GetFromTeamId(Guid id)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    var query = session.Query<Models.AspNetUsers.AspNetUsers>().Where(x => x.TeamEntity_FK == id)
+                        .ToList();
+                    return query;
+                }
+            }
+
+            return null;
+        }
         
         [HttpPut("addToTeam/{email}")]
         public ActionResult<Models.AspNetUsers.AspNetUsers> AddToTeam(string email)
