@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { TextInput, Button, Paper, Text, List, ListItem, Avatar } from '@mantine/core';
+import {TextInput, Button, Paper, Text, List, ListItem, Avatar, Modal} from '@mantine/core';
 import { useForm } from '@mantine/form';
 import {checkUserLoggedIn, gethasTeam} from "../../../features/getCookies/getCookies";
 import {Await} from "react-router";
+import {useDisclosure} from "@mantine/hooks";
 
 
 export function YourTeam() {
@@ -10,6 +11,7 @@ export function YourTeam() {
     const [teamName, setTeamName] = useState('');
     const [teamDescription, setTeamDescription] = useState('');
     const [users, setUsers] = useState([]);
+    const [opened, { open, close }] = useDisclosure(false);
     const form = useForm({
         initialValues: {
             TeamName: '',
@@ -21,10 +23,11 @@ export function YourTeam() {
         const data = {
 
             TeamName: form.values.TeamName,
-            TeamDescription: form.values.TeamDescription,
+            TeamDesc: form.values.TeamDescription,
         }
         try {
             const response = await fetch(url, {
+                credentials: 'include',
                 method: 'POST',
                 headers: {
                     'Content-Type':
@@ -35,6 +38,7 @@ export function YourTeam() {
         }catch (error) {
             console.error('Error creating entity:', error);
         }
+        window.location.href = "/panel";
         
 
        
@@ -144,7 +148,7 @@ export function YourTeam() {
     return (
         <Paper padding="md" style={{ maxWidth: 600, margin: 'auto' }}>
             {!hasTeam ? (
-                <form onSubmit={form.onSubmit(handleRegister)}>
+                <form onSubmit={form.onSubmit(() => { })}>
                     <TextInput
                         label="Team Name"
                         placeholder="Enter team name"
@@ -162,7 +166,7 @@ export function YourTeam() {
                         multiline
                         style={{ marginBottom: '16px' }}
                     />
-                    <Button type="submit">Send</Button>           
+                    <Button type="submit" onClick = {handleRegister}>Send</Button>           
                 </form>
 
             ) : (
@@ -178,7 +182,10 @@ export function YourTeam() {
                         ))}
                     </List>
                 </>
+                
+                
             )}
+            
         </Paper>
     );
 }
