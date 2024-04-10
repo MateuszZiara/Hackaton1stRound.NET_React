@@ -124,12 +124,12 @@ export function YourTeam() {
     return (
         <Paper padding="md" style={{ maxWidth: 600, margin: 'auto' }}>
             {!hasTeam ? (
-                <form onSubmit={form.onSubmit(() => { })}>
+                <form onSubmit={form.onSubmit(handleRegister)}>
                     <TextInput
-                        label="Team "
+                        label="Team Name"
                         placeholder="Enter team name"
                         value={form.values.TeamName}
-                        onChange={(e) => setTeamName(e.target.value)}
+                        onChange={(event) => form.setFieldValue('TeamName', event.currentTarget.value)}
                         required
                         style={{ marginBottom: '16px' }}
                     />
@@ -137,13 +137,14 @@ export function YourTeam() {
                         label="Team Description"
                         placeholder="Enter team description"
                         value={form.values.TeamDescription}
-                        onChange={(e) => setTeamDescription(e.target.value)}
+                        onChange={(event) => form.setFieldValue('TeamDescription', event.currentTarget.value)}
                         required
                         multiline
                         style={{ marginBottom: '16px' }}
                     />
-                    <Button type="submit" onClick = {handleRegister}>Send</Button>
+                    <Button type="submit">Send</Button>           
                 </form>
+
             ) : (
                 <>
                     <Text style={{ marginBottom: '16px' }}>Team Name: {teamName}</Text>
