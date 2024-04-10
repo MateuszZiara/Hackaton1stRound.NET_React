@@ -4,6 +4,7 @@ import heroImage from '../../../public/heroImage.webp';
 import classes from './Hero.module.css';
 import React, {useEffect, useState} from "react";
 import {checkUserLoggedIn} from "../../features/getCookies/getCookies";
+import {useRedirectIfLoggedIn} from "../../features/getCookies/getCookies";
 
 export function Hero() {
     
@@ -27,7 +28,7 @@ export function Hero() {
        
             if(loggedIn)
             {
-                //Przejscie do stronki    
+                window.location.href = "/panel";
             }
             else
                 window.location.href = "/pag";
@@ -38,7 +39,7 @@ export function Hero() {
 
         if(loggedIn)
         {
-            //Przejscie do stronki    
+            window.location.href = "/panel";
         }
         else
             window.location.href = "/pag";
