@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { Center, Tooltip, UnstyledButton, Stack, rem } from '@mantine/core';
+import {Center, Tooltip, UnstyledButton, Stack, rem, Avatar, MenuLabel} from '@mantine/core';
 import {
     IconHome2,
-    IconGauge,
+    IconCalendarEvent,
     IconDeviceDesktopAnalytics,
     IconFingerprint,
     IconCalendarStats,
-    IconUser,
+    IconUsers,
     IconSettings,
     IconLogout,
     IconSwitchHorizontal,
@@ -32,11 +32,10 @@ function NavbarLink({ icon: Icon, label, active, onClick }: NavbarLinkProps) {
 }
 
 const mockdata = [
-    { icon: IconHome2, label: 'Home' },
-    { icon: IconGauge, label: 'Dashboard' },
-    { icon: IconDeviceDesktopAnalytics, label: 'Analytics' },
+    { icon: IconHome2, label: 'Strona główna' },
+    { icon: IconCalendarEvent, label: 'Kalendarz?' },
+    { icon: IconUsers, label: 'Twój zespół' },
     { icon: IconCalendarStats, label: 'Releases' },
-    { icon: IconUser, label: 'Account' },
     { icon: IconFingerprint, label: 'Security' },
     { icon: IconSettings, label: 'Settings' },
 ];
@@ -65,8 +64,8 @@ export function Navbar() {
                 </Stack>
             </div>
 
-            <Stack justify="center" gap={0}>
-                <NavbarLink icon={IconSwitchHorizontal} label="Change account" />
+            <Stack justify="center" gap={10}>
+                <Avatar variant={"outline"} color={"white"} w={50} h={50} label={"aa"}>AW</Avatar>
                 <NavbarLink icon={IconLogout} label="Logout" />
             </Stack>
         </nav>
