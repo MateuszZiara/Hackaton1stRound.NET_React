@@ -11,12 +11,29 @@ export default function Panel() {
     const [activePage, setActivePage] = useState("home"); // Domyślnie wyświetlany będzie komponent Home
 
     // Funkcja renderująca odpowiedni komponent w zależności od aktywnej strony
-    const renderPage = () => {
+    const renderPageUser = () => {
         switch (activePage) {
             case "home":
                 return <MainPage />;
             case "teams":
                 return <YourTeam />;
+            case "settings":
+                return <UserSettings />;
+            default:
+                return <MainPage />;
+        }
+    };
+
+    const renderPageAdmin = () => {
+        switch (activePage) {
+            case "home":
+                return <MainPage />;
+            case "teams":
+                return <YourTeam />;
+            case "users":
+                return <UserSettings />;
+            case "files":
+                return <UserSettings />;
             case "settings":
                 return <UserSettings />;
             default:
@@ -32,11 +49,21 @@ export default function Panel() {
             direction="row"
             wrap="nowrap"
         >
-            <div style={{ zIndex: 1 }}>
+            <div style={{ zIndex: 1}}>
                 <Navbar setActivePage={setActivePage} />
             </div>
-            <div style={{ zIndex: 0 }}>
-                {renderPage()}
+            <div style={{ zIndex: 0}}>
+                {/*
+                {
+                x === 'Admin' ?
+                    (
+                        renderPageAdmin()
+                    ) : (
+                        renderPageUser()
+                    )
+            }
+            */}
+                {renderPageUser()}
             </div>
         </Flex>
     );
