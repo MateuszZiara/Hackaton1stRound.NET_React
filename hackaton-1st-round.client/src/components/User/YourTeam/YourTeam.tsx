@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import {TextInput, Textarea, Button, Paper, Text, List, ListItem, Avatar, Modal, Title, FileInput} from '@mantine/core';
+import {TextInput, Textarea, Button, Paper, Text, List, ListItem, Avatar, Modal, Title, FileInput, Flex, Card} from '@mantine/core';
 import { useForm } from '@mantine/form';
 import {checkUserLoggedIn, gethasTeam} from "../../../features/getCookies/getCookies";
 import {Await} from "react-router";
 import {useDisclosure} from "@mantine/hooks";
-
+import classes from  "./YourTeam.module.css"
 
 export function YourTeam() {
     const [hasTeam, setHasTeam] = useState(false);
     const [teamName, setTeamName] = useState('');
     const [teamDescription, setTeamDescription] = useState('');
     const [users, setUsers] = useState([]);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [opened, { open, close }] = useDisclosure(false);
     const form = useForm({
         initialValues: {
@@ -44,8 +45,8 @@ export function YourTeam() {
         console.log('User added to team successfully');
 
         window.location.href = "/panel";
-    } 
-    
+    }
+
     async function handleRegister() {
         const url = "https://localhost:7071/api/TeamEntity/createTeamByUser";
         const data = {
@@ -67,11 +68,11 @@ export function YourTeam() {
             console.error('Error creating entity:', error);
         }
         window.location.href = "/panel";
-        
 
-       
+
+
     }
-    
+
    /* useEffect(async () => {
         // Assuming gethasTeam function returns a boolean indicating if the user has a team
         const hasTeam = gethasTeam();
@@ -123,8 +124,8 @@ export function YourTeam() {
         update();
         checkIfHasTeam();
         fetchData();
-        
-        
+
+
     }, []);
 
     const fetchTeamDetails = async () => {
@@ -171,6 +172,35 @@ export function YourTeam() {
         ]);
     };*/
 
+    const handleFileChange = (file: File) => {
+        setSelectedFile(file);
+    };
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (!selectedFile) return;
+
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+        {/* //TODO ZMIANA LINKU DO API*/}
+        try {
+            const response = await fetch('https://localhost:7071/api/upload', {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to upload file');
+            }
+
+            console.log('File uploaded successfully');
+        } catch (error) {
+            console.error('Error uploading file:', error);
+        }
+    };
+
+
+
     var numberOfTeammates = 2;
     const addUser = (numberOfTeammates < 4 ?
             (
@@ -199,7 +229,7 @@ export function YourTeam() {
 )
 
     return (
-        <Paper padding="md" style={{maxWidth: 900, margin: 'auto'}}>
+        <Card withBorder radius="md" p="xl" m="md" className={classes.card}>
             {!hasTeam ? (
                 <form onSubmit={form.onSubmit(() => {
                 })}>
@@ -240,28 +270,37 @@ export function YourTeam() {
                         ))}
                         </List>
                     </div>
+                    <Flex
+                        gap="xl"
+                        justify="flex-start"
+                        align="stretch"
+                        direction="row"
+                        wrap="wrap"
+                    >
+                        <div>
                     {addUser}
-
-
-
-
-
-
-                    <form onSubmit={form.onSubmit(()=> { })}>
+                        </div>
+<div>
+    <Title order={2} pb={30}>Dodaj plik PDF</Title>
+            <Text pb={20} truncate={true}>Można dodać tylko jeden plik. Jeżeli został dodany, to zostanie nadpisany.</Text>
+                    <form onSubmit={handleSubmit}>
                         <FileInput
-                            accept="file/pdf"
+                            accept=".pdf"
                             label="Dodaj wniosek"
+                            onChange={handleFileChange}
                             placeholder="Dozwolone rodzaje plików: .pdf"
                         />
+                        <Button type="submit">Wyślij</Button>
                     </form>
-                    
+</div>
+                    </Flex>
 
                 </>
-                
-                
+
+
             )}
-            
-        </Paper>
+
+        </Card>
     );
 }
 
