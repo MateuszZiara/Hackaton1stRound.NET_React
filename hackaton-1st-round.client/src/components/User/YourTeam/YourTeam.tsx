@@ -16,6 +16,7 @@ export function YourTeam() {
         initialValues: {
             TeamName: '',
             TeamDescription: '',
+            invitation: '',
         },}
     )
 
@@ -210,12 +211,13 @@ export function YourTeam() {
                                     placeholder="hackaton@tu.kielce.pl"
                                     value={form.values.invitation}
                                     onChange={(event) => form.setFieldValue('invitation', event.currentTarget.value)}
-                                    error={form.errors.invitation && 'Podany adres jest nieprawid³owy'}
+                                    error={form.errors.invitation && 'Podany adres jest nieprawidï¿½owy'}
                                     radius="md"
                                 />
                             </div>
                             <Button type="submit" onClick={SendInvite}>Invite friend</Button>
                         </form>
+                    
 
                 </>
                 
