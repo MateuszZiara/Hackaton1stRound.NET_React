@@ -18,6 +18,27 @@ export function YourTeam() {
             TeamDescription: '',
         },}
     )
+
+    async function SendInvite() {
+        const url = "https://localhost:7071/api/AspNetUsers/addToTeam/" + form.values.invitation;
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to add user to team');
+        }
+
+        // Handle successful response here if needed
+        console.log('User added to team successfully');
+
+        window.location.href = "/panel";
+    } 
+    
     async function handleRegister() {
         const url = "https://localhost:7071/api/TeamEntity/createTeamByUser";
         const data = {
@@ -180,7 +201,22 @@ export function YourTeam() {
                                 {user.name} {user.surname}
                             </ListItem>
                         ))}
-                    </List>
+                        </List>
+                        <form onSubmit={form.onSubmit(() => { })}>
+                            <div style={{ marginBottom: '16px' }}>
+                                <TextInput
+                                    required
+                                    label="Add your friend by email"
+                                    placeholder="hackaton@tu.kielce.pl"
+                                    value={form.values.invitation}
+                                    onChange={(event) => form.setFieldValue('invitation', event.currentTarget.value)}
+                                    error={form.errors.invitation && 'Podany adres jest nieprawid³owy'}
+                                    radius="md"
+                                />
+                            </div>
+                            <Button type="submit" onClick={SendInvite}>Invite friend</Button>
+                        </form>
+
                 </>
                 
                 
