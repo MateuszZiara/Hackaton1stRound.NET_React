@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hackaton-1st-round.Server", "Hackaton-1st-round.Server\Hackaton-1st-round.Server.csproj", "{60DD4E5C-7956-46D0-AE7E-64117AF2EE7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hackaton-1st-round.Server", "Hackaton-1st-round.Server\Hackaton-1st-round.Server.csproj", "{60DD4E5C-7956-46D0-AE7E-64117AF2EE7B}"
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "hackaton-1st-round.client", "hackaton-1st-round.client\hackaton-1st-round.client.esproj", "{BD401253-67EB-45A1-8E20-E70E6D91E127}"
 EndProject
