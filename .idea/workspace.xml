@@ -5,27 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="751470c8-dcf2-4bf8-bbc8-9a6326df1478" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/hackaton-1st-round.client/public/heroImage.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hackaton-1st-round.client/src/components/Hero/Hero.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hackaton-1st-round.client/src/components/Hero/Hero.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hackaton-1st-round.client/src/pages/404/Err404.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hackaton-1st-round.client/src/pages/404/Err404.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hackaton-1st-round.client/src/pages/404/Number.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Hackaton-1st-round/DesignTimeBuild/.dtbcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Hackaton-1st-round/DesignTimeBuild/.dtbcache.v2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Hackaton-1st-round/FileContentIndex/1174829a-f498-4934-9c65-9216f0e471e1.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/Hackaton-1st-round/FileContentIndex/3f69a484-40f2-49af-9106-1dea2b72972d.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/Microsoft.Data.SqlClient.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/Microsoft.Data.SqlClient.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/runtimes/unix/lib/net6.0/Microsoft.Data.SqlClient.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/runtimes/unix/lib/net6.0/Microsoft.Data.SqlClient.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/runtimes/win/lib/net6.0/Microsoft.Data.SqlClient.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/runtimes/win/lib/net6.0/Microsoft.Data.SqlClient.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hackaton-1st-round.client/src/layouts/Footer/Footer.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/hackaton-1st-round.client/src/layouts/Footer/Footer.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hackaton-1st-round.client/src/layouts/Footer/Footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/hackaton-1st-round.client/src/layouts/Footer/Footer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hackaton-1st-round.client/src/layouts/Header/HeaderMenu.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/hackaton-1st-round.client/src/layouts/Header/HeaderMenu.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hackaton-1st-round.client/src/layouts/Header/HeaderMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/hackaton-1st-round.client/src/layouts/Header/HeaderMenu.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hackaton-1st-round.client/src/layouts/Navbar/Navbar.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hackaton-1st-round.client/src/layouts/Navbar/Navbar.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hackaton-1st-round.client/src/pages/UserPanel/Panel.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hackaton-1st-round.client/src/pages/UserPanel/Panel.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.sln" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hackaton-1st-round.client/src/main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/hackaton-1st-round.client/src/main.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hackaton-1st-round.client/src/pages/Auth/Auth.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/hackaton-1st-round.client/src/pages/Auth/Auth.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hackaton-1st-round.client/src/pages/Index/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/hackaton-1st-round.client/src/pages/Index/Home.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,8 +21,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript JSX File" />
         <option value="CSS File" />
+        <option value="TypeScript JSX File" />
       </list>
     </option>
   </component>
@@ -62,7 +48,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/Pawel/source/repos/hackatonPre/team9repo",
+    "last_opened_file_path": "C:/Users/Pawel/source/repos/hackatonPre/team9repo/hackaton-1st-round.client/src/pages/UserPanel",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -74,6 +60,9 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Pawel\source\repos\hackatonPre\team9repo\hackaton-1st-round.client\src\pages\UserPanel" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Pawel\source\repos\hackatonPre\team9repo\hackaton-1st-round.client\public" />
     </key>
@@ -93,7 +82,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1712683730029</updated>
-      <workItem from="1712683731085" duration="12342000" />
+      <workItem from="1712683731085" duration="18242000" />
     </task>
     <servers />
   </component>

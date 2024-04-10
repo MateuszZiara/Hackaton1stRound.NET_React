@@ -12,6 +12,7 @@ import Home from './pages/Index/Home.tsx';
 import MainPage from './pages/Temp/MainPage.tsx';
 import BuyFlower from './pages/BuyFlower/BuyFlower.tsx';
 import {Err404} from "@/pages/404/Err404.tsx";
+import Panel from "@/pages/UserPanel/Panel.tsx";
 
 // Tworzenie motywu Mantine
 const theme = createTheme({
@@ -31,6 +32,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 <Route path="/main" element={<MainPage />} />
                 <Route path="/buyflower" element={<BuyFlower />} />
                 <Route path="/404" element={<Err404 />} />
+                <Route path="/panel" element={<Panel />} />
             </Routes>
         </BrowserRouter>
     </MantineProvider>
