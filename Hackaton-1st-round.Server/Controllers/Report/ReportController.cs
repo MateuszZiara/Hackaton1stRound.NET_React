@@ -65,6 +65,54 @@ namespace Hackaton_1st_round.Server.Controllers.Report
             }
 
         }
+        
+
+        
+        [HttpPost("upload/{name}/{FK}")]
+        public async Task<IActionResult> Upload(string name, Guid FK, [FromForm] Microsoft.AspNetCore.Http.IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("Nieprawidłowy plik");
+            }
+
+            try
+            {
+                string _uploadsDirectory = @"uploads\" + name;
+                var uploadsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _uploadsDirectory);
+                var filePath = Path.Combine(uploadsPath, file.FileName);
+                // Jeśli katalog nie istnieje, utwórz go
+                if (!Directory.Exists(uploadsPath))
+                {
+                    Directory.CreateDirectory(uploadsPath);
+                }
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                using (var session = NHibernateHelper.OpenSession())
+                {
+                    using (var transaction = session.BeginTransaction())
+                    {
+                        Models.Report.Report report = new Models.Report.Report();
+                        report.TeamEntity_FK2 = FK;
+                        report.Url = filePath;
+                        session.Save(report);
+                        transaction.Commit();
+                    }
+                }
+
+                return Ok("Plik został pomyślnie zapisany.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Wystąpił błąd podczas zapisywania pliku: {ex.Message}");
+            }
+        }
+    
+        
         [HttpPut("update/{id}")]
         public ActionResult<Models.Report.Report> Edit(Guid id, string? Url = null, Guid? TeamEntity_FK2 = null)
         {
