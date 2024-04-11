@@ -348,4 +348,45 @@ using Microsoft.AspNetCore.Mvc;
                 }
             }
         }
+        [HttpPut("updateToAdmin/{id}")]
+        public ActionResult<Models.AspNetUsers.AspNetUsers> UpdateToAdmin(string id)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    var query = session.Query<Models.AspNetUsers.AspNetUsers>().Where(x => x.Id == id).ToList();
+                    if (query.Count == 1)
+                    {
+                        query[0].UserRank = UserRank.Admin;
+                        session.SaveOrUpdate(query[0]);
+                        transaction.Commit();
+                        return query[0];
+                    }
+
+                    return NotFound("No user with this id");
+                }
+            }
+        }
+        [HttpPut("updateToUser/{id}")]
+        public ActionResult<Models.AspNetUsers.AspNetUsers> updateToUser(string id)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    var query = session.Query<Models.AspNetUsers.AspNetUsers>().Where(x => x.Id == id).ToList();
+                    if (query.Count == 1)
+                    {
+                        query[0].UserRank = UserRank.User;
+                        session.SaveOrUpdate(query[0]);
+                        transaction.Commit();
+                        return query[0];
+                    }
+
+                    return NotFound("No user with this id");
+                }
+            }
+        }
+
 }

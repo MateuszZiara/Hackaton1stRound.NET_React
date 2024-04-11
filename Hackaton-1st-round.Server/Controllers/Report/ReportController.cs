@@ -22,6 +22,22 @@ namespace Hackaton_1st_round.Server.Controllers.Report
                 return Ok(teamEntities);
             }
         }
+        [HttpGet("CheckAccepted/{id}")]
+        public bool CheckIfTeamAccepted(Guid id)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                var query = session.Query<Models.Report.Report>().Where(x => x.TeamEntity_FK2 == id && x.accepted).ToList();
+                if (query == null)
+                    return false;
+                if (query.Count > 0)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
 
         [HttpGet("id/{id}")]
         public ActionResult<Models.Report.Report> GetById(Guid id)
@@ -99,6 +115,7 @@ namespace Hackaton_1st_round.Server.Controllers.Report
                         Models.Report.Report report = new Models.Report.Report();
                         report.TeamEntity_FK2 = FK;
                         report.Url = filePath;
+                        report.accepted = false;
                         session.Save(report);
                         transaction.Commit();
                     }

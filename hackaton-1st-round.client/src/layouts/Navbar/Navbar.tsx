@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { Center, Tooltip, UnstyledButton, Stack, rem, Avatar } from '@mantine/core';
 import { MantineLogo } from '@mantinex/mantine-logo';
-import {IconHome2, IconUsers, IconSettings, IconLogout, IconFiles} from '@tabler/icons-react';
+import {IconHome2, IconUsers, IconSettings, IconLogout, IconFiles, IconUsersGroup} from '@tabler/icons-react';
 import classes from './Navbar.module.css';
 import { logout } from "../../features/getCookies/getCookies";
 import { checkUserLoggedIn } from "../../features/getCookies/getCookies";
@@ -80,9 +80,9 @@ export function Navbar({ setActivePage }: { setActivePage: (index: string) => vo
 
     const linksAdmin = [
         { icon: IconHome2, label: 'Strona główna', path: 'home' },
-        { icon: IconUsers, label: 'Zespoły', path: 'teams' },
+        { icon: IconUsersGroup, label: 'Zespoły', path: 'teams' },
         { icon: IconUsers, label: 'Uczestnicy', path: 'users' },
-        { icon: IconFiles, label: 'Pliki PDF', path: 'files' },
+        { icon: IconFiles, label: 'Zgłoszenia', path: 'requests' },
         { icon: IconSettings, label: 'Ustawienia', path: 'settings' },
     ];
 
