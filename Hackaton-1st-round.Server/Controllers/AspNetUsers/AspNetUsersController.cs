@@ -209,10 +209,6 @@ using Microsoft.AspNetCore.Mvc;
                 {
                     var findedUserFromEmail = session.Query<Models.AspNetUsers.AspNetUsers>()
                         .Where(x => x.Email == email).ToList();
-                    if (findedUserFromEmail[0].TeamEntity_FK != null)
-                    {
-                        throw new Exception("This user has got a team");
-                    }
                     if (findedUserFromEmail.Count > 1)
                     {
                         throw new Exception("There is more than 1 user in database with this email");
@@ -223,6 +219,12 @@ using Microsoft.AspNetCore.Mvc;
                         throw new Exception("There is no user with this email in the database");
                     }
 
+                    
+                    if (findedUserFromEmail[0].TeamEntity_FK != null)
+                    {
+                        throw new Exception("This user has got a team");
+                    }
+                    
                     Models.AspNetUsers.AspNetUsers cookieUser = GetUserInfoAsObject();
                     findedUserFromEmail[0].TeamEntity_FK = cookieUser.TeamEntity_FK;
                     session.SaveOrUpdate(findedUserFromEmail[0]);

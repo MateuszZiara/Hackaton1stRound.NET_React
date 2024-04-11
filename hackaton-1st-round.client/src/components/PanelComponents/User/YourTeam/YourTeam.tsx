@@ -15,6 +15,7 @@ export function YourTeam() {
     const [users, setUsers] = useState([]);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [opened, { open, close }] = useDisclosure(false);
+  let number = 0;
     const form = useForm({
         initialValues: {
             TeamName: '',
@@ -129,7 +130,7 @@ export function YourTeam() {
             console.error('Error uploading file:', error);
         }
     };
-    
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -147,33 +148,32 @@ export function YourTeam() {
                 const hasTeam = await gethasTeam();
                 if (!hasTeam) {
                     setHasTeam(false);
-                }
-                else
-                {
+                } else {
                     setHasTeam(true);
                 }
             } catch (error) {
-                console.error('Error checking user login status:', error);
+                console.error('Error checking if user has a team:', error);
             }
         };
-        const update = async () =>
-        {
+
+        const update = async () => {
             try {
                 const hasTeam = await gethasTeam();
-                if(hasTeam) {
-                    fetchTeamDetails();
-                    fetchUsers();
+                if (hasTeam) {
+                    await Promise.all([fetchTeamDetails(), fetchUsers()]);
                 }
+            } catch (error) {
+                console.error('Error updating team details:', error);
             }
-            catch (error) {
-                console.error('Error', error);
-            }
-        }
-        update();
-        checkIfHasTeam();
-        fetchData();
+        };
 
+        const initialize = async () => {
+            await fetchData();
+            await checkIfHasTeam();
+            await update();
+        };
 
+        initialize();
     }, []);
 
     const fetchTeamDetails = async () => {
@@ -190,8 +190,12 @@ export function YourTeam() {
         var id = data.teamEntity_FK;
         const responseTeamDetails = await fetch("https://localhost:7071/api/TeamEntity/id/"+id);
         const dataTeamDetails = await responseTeamDetails.json();
+        const numberResponse = await fetch("https://localhost:7071/api/TeamEntity/AmmountOfMembers/"+id);
+        const dataNumberResponse = await numberResponse.json();
+        number = dataNumberResponse;
         setTeamName(dataTeamDetails.teamName);
         setTeamDescription(dataTeamDetails.teamDesc);
+        console.log(number);
     };
     const fetchUsers = async () => {
         const responseUserDetails = await fetch("https://localhost:7071/api/AspNetUsers/GetUsersFromTeamCookies",{
