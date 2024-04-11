@@ -157,11 +157,7 @@ export default function Auth(props) {
 
             }
         };
-        checkCookies();
-
-            }
-        };
-        checkCookies();
+        
     },[]);
     return (
         <Paper radius="md" p="xl" withBorder {...props}>

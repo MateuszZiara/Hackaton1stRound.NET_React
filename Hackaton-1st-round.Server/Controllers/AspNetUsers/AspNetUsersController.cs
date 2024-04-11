@@ -23,6 +23,10 @@ using Swashbuckle.AspNetCore.Annotations;
             using (var session = NHibernateHelper.OpenSession())
             {
                 var aspNetUsers = session.Query<Models.AspNetUsers.AspNetUsers>().ToList();
+                foreach (var item in aspNetUsers)
+                {
+                    item.PasswordHash = "***";
+                }
                 return Ok(aspNetUsers);
             }
         }

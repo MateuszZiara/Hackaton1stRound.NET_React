@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
     Button,
     Card,
@@ -9,22 +10,70 @@ import {
     Switch,
     Table,
     Modal,
-    Avatar,
-    Radio,
-    TextInput, PasswordInput
+    TextInput,
+    PasswordInput
 } from "@mantine/core";
-import {IconUserPlus, IconUserEdit, IconUserMinus, IconPlus, IconMinus} from "@tabler/icons-react";
-import React, {useEffect, useState} from "react";
-import {useDisclosure} from "@mantine/hooks";
+import { IconUserPlus, IconUserEdit, IconUserMinus, IconPlus, IconMinus } from "@tabler/icons-react";
+import { useDisclosure } from "@mantine/hooks";
 import cx from 'clsx';
 import classes from '../AllTeams/AllTeams.module.css';
-import {useForm} from "@mantine/form";
+import { useForm } from "@mantine/form";
 
 export function AllUsers() {
     const [teams, setTeams] = useState([]);
-    const [selection, setSelection] = useState('1');
+    const [selection, setSelection] = useState([]);
     const [loading, { toggle }] = useDisclosure();
     const [addUserModalOpen, setAddUserModalOpen] = useState(false);
+    const [rows, setRows] = useState([]);
+    useEffect(() => {
+        const fetchTeamDetails = async () => {
+            try {
+                const responseTeamDetails = await fetch("https://localhost:7071/api/AspNetUsers/");
+                const dataTeamDetails = await responseTeamDetails.json();
+
+                setTeams(dataTeamDetails);
+            } catch (error) {
+                console.error('Error fetching team details:', error);
+            }
+        };
+
+        fetchTeamDetails();
+    }, []);
+
+    async function getName(id) {
+        const responseTeamDetails = await fetch("https://localhost:7071/api/TeamEntity/id/" + id);
+        const dataTeamDetails = await responseTeamDetails.json();
+        return dataTeamDetails.teamName;
+    }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const rows = await Promise.all(teams.map(async (request) => {
+                const selected = selection.includes(request.id);
+                let name;
+                if (request.teamEntity_FK == null) {
+                    name = "Brak";
+                } else {
+                    name = await getName(request.teamEntity_FK);
+                }
+                return (
+                    <Table.Tr key={request.id} className={cx({ [classes.rowSelected]: selected })}>
+                        <Table.Td>
+                            <Checkbox checked={selection.includes(request.id)} onChange={() => toggleRow(request.id)} />
+                        </Table.Td>
+                        <Table.Td>{request.firstName}</Table.Td>
+                        <Table.Td>{request.lastName}</Table.Td>
+                        <Table.Td>{request.email}</Table.Td>
+                        <Table.Td>{name}</Table.Td>
+                    </Table.Tr>
+                );
+            }));
+            setRows(rows);
+        };
+
+        fetchData();
+    }, [teams, selection]);
+
     const toggleRow = (id) => {
         setSelection((current) =>
             current.includes(id) ? current.filter((item) => item !== id) : [...current, id]
@@ -34,38 +83,6 @@ export function AllUsers() {
     const toggleAll = () => {
         setSelection((current) => (current.length === teams.length ? [] : teams.map((item) => item.id)));
     };
-    useEffect(() => {
-        const fetchTeamDetails = async () => {
-            try {
-                const responseTeamDetails = await fetch("https://localhost:7071/api/AspNetUsers/");
-                const dataTeamDetails = await responseTeamDetails.json();
-
-                setTeams(dataTeamDetails);
-                console.log(dataTeamDetails);
-            } catch (error) {
-                console.error('Error fetching team details:', error);
-            }
-        };
-
-        fetchTeamDetails();
-    }, []);
-
-
-    const rows = teams.map((request) => {
-        const selected = selection.includes(request.id);
-        return (
-            <Table.Tr key={request.id} className={cx({ [classes.rowSelected]: selected })}>
-                <Table.Td>
-                    <Checkbox checked={selection.includes(request.id)} onChange={() => toggleRow(request.id)} />
-                </Table.Td>
-                <Table.Td>{request.firstName}</Table.Td>
-                <Table.Td>{request.lastName}</Table.Td>
-                <Table.Td>{request.email}</Table.Td>
-                <Table.Td>{request.teamName}</Table.Td>
-            </Table.Tr>
-        )
-    });
-
 
     const form = useForm({
         initialValues: {
@@ -81,13 +98,63 @@ export function AllUsers() {
         },
     });
 
+    async function handleRegister() {
+        const checkEmailUrl = "https://localhost:7071/api/AspNetUsers/checkEmail/" + form.values.email;
+        const registerUrl = "https://localhost:7071/api/AspNetUsers/registerCustom";
+
+        try {
+            const emailResponse = await fetch(checkEmailUrl, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!emailResponse.ok) {
+                const errorMessage = await emailResponse.text();
+                throw new Error(`HTTP error! Status: ${emailResponse.status}, Message: ${errorMessage}`);
+            }
+
+            const emailExists = await emailResponse.json();
+
+            if (emailExists) {
+                return;
+            }
+
+            const registerData = {
+                FirstName: form.values.firstName,
+                LastName: form.values.lastName,
+                Email: form.values.email,
+                PasswordHash: form.values.password,
+            };
+
+            const registerResponse = await fetch(registerUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(registerData),
+            });
+
+            if (!registerResponse.ok) {
+                const errorMessage = await registerResponse.text();
+                throw new Error(`HTTP error! Status: ${registerResponse.status}, Message: ${errorMessage}`);
+            }
+
+            window.location.href = "/panel";
+
+        } catch (error) {
+            console.error('Error during registration:', error);
+        }
+    }
+
+   
 
     return (
         <Flex
             gap="sm"
             justify="flex-start"
-            align="center"
-            alignItems="stretch"
+            alignitems="center"
             direction="column"
             wrap="nowrap"
             style={{ height: '100%' }}
@@ -118,12 +185,11 @@ export function AllUsers() {
                             <Table.Th>Zespół</Table.Th>
                         </Table.Tr>
                     </Table.Thead>
-                    {<Table.Tbody>{rows}</Table.Tbody>}
+                    <Table.Tbody>{rows}</Table.Tbody>
                 </Table>
             </div>
             <Switch checked={loading} onChange={toggle} label="Loading state" mt="md" />
 
-            {/* Modal do dodawania nowego użytkownika */}
             <Modal
                 title="Dodaj nowego użytkownika"
                 opened={addUserModalOpen}
@@ -139,38 +205,42 @@ export function AllUsers() {
                         onChange={(event) => form.setFieldValue('firstName', event.currentTarget.value)}
                         radius="md"
                     />
-                        <TextInput
-                            label="Nazwisko"
-                            placeholder="Podaj nazwisko"
-                            value={form.values.lastName}
-                            onChange={(event) => form.setFieldValue('lastName', event.currentTarget.value)}
-                            radius="md"
-                        />
                     <TextInput
-                        required
-                        label="Adres email"
-                        placeholder="hackaton@tu.kielce.pl"
+                        label="Nazwisko"
+                        placeholder="Podaj nazwisko"
+                        value={form.values.lastName}
+                        onChange={(event) => form.setFieldValue('lastName', event.currentTarget.value)}
+                        radius="md"
+                    />
+                    <TextInput
+                        label="Adres e-mail"
+                        placeholder="Podaj adres e-mail"
                         value={form.values.email}
                         onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
-                        error={form.errors.email && 'Podany adres jest nieprawidłowy'}
                         radius="md"
                     />
                     <PasswordInput
-                        required
                         label="Hasło"
-                        placeholder="Twoje hasło"
+                        placeholder="Podaj hasło"
                         value={form.values.password}
                         onChange={(event) => form.setFieldValue('password', event.currentTarget.value)}
-                        error={form.errors.password && 'Hasło powinno zawierać minimum 8 znaków'}
                         radius="md"
                     />
-                        <Group pt={50}>
-                            <Button variant={"outline"} rightSection={<IconPlus size={14}/>} loading={loading} /*onClick = {}*/>Dodaj użytkownika</Button>
-                            <Button rightSection={<IconMinus size={14} />} loading={loading} /*onClick = {}*/>Anuluj</Button>
-                        </Group>
+                    <Checkbox
+                        label="Akceptuję regulamin"
+                        checked={form.values.terms}
+                        onChange={(event) => form.setFieldValue('terms', event.currentTarget.checked)}
+                        radius="md"
+                    />
+                    <Button
+                        onClick={handleRegister}
+                        loading={loading}
+                        disabled={!form.values.terms || form.errors.email || form.errors.password || !form.values.firstName || !form.values.lastName}
+                    >
+                        Zarejestruj się
+                    </Button>
                 </div>
             </Modal>
-
         </Flex>
     );
 }
