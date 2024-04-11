@@ -95,7 +95,7 @@ export function Navbar({ setActivePage }: { setActivePage: (index: string) => vo
 
             <div className={classes.navbarMain}>
                 {
-                    userRank === 1 ? (
+                    userRank === 2 ? (
                             <Stack justify="center" gap={20}>
                                 {linksAdmin.map((link) => (
                                     <NavbarLink

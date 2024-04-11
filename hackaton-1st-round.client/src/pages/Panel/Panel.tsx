@@ -79,7 +79,7 @@ export default function Panel() {
             </div>
             <div style={{ zIndex: 0}}>
                 {
-                userRank === 1 ?
+                userRank === 2 ?
                     (
                         renderPageAdmin()
                     ) : (
