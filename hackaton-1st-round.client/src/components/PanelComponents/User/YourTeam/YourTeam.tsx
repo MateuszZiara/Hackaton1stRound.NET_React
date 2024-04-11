@@ -82,7 +82,6 @@ export function YourTeam() {
         }
 
         // Handle successful response here if needed
-        console.log('User added to team successfully');
 
         window.location.href = "/panel";
     }
