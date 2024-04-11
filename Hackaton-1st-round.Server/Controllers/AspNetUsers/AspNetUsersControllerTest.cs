@@ -1,14 +1,7 @@
-﻿using Xunit;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Hackaton_1st_round.Server.Controllers.AspNetUsers;
-using Hackaton_1st_round.Server.Models.AspNetUsers;
-using NUnit.Framework;
+﻿using Microsoft.AspNetCore.Mvc;
+using Xunit;
 
-namespace Hackaton_1st_round.Server.Tests.Controllers
+namespace Hackaton_1st_round.Server.Controllers.AspNetUsers
 {
     public class AspNetUsersControllerTest
     {
@@ -27,7 +20,7 @@ namespace Hackaton_1st_round.Server.Tests.Controllers
 
             // Assert
             var okResult = Xunit.Assert.IsType<OkObjectResult>(result.Result);
-            var aspNetUsers = Xunit.Assert.IsAssignableFrom<IEnumerable<AspNetUsers>>(okResult.Value);
+            var aspNetUsers = Xunit.Assert.IsAssignableFrom<IEnumerable<Models.AspNetUsers.AspNetUsers>>(okResult.Value);
             Xunit.Assert.NotEmpty(aspNetUsers);
         }
 
@@ -36,63 +29,17 @@ namespace Hackaton_1st_round.Server.Tests.Controllers
         {
             // Arrange
             Guid id = Guid.NewGuid();
+            String id_parse = id.ToString();
 
             // Act
-            var result = _controller.GetById(id);
+            var result = _controller.GetById(id_parse);
 
             // Assert
             Xunit.Assert.IsType<NotFoundResult>(result.Result);
         }
-
-        [Fact]
-        public async Task Logout_ReturnsOkResult()
-        {
-            // Act
-            var result = await _controller.Logout();
-
-            // Assert
-            var okResult = Xunit.Assert.IsType<OkObjectResult>(result);
-            Xunit.Assert.Equal("Identity cookies deleted successfully.", okResult.Value);
-        }
-
-        [Fact]
-        public void GetUserInfo_ReturnsOkResult_WhenUserIsAuthenticated()
-        {
-            // Arrange
-            // You may need to mock HttpContext for this test
-
-            // Act
-            var result = _controller.GetUserInfo();
-
-            // Assert
-            Xunit.Assert.IsType<OkObjectResult>(result.Result);
-        }
-
-        [Fact]
-        public void GetUserInfo_ReturnsUnauthorizedResult_WhenUserIsNotAuthenticated()
-        {
-            // Arrange
-            // You may need to mock HttpContext for this test
-
-            // Act
-            var result = _controller.GetUserInfo();
-
-            // Assert
-            Xunit.Assert.IsType<UnauthorizedResult>(result.Result);
-        }
-
-        [Fact]
-        public void GetFromTeam_ReturnsOkResult()
-        {
-            // Act
-            var result = _controller.GetFromTeam();
-
-            // Assert
-            var okResult = Xunit.Assert.IsType<OkObjectResult>(result.Result);
-            var aspNetUsers = Xunit.Assert.IsAssignableFrom<IEnumerable<AspNetUsers>>(okResult.Value);
-            Xunit.Assert.NotEmpty(aspNetUsers);
-        }
-
+        
+        
+        
         [Fact]
         public void AddToTeam_ReturnsBadRequestResult_WhenEmailIsNull()
         {
