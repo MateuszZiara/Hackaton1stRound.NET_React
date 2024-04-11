@@ -99,6 +99,7 @@ namespace Hackaton_1st_round.Server.Controllers.Report
                         Models.Report.Report report = new Models.Report.Report();
                         report.TeamEntity_FK2 = FK;
                         report.Url = filePath;
+                        report.accepted = false;
                         session.Save(report);
                         transaction.Commit();
                     }

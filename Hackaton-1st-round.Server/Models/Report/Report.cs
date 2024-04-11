@@ -14,10 +14,12 @@ public class Report
         this.id = id;
         Url = url;
         TeamEntity_FK2 = teamEntity_FK;
+        accepted = false;
     }
 
     public virtual Guid id { get; set; }
     public virtual string Url { get; set; }
 
+    public virtual bool accepted { get; set; }
     public virtual Guid? TeamEntity_FK2 { get; set; }
 }
