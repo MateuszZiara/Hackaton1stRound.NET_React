@@ -150,7 +150,36 @@ export function AllUsers() {
         }
     }
 
-   
+    // Function to log selected item IDs
+    const logSelectedItems = () => {
+        console.log("Selected item IDs:", selection);
+    };
+
+    async function buttonLogic() {
+        const selectedIds = selection.filter(id => id);
+        console.log(selectedIds);
+        for (let id of selectedIds) {
+            const url = "https://localhost:7071/api/AspNetUsers/update/"+id+"?"+"email="+form.values.email+"&"+"firstName"+form.values.firstName+"&lastName="+form.values.lastName;
+            const response = await fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+        }
+        window.location.href = "/panel";
+    }
+    async function buttonLogicDelete() {
+        const selectedIds = selection.filter(id => id);
+        console.log(selectedIds);
+        for (let id of selectedIds) {
+            const url = "https://localhost:7071/api/AspNetUsers/"+id;
+            const response = await fetch(url, {
+                method: 'DELETE',
+            });
+        }
+        window.location.href = "/panel";
+    }
 
     return (
         <Flex
@@ -287,7 +316,7 @@ export function AllUsers() {
                         radius="md"
                     />
                     <Button
-                        onClick={handleRegister} //TODO NOWA FUNKCJA
+                        onClick={buttonLogic} //TODO NOWA FUNKCJA
                         loading={loading}
                         disabled={!form.values.terms || form.errors.email || form.errors.password || !form.values.firstName || !form.values.lastName}
                     >
@@ -306,7 +335,7 @@ export function AllUsers() {
                     Wybranej operacji nie da się cofnąć!
                     <Group>
                         <Button
-                            onClick={handleRegister} //TODO NOWA FUNKCJA
+                            onClick={buttonLogicDelete} //TODO NOWA FUNKCJA
                             loading={loading}
 
                         >
@@ -322,6 +351,7 @@ export function AllUsers() {
                     </Group>
                 </div>
             </Modal>
+           
         </Flex>
     );
 }
