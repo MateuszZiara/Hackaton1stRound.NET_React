@@ -1,8 +1,21 @@
-import { Table } from "@mantine/core";
+import {Button, Card, Checkbox, Divider, Flex, Group, rem, Space, Switch, Table} from "@mantine/core";
 import { useState, useEffect } from "react";
-
+import classes from "./AllTeams.module.css";
+import cx from 'clsx';
+import {IconArrowRight, IconDownload, IconMinus, IconPhoto, IconPlus} from "@tabler/icons-react";
+import {useDisclosure} from "@mantine/hooks";
 export function AllTeams() {
     const [teams, setTeams] = useState([]);
+    const [selection, setSelection] = useState(['1']);
+    const [loading, { toggle }] = useDisclosure();
+    const toggleRow = (id: string) =>
+        setSelection((current) =>
+            current.includes(id) ? current.filter((item) => item !== id) : [...current, id]
+        );
+    const toggleAll = () =>
+        setSelection((current) => (current.length === teams.length ? [] : teams.map((item) => item.id)));
+
+
 
     useEffect(() => {
         const fetchTeamDetails = async () => {
@@ -19,22 +32,54 @@ export function AllTeams() {
         fetchTeamDetails();
     }, []);
 
-    const rows = teams.map((team) => (
-        <Table.Tr key={team.id}>
-            <Table.Td>{team.teamName}</Table.Td>
-            <Table.Td>{team.teamDesc}</Table.Td>
-        </Table.Tr>
-    ));
+    const rows = teams.map((team) => {
+        const selected = selection.includes(team.id);
+        return (
+            <Table.Tr key={team.id} className={cx({ [classes.rowSelected]: selected })}>
+                <Table.Td>
+                    <Checkbox checked={selection.includes(team.id)} onChange={() => toggleRow(team.id)} />
+                </Table.Td>
+                <Table.Td>{team.teamName}</Table.Td>
+                <Table.Td>{team.teamDesc}</Table.Td>
+            </Table.Tr>
+        )
+    });
 
     return (
-        <Table w={'70vh'} stickyHeader stickyHeaderOffset={60}>
+        <Flex
+            gap="sm"
+            justify="flex-start"
+            align="stretch"
+            direction="column"
+            wrap="nowrap"
+        >
+            //TODO Funkcja do akceptowania/odrzucania zespołów
+            <Card withBorder radius="md" p="xs">
+                <Group justify="center">
+                    <Button variant={"outline"} rightSection={<IconPlus size={14}/>} loading={loading}>Akceptuj zespół</Button>
+                    <Button rightSection={<IconMinus size={14} />} loading={loading}>Odrzuć zespół</Button>
+                </Group>
+            </Card>
+            <div>
+                <Space h="xl" />
+        <Table w={'70vh'} stickyHeader stickyHeaderOffset={60} highlightOnHover >
             <Table.Thead>
                 <Table.Tr>
+                    <Table.Th style={{ width: rem(40) }}>
+                        <Checkbox
+                            onChange={toggleAll}
+                            checked={selection.length === teams.length}
+                            indeterminate={selection.length > 0 && selection.length !== teams.length}
+                        />
+                    </Table.Th>
                     <Table.Th>Nazwa zespołu</Table.Th>
                     <Table.Th>Opis zespołu</Table.Th>
                 </Table.Tr>
             </Table.Thead>
             <Table.Tbody>{rows}</Table.Tbody>
         </Table>
+            </div>
+            <Switch checked={loading} onChange={toggle} label="Loading state" mt="md" />
+        </Flex>
     );
 }

@@ -1,5 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import {TextInput, Textarea, Button, Paper, Text, List, ListItem, Avatar, Modal, Title, FileInput, Flex, Card} from '@mantine/core';
+import {
+    TextInput,
+    Textarea,
+    Button,
+    Paper,
+    Text,
+    List,
+    ListItem,
+    Avatar,
+    Modal,
+    Title,
+    FileInput,
+    Flex,
+    Card,
+    CloseButton
+} from '@mantine/core';
 import { useForm } from '@mantine/form';
 import {checkUserLoggedIn, gethasTeam} from "../../../../features/getCookies/getCookies";
 import {Await} from "react-router";
@@ -15,6 +30,7 @@ export function YourTeam() {
     const [users, setUsers] = useState([]);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [opened, { open, close }] = useDisclosure(false);
+  let number = 0;
     const form = useForm({
         initialValues: {
             TeamName: '',
@@ -28,6 +44,25 @@ export function YourTeam() {
 
         }
     )
+    async function leaveteam() {
+        const url = "https://localhost:7071/api/AspNetUsers/LeaveTeam/" + form.values.invitation;
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to add user to team');
+        }
+
+        // Handle successful response here if needed
+        console.log('User left team');
+
+        window.location.href = "/panel";
+    }
 
     async function SendInvite() {
         const url = "https://localhost:7071/api/AspNetUsers/addToTeam/" + form.values.invitation;
@@ -129,7 +164,7 @@ export function YourTeam() {
             console.error('Error uploading file:', error);
         }
     };
-    
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -147,33 +182,32 @@ export function YourTeam() {
                 const hasTeam = await gethasTeam();
                 if (!hasTeam) {
                     setHasTeam(false);
-                }
-                else
-                {
+                } else {
                     setHasTeam(true);
                 }
             } catch (error) {
-                console.error('Error checking user login status:', error);
+                console.error('Error checking if user has a team:', error);
             }
         };
-        const update = async () =>
-        {
+
+        const update = async () => {
             try {
                 const hasTeam = await gethasTeam();
-                if(hasTeam) {
-                    fetchTeamDetails();
-                    fetchUsers();
+                if (hasTeam) {
+                    await Promise.all([fetchTeamDetails(), fetchUsers()]);
                 }
+            } catch (error) {
+                console.error('Error updating team details:', error);
             }
-            catch (error) {
-                console.error('Error', error);
-            }
-        }
-        update();
-        checkIfHasTeam();
-        fetchData();
+        };
 
+        const initialize = async () => {
+            await fetchData();
+            await checkIfHasTeam();
+            await update();
+        };
 
+        initialize();
     }, []);
 
     const fetchTeamDetails = async () => {
@@ -190,8 +224,12 @@ export function YourTeam() {
         var id = data.teamEntity_FK;
         const responseTeamDetails = await fetch("https://localhost:7071/api/TeamEntity/id/"+id);
         const dataTeamDetails = await responseTeamDetails.json();
+        const numberResponse = await fetch("https://localhost:7071/api/TeamEntity/AmmountOfMembers/"+id);
+        const dataNumberResponse = await numberResponse.json();
+        number = dataNumberResponse;
         setTeamName(dataTeamDetails.teamName);
         setTeamDescription(dataTeamDetails.teamDesc);
+        console.log(number);
     };
     const fetchUsers = async () => {
         const responseUserDetails = await fetch("https://localhost:7071/api/AspNetUsers/GetUsersFromTeamCookies",{
@@ -213,24 +251,12 @@ export function YourTeam() {
         setUsers(users);
     }
 
-    /*const fetchUsers = () => {
-        setUsers([
-            { id: 1, name: 'John', surname: 'Doe' },
-            { id: 2, name: 'Jane', surname: 'Doe' },
-        ]);
-    };*/
-
-    
-    
-    
-
-
-
+    //logika z fetchTeamDetails
     var numberOfTeammates = 2;
     const addUser = (numberOfTeammates < 4 ?
             (
                 <div>
-                <Title order={2} pb={30}>Dodaj członków do zespołu.</Title>
+                <Title order={2} pb={30}>Dodaj członków do zespołu</Title>
             <form onSubmit={form.onSubmit(() => {
             })}>
                 <div style={{marginBottom: '16px'}}>
@@ -281,19 +307,26 @@ export function YourTeam() {
 
             ) : (
                 <>
+                    <CloseButton onClick = {leaveteam}></CloseButton>
                     <Title order={2} pb={"30"}>Oto twój zespół!</Title>
-                    <div style={{textAlign: "left"}}>
-                    <Text style={{ marginBottom: '16px' }}>Nazwa zespołu: {teamName}</Text>
-                    <Text style={{ marginBottom: '16px' }}>Opis zespołu: {teamDescription}</Text>
-                        <Title order={3} pb={"30"}>Członkowie zespołu</Title>
-                        <List style={{ marginBottom: '16px' }}>
-                        {users.map((user) => (
-                            <ListItem key={user.id}>
-                                <Avatar style={{ marginRight: '8px' }}>{user.name.charAt(0)}</Avatar>
-                                {user.name} {user.surname}
-                            </ListItem>
-                        ))}
-                        </List>
+                    <div style={{textAlign: "left", display: "grid", gridTemplateColumns: "repeat(2, 50%)"}}>
+                        <div style={{marginBottom: '16px'}}>
+                            <Text style={{marginBottom: '16px'}}>Nazwa zespołu: {teamName}</Text>
+                            <Text style={{marginBottom: '16px'}}>Opis zespołu: {teamDescription}</Text>
+                            <Title order={3} pb={"30"}>Członkowie zespołu</Title>
+                            <div style={{
+                                display: "grid",
+                                gridTemplateColumns: "repeat(auto-fit, minmax(100px, 1fr))",
+                                gap: "8px"
+                            }}>
+                                {users.map((user) => (
+                                    <div key={user.id} style={{display: "flex", alignItems: "center"}}>
+                                        <Avatar style={{marginRight: '8px'}}>{user.name.charAt(0)}</Avatar>
+                                        <div>{user.name} {user.surname}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </div>
                     <Flex
                         gap="xl"
@@ -303,18 +336,19 @@ export function YourTeam() {
                         wrap="wrap"
                     >
                         <div>
-                    {addUser}
+                            {addUser}
                         </div>
-<div>
-    <Title order={2} pb={30}>Dodaj plik PDF</Title>
-            <Text pb={20} truncate={true}>Można dodać tylko jeden plik. Jeżeli został dodany, to zostanie nadpisany.</Text>
-                <form onSubmit={form.onSubmit(() => {
-                    })}>
-                        <FileInput
-                            accept=".pdf"
-                            label="Dodaj wniosek"
-                            onChange={handleFileChange}
-                            placeholder="Dozwolone rodzaje plików: .pdf"
+                        <div>
+                            <Title order={2} pb={30}>Dodaj plik PDF</Title>
+                            <Text pb={20} truncate={true}>Można dodać tylko jeden plik. Jeżeli został dodany, to
+                                zostanie nadpisany.</Text>
+                            <form onSubmit={form.onSubmit(() => {
+                            })}>
+                                <FileInput
+                                    accept=".pdf"
+                                    label="Dodaj wniosek"
+                                    onChange={handleFileChange}
+                                    placeholder="Dozwolone rodzaje plików: .pdf"
                         />
                         <Button type="submit" onClick = {handleSubmit}>Wyślij</Button>
                     </form>

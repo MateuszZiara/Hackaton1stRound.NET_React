@@ -117,6 +117,16 @@ namespace Hackaton_1st_round.Server.Controllers.TeamEntity
 
         }
         
+        [HttpGet("AmmountOfMembers/{id}")]
+        public int GetAmmountOfMembers(Guid id)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                var query = session.Query<Models.TeamEntity.TeamEntity>().Where(x => x.id == id).ToList();
+                return query.Count;
+            }
+        }
+        
 
         [HttpPut("update/{id}")]
         public ActionResult<Models.TeamEntity.TeamEntity> Edit(Guid id, string TeamName = null, string TeamDesc = null)
