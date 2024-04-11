@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Hackaton_1st_round.Server.Models.Report;
 using Hackaton_1st_round.Server.Persistance.Report;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Hackaton_1st_round.Server.Controllers.Report
 {
@@ -14,6 +15,7 @@ namespace Hackaton_1st_round.Server.Controllers.Report
         private readonly ReportService _ReportService = new ReportService();
         private readonly ReportRepository _ReportRepository = new ReportRepository();
 
+        [SwaggerOperation(Summary = "Pobranie wszystkich raportów z bazy danych")]
         [HttpGet]
         public ActionResult<IEnumerable<Models.Report.Report>> GetAll()
         {
@@ -23,6 +25,8 @@ namespace Hackaton_1st_round.Server.Controllers.Report
                 return Ok(teamEntities);
             }
         }
+
+        [SwaggerOperation(Summary = "Sprawdzenie czy istnieje raport zespołu, który został zaakceptowany")]
         [HttpGet("CheckAccepted/{id}")]
         public bool CheckIfTeamAccepted(Guid id)
         {
@@ -40,6 +44,7 @@ namespace Hackaton_1st_round.Server.Controllers.Report
             }
         }
 
+        [SwaggerOperation(Summary = "Wyświetlenie raportu z bazy danych na podstawie id")]
         [HttpGet("id/{id}")]
         public ActionResult<Models.Report.Report> GetById(Guid id)
         {
@@ -55,6 +60,7 @@ namespace Hackaton_1st_round.Server.Controllers.Report
             }
         }
 
+        [SwaggerOperation(Summary = "Tworzenie nowego raportu")]
         [HttpPost]
         public ActionResult<Models.Report.Report> CreateAddressEntity([FromBody] Models.Report.Report Report)
         {
@@ -82,9 +88,8 @@ namespace Hackaton_1st_round.Server.Controllers.Report
             }
 
         }
-        
 
-        
+        [SwaggerOperation(Summary = "Obsługa przesłania pliku i zapisanie go w określonym katalogu")]
         [HttpPost("upload/{name}/{FK}")]
         public async Task<IActionResult> Upload(string name, Guid FK, [FromForm] Microsoft.AspNetCore.Http.IFormFile file)
         {
@@ -139,7 +144,8 @@ namespace Hackaton_1st_round.Server.Controllers.Report
                 return StatusCode(500, $"Wystąpił błąd podczas zapisywania pliku: {ex.Message}");
             }
         }
-        
+
+        [SwaggerOperation(Summary = "Edycja istniejącego raportu")]
         [HttpPut("update/{id}")]
         public ActionResult<Models.Report.Report> Edit(Guid id, string? Url = null, Guid? TeamEntity_FK2 = null)
         {
@@ -154,7 +160,8 @@ namespace Hackaton_1st_round.Server.Controllers.Report
 
             return _ReportService.Edit(id, Url, TeamEntity_FK2);
         }
-        
+
+        [SwaggerOperation(Summary = "Zatwierdzenie raportu")]
         [HttpPut("acccept/{id}")]
         public ActionResult<Models.Report.Report> Accept(Guid id)
         {
@@ -170,6 +177,8 @@ namespace Hackaton_1st_round.Server.Controllers.Report
                 }
             }
         }
+
+        [SwaggerOperation(Summary = "Odrzucenie raportu")]
         [HttpPut("reject/{id}")]
         public ActionResult<Models.Report.Report> Reject(Guid id)
         {
@@ -186,6 +195,7 @@ namespace Hackaton_1st_round.Server.Controllers.Report
             }
         }
 
+        [SwaggerOperation(Summary = "Usuwanie raportu")]
         [HttpDelete("{id}")]
         public ActionResult DeleteAddressEntity(Guid id)
         {

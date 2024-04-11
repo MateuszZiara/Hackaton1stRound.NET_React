@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Hackaton_1st_round.Server.Models.TeamEntity;
 using Hackaton_1st_round.Server.Persistance.TeamEntity;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Hackaton_1st_round.Server.Controllers.TeamEntity
 {
@@ -15,6 +16,7 @@ namespace Hackaton_1st_round.Server.Controllers.TeamEntity
         private readonly TeamEntityService _teamEntityService = new TeamEntityService();
         private readonly TeamEntityRepository _teamEntityRepository = new TeamEntityRepository();
 
+        [SwaggerOperation(Summary = "Pobranie wszystkich zespołów z bazy danych")]
         [HttpGet]
         public ActionResult<IEnumerable<Models.TeamEntity.TeamEntity>> GetAll()
         {
@@ -25,6 +27,7 @@ namespace Hackaton_1st_round.Server.Controllers.TeamEntity
             }
         }
 
+        [SwaggerOperation(Summary = "Pobranie zespołu o określonym id")]
         [HttpGet("id/{id}")]
         public ActionResult<Models.TeamEntity.TeamEntity> GetById(Guid id)
         {
@@ -40,6 +43,7 @@ namespace Hackaton_1st_round.Server.Controllers.TeamEntity
             }
         }
 
+        [SwaggerOperation(Summary = "Tworzenie nowego zespołu dla określonego użytkownika")]
         [HttpPost("createTeamByUser")]
         public ActionResult<Models.TeamEntity.TeamEntity> CreateTeamByUser([FromBody] Models.TeamEntity.TeamEntity teamEntity)
         {
@@ -88,7 +92,8 @@ namespace Hackaton_1st_round.Server.Controllers.TeamEntity
 
             throw new Exception("There is problem with your cookies settings contact with administrator");
         }
-        
+
+        [SwaggerOperation(Summary = "Tworzenie nowego zespołu")]
         [HttpPost]
         public ActionResult<Models.TeamEntity.TeamEntity> CreateAddressEntity([FromBody] Models.TeamEntity.TeamEntity teamEntity)
         {
@@ -116,7 +121,8 @@ namespace Hackaton_1st_round.Server.Controllers.TeamEntity
             }
 
         }
-        
+
+        [SwaggerOperation(Summary = "Sprawdzanie ilości członków danego zespołu")]
         [HttpGet("AmmountOfMembers/{id}")]
         public int GetAmmountOfMembers(Guid id)
         {
@@ -126,14 +132,15 @@ namespace Hackaton_1st_round.Server.Controllers.TeamEntity
                 return query.Count;
             }
         }
-        
 
+        [SwaggerOperation(Summary = "Sprawdzanie ilości członków danego zespołu")]
         [HttpPut("update/{id}")]
         public ActionResult<Models.TeamEntity.TeamEntity> Edit(Guid id, string TeamName = null, string TeamDesc = null)
         {
             return _teamEntityRepository.Edit(id, TeamName, TeamDesc);
         }
-        
+
+        [SwaggerOperation(Summary = "Usuwanie zespołu o określonym id")]
         [HttpDelete("{id}")]
         public ActionResult DeleteAddressEntity(Guid id)
         {
