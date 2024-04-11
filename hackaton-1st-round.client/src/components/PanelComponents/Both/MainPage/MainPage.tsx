@@ -1,7 +1,7 @@
 import React from "react";
 import {Button, Container, Group, Image, List, rem, Text, ThemeIcon, Title} from "@mantine/core";
 import {IconCheck} from "@tabler/icons-react";
-import mainPage from "../../../../public/mainPage.webp"
+import mainPage from "../../../../../public/mainPage.webp"
 import classes from "./MainPage.module.css"
 export function MainPage(){
 

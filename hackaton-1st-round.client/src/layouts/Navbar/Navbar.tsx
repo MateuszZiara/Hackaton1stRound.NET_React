@@ -54,8 +54,6 @@ export function Navbar({ setActivePage }: { setActivePage: (index: string) => vo
     }, []);
 
 
-    const userType = 'User';
-    
     const [loggedIn, setLoggedIn] = useState(null);
     useEffect(() => {
         const fetchData = async () => {

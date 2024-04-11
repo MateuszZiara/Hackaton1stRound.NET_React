@@ -1,14 +1,39 @@
 // panel.tsx
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { Flex } from "@mantine/core";
 import { Navbar } from "../../layouts/Navbar/Navbar";
-import { MainPage } from "../../components/User/MainPage/MainPage";
-import {UserSettings} from "../../components/User/Settings/UserSettings";
-import YourTeam from "../../components/User/YourTeam/YourTeam";
+import { MainPage } from "../../components/PanelComponents/Both/MainPage/MainPage";
+import {UserSettings} from "../../components/PanelComponents/Both/Settings/UserSettings";
+import YourTeam from "../../components/PanelComponents/User/YourTeam/YourTeam";
+import {AllTeams} from "../../components/PanelComponents/Admin/AllTeams/AllTeams";
+import {AllUsers} from "../../components/PanelComponents/Admin/AllUsers/AllUsers";
+import {AllFiles} from "../../components/PanelComponents/Admin/AllFiles/AllFiles";
 
 
 export default function Panel() {
     const [activePage, setActivePage] = useState("home"); // Domyślnie wyświetlany będzie komponent Home
+    const [userRank, setUserRank] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const responseUserDetails = await fetch("https://localhost:7071/api/AspNetUsers/info", {
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*',
+                        'Access-Control-Allow-Credentials': 'true'
+                    }
+                });
+                const data = await responseUserDetails.json();
+                setUserRank(data.userRank);
+            } catch (error) {
+                console.error('Error fetching team details:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     // Funkcja renderująca odpowiedni komponent w zależności od aktywnej strony
     const renderPageUser = () => {
@@ -29,11 +54,11 @@ export default function Panel() {
             case "home":
                 return <MainPage />;
             case "teams":
-                return <YourTeam />;
+                return <AllTeams />;
             case "users":
-                return <UserSettings />;
+                return <AllUsers />;
             case "files":
-                return <UserSettings />;
+                return <AllFiles />;
             case "settings":
                 return <UserSettings />;
             default:
@@ -53,17 +78,14 @@ export default function Panel() {
                 <Navbar setActivePage={setActivePage} />
             </div>
             <div style={{ zIndex: 0}}>
-                {/*
                 {
-                x === 'Admin' ?
+                userRank === 1 ?
                     (
                         renderPageAdmin()
                     ) : (
                         renderPageUser()
                     )
             }
-            */}
-                {renderPageUser()}
             </div>
         </Flex>
     );

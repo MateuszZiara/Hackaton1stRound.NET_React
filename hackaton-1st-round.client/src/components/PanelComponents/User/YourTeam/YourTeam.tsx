@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import {TextInput, Textarea, Button, Paper, Text, List, ListItem, Avatar, Modal, Title, FileInput, Flex, Card} from '@mantine/core';
 import { useForm } from '@mantine/form';
-import {checkUserLoggedIn, gethasTeam} from "../../../features/getCookies/getCookies";
+import {checkUserLoggedIn, gethasTeam} from "../../../../features/getCookies/getCookies";
 import {Await} from "react-router";
 import {useDisclosure} from "@mantine/hooks";
-import classes from  "./YourTeam.module.css"
+import classes from "./YourTeam.module.css"
 
 export function YourTeam() {
     const [hasTeam, setHasTeam] = useState(false);
