@@ -15,7 +15,6 @@ export function AllRequests() {
     const toggleAll = () =>
         setSelection((current) => (current.length === requests.length ? [] : requests.map((item) => item.id)));
 
-    //TODO Nie działa
     useEffect(() => {
         const fetchTeamDetails = async () => {
             try {

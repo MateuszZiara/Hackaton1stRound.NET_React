@@ -108,11 +108,20 @@ export function AllTeams() {
             wrap="nowrap"
             style={{ height: '100%' }}
         >
-            <Card withBorder radius="md" p="xs">
-                <Group justify="center">
-                    <Button variant={"outline"} rightSection={<IconPlus size={14}/>} onClick={handleShowTeamDetails} loading={loading}>Pokaż członków zespołu</Button>
-                </Group>
-            </Card>
+            <Flex gap="xl">
+                <Card withBorder radius="md" p="xs">
+                    <Group justify="center">
+                        <Button variant={"outline"} rightSection={<IconPlus size={14}/>} onClick={handleShowTeamDetails} loading={loading}>Pokaż członków zespołu</Button>
+                    </Group>
+                </Card>
+                {/* Sprawdzenie czy checkUsers nie jest puste przed wyrenderowaniem drugiego Card */}
+                {checkUsers && (
+                    <Card withBorder radius="md" p="xs">
+                        {renderUsersList()}
+                    </Card>
+                )}
+            </Flex>
+
             <div>
                 <Space h="xl" />
                 <Table w={'70vh'} stickyHeader stickyHeaderOffset={60} highlightOnHover >
@@ -130,15 +139,6 @@ export function AllTeams() {
                     <Table.Tbody>{rows}</Table.Tbody>
                 </Table>
             </div>
-            {!checkUsers ? (
-                    <>
-
-                    </>
-                ) :
-                (<>
-                        {renderUsersList()}
-                    </>
-                )}
         </Flex>
     );
 }

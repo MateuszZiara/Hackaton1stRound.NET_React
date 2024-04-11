@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using System.Diagnostics;
 using Hackaton_1st_round.Server.Models.AspNetUsers;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,8 +36,11 @@ builder.Services.AddCors(options =>
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
+builder.Services.AddSwaggerGen(c =>
+{
+    c.EnableAnnotations();
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "API Aplikacji do rejestracji na hackaton", Version = "v1" });
+});
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(
         "Server=localhost\\SQLEXPRESS;Database=Hackaton;Integrated Security=SSPI;Application Name=Hackaton; TrustServerCertificate=true;"));

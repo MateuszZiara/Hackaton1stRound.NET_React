@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 namespace Hackaton_1st_round.Server.Controllers.AspNetUsers;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 
     [EnableCors("AllowAllOrigins")]
@@ -15,7 +16,8 @@ using Microsoft.AspNetCore.Mvc;
     public class AspNetUsersController : ControllerBase
     {
         private AspNetUsersService _aspNetUsersService = new AspNetUsersService();
-        [HttpGet]
+    [SwaggerOperation(Summary = "Pobierz wszystkich użytkowników")]
+    [HttpGet]
         public ActionResult<IEnumerable<Models.AspNetUsers.AspNetUsers>> GetAll()
         {
             using (var session = NHibernateHelper.OpenSession())

@@ -90,13 +90,73 @@ export default function Auth(props) {
     }
 
     async function handleLogin() {
-        // Funkcja handleLogin nie zmieniła się, została przekopiowana z poprzedniego kodu
+        const url = "https://localhost:7071/login?useCookies=true&useSessionCookies=true";
+        const data = {
+
+            email: form.values.email,
+            password: form.values.password
+        }
+
+        try {
+            const response = await fetch(url, {
+                credentials: 'include',
+                method: 'POST',
+                headers: {
+                    'Content-Type':
+                        'application/json',
+                    'Cookie': 'cookieName=cookieValue'
+                },
+                body: JSON.stringify(data),
+            });
+            if (!response.ok) {
+
+                const errorMessage = await response.text();
+                throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorMessage}`);
+            } else {
+                window.location.href = "/";
+            }
+
+        } catch (error) {
+            console.error('Error creating entity:', error);
+        }
     }
+    const [users, setUsers] = useState([]);
 
+    const headers = {'Content-Type':'application/json',
+        'Access-Control-Allow-Origin':'*',
+        'Access-Control-Allow-Methods':'POST,OPTIONS'}
+    async function getCookies() {
+        const response = await fetch("https://localhost:7142/api/AspNetUsers/info", {
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials':'true'
+            }
+
+        });
+
+        if (response.ok) {
+
+            return true;
+        } else {
+
+            return false;
+        }
+
+
+    }
     useEffect(() => {
-        // Funkcja useEffect nie zmieniła się, została przekopiowana z poprzedniego kodu
-    }, []);
+        const checkCookies = async () => {
+            const isLoggedIn = await getCookies();
+            if (isLoggedIn) {
+                window.location.href = "/main";
+            } else {
 
+            }
+        };
+        checkCookies();
+    },[]);
     return (
         <Paper radius="md" p="xl" withBorder {...props}>
             <Text size="lg" fw={500}>
