@@ -229,7 +229,6 @@ export function YourTeam() {
         number = dataNumberResponse;
         setTeamName(dataTeamDetails.teamName);
         setTeamDescription(dataTeamDetails.teamDesc);
-        console.log(number);
     };
     const fetchUsers = async () => {
         const responseUserDetails = await fetch("https://localhost:7071/api/AspNetUsers/GetUsersFromTeamCookies",{
