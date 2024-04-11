@@ -47,9 +47,206 @@ namespace Hackaton_1st_round.Server.Controllers.AspNetUsers
             var result = _controller.AddToTeam(null);
 
             // Assert
-            Xunit.Assert.IsType<BadRequestResult>(result.Result);
+            Xunit.Assert.IsType<BadRequestObjectResult>(result.Result);
+        }
+        
+        [Fact]
+        public void ReturnGetALl()
+        {
+            // Act
+            var result = _controller.GetAll();
+
+            // Assert
+            Xunit.Assert.IsType<OkObjectResult>(result.Result);
+        }
+        // TO DO do poprawy
+        [Fact]
+        public void ReturnEdit()
+        {
+            Models.AspNetUsers.AspNetUsers aspNetUsers = new Models.AspNetUsers.AspNetUsers();
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    session.Save(aspNetUsers);
+                    transaction.Commit();
+                }
+            }
+    
+            var result = _controller.Edit(aspNetUsers.Id, null, null, null, null);
+
+            // Assert
+            Xunit.Assert.IsType<OkObjectResult>(result.Result);
+    
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    session.Delete(aspNetUsers);
+                    transaction.Commit();
+                }
+            }
         }
 
-        // Add more tests as needed for other controller actions...
+        
+        [Fact]
+        public void GetIdOk()
+        {
+            Models.AspNetUsers.AspNetUsers aspNetUsers = new Models.AspNetUsers.AspNetUsers();
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    session.Save(aspNetUsers);
+                    transaction.Commit();
+                }
+            }
+
+            // Act
+            var result = _controller.GetById(aspNetUsers.Id);
+            
+            // Assert
+            Xunit.Assert.IsType<OkObjectResult>(result.Result);
+            
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    session.Delete(aspNetUsers);
+                    transaction.Commit();
+                }
+            }
+        }
+        [Fact]
+        public void GetIdNotOk()
+        {
+            Models.AspNetUsers.AspNetUsers aspNetUsers = new Models.AspNetUsers.AspNetUsers();
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    session.Save(aspNetUsers);
+                    transaction.Commit();
+                }
+            }
+
+            // Act
+            var result = _controller.GetById("ED46F6F9-7B87-4549-816A-0E0788D1B506");
+            
+            // Assert
+            Xunit.Assert.IsType<NotFoundResult>(result.Result);
+            
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    session.Delete(aspNetUsers);
+                    transaction.Commit();
+                }
+            }
+        }
+        
+        [Fact]
+        public void ReturnRegister()
+        {
+            Models.AspNetUsers.AspNetUsers testEntity = new Models.AspNetUsers.AspNetUsers();
+            testEntity.Email = "lolkolo@gb.pl";
+            testEntity.PasswordHash = "kolobolo123@";
+            var result = _controller.Register(testEntity);
+        
+            
+            Xunit.Assert.IsType<CreatedAtActionResult>(result.Result);
+            
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    session.Delete(testEntity);
+                    transaction.Commit();
+                }
+            }
+            
+        }
+        [Fact]
+        public void ShortPasswordWithRegister()
+        {
+            Models.AspNetUsers.AspNetUsers testEntity = new Models.AspNetUsers.AspNetUsers();
+            testEntity.Email = "lolkolo@gb.pl";
+            testEntity.PasswordHash = "gb";
+            var result = _controller.Register(testEntity);
+        
+            
+            Xunit.Assert.IsType<ConflictObjectResult>(result.Result);
+            
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    session.Delete(testEntity);
+                    transaction.Commit();
+                }
+            }
+            
+        }
+        
+        [Fact]
+        public void DeleteOk()
+        {
+            Models.AspNetUsers.AspNetUsers aspNetUsers = new Models.AspNetUsers.AspNetUsers();
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    session.Save(aspNetUsers);
+                    transaction.Commit();
+                }
+            }
+
+            // Act
+            var result = _controller.DeleteAddressEntity(aspNetUsers.Id);
+            
+            // Assert
+            Xunit.Assert.IsType<NoContentResult>(result);
+            
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    session.Delete(aspNetUsers);
+                    transaction.Commit();
+                }
+            }
+        }
+        
+        [Fact]
+        public void DeleteNotOk()
+        {
+            Models.AspNetUsers.AspNetUsers aspNetUsers = new Models.AspNetUsers.AspNetUsers();
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    session.Save(aspNetUsers);
+                    transaction.Commit();
+                }
+            }
+
+            // Act
+            var result = _controller.DeleteAddressEntity("ED46F6F9-7B87-4549-816A-0E0788D1B506");
+            
+            // Assert
+            Xunit.Assert.IsType<NotFoundResult>(result);
+            
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    session.Delete(aspNetUsers);
+                    transaction.Commit();
+                }
+            }
+            
+        }
+        
     }
 }

@@ -10,7 +10,7 @@ public class AspNetUsersRepository : IAspNetUsersRepository
         if (Password.Length <  8) return false;
         return true;
     }
-    public Models.AspNetUsers.AspNetUsers Edit(Guid id, string? email, string? phoneNumber, string? firstName,
+    public Models.AspNetUsers.AspNetUsers Edit(string id, string? email, string? phoneNumber, string? firstName,
         string? lastName)
     {
         using (var session = NHibernateHelper.OpenSession())

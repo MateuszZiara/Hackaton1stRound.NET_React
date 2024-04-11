@@ -41,7 +41,7 @@ using Microsoft.AspNetCore.Mvc;
         }
 
         [HttpPut("update/{id}")]
-        public ActionResult<Models.AspNetUsers.AspNetUsers> Edit(Guid id, string? email = null,
+        public ActionResult<Models.AspNetUsers.AspNetUsers> Edit(string id, string? email = null,
             string? phoneNumber = null, string? firstName = null,
             string? lastName = null)
         {
@@ -239,7 +239,7 @@ using Microsoft.AspNetCore.Mvc;
                         .Where(x => x.Email == email).ToList();
                     if (findedUserFromEmail.Count > 1)
                     {
-                        throw new Exception("There is more than 1 user in database with this email");
+                        return BadRequest("There is more than 1 user in database with this email");
                     }
 
                     if (findedUserFromEmail.Count == 0)
@@ -282,10 +282,7 @@ using Microsoft.AspNetCore.Mvc;
                         var passwordHasher = new PasswordHasher<Models.AspNetUsers.AspNetUsers>();
                         string hashedPassword = passwordHasher.HashPassword(null, testEntity.PasswordHash);
                         testEntity.PasswordHash = hashedPassword;
-
-                       
-
-
+                        
                         if (testEntity.Email != null)
                         {
                             testEntity.NormalizedEmail = testEntity.Email.ToUpper();
@@ -319,7 +316,7 @@ using Microsoft.AspNetCore.Mvc;
         
         
         [HttpDelete("{id}")]
-        public ActionResult DeleteAddressEntity(Guid id)
+        public ActionResult DeleteAddressEntity(string id)
         {
             using (var session = NHibernateHelper.OpenSession())
             {
