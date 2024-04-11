@@ -15,6 +15,8 @@ import {
 } from '@mantine/core';
 import './Auth.css';
 import '@mantine/core/styles.css';
+import {checkUserLoggedIn} from "../../features/getCookies/getCookies";
+
 
 export default function Auth(props) {
     const [type, toggle] = useToggle(['login', 'register']);
@@ -148,10 +150,14 @@ export default function Auth(props) {
     }
     useEffect(() => {
         const checkCookies = async () => {
-            const isLoggedIn = await getCookies();
+            const isLoggedIn = await checkUserLoggedIn();
             if (isLoggedIn) {
                 window.location.href = "/main";
             } else {
+
+            }
+        };
+        checkCookies();
 
             }
         };

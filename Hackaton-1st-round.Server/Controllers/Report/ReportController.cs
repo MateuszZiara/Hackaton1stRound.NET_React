@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Cors;
+﻿using System.Reflection.Metadata;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Hackaton_1st_round.Server.Models.Report;
 using Hackaton_1st_round.Server.Persistance.Report;
@@ -97,6 +98,8 @@ namespace Hackaton_1st_round.Server.Controllers.Report
                 string _uploadsDirectory = @"uploads\" + name;
                 var uploadsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _uploadsDirectory);
                 var filePath = Path.Combine(uploadsPath, "zgloszenie.pdf");
+                string base64String = ""; // Variable to store base64 string
+
                 // Jeśli katalog nie istnieje, utwórz go
                 if (!Directory.Exists(uploadsPath))
                 {
@@ -108,14 +111,22 @@ namespace Hackaton_1st_round.Server.Controllers.Report
                     await file.CopyToAsync(stream);
                 }
 
+                // Convert PDF file to base64
+                using (var stream = new FileStream(filePath, FileMode.Open))
+                {
+                    byte[] bytes = new byte[stream.Length];
+                    await stream.ReadAsync(bytes, 0, (int)stream.Length);
+                    base64String = Convert.ToBase64String(bytes);
+                }
+
                 using (var session = NHibernateHelper.OpenSession())
                 {
                     using (var transaction = session.BeginTransaction())
                     {
                         Models.Report.Report report = new Models.Report.Report();
                         report.TeamEntity_FK2 = FK;
-                        report.Url = filePath;
                         report.accepted = false;
+                        report.Base64 = base64String; // Assuming there's a property named Base64Data in the Report model
                         session.Save(report);
                         transaction.Commit();
                     }
@@ -128,7 +139,6 @@ namespace Hackaton_1st_round.Server.Controllers.Report
                 return StatusCode(500, $"Wystąpił błąd podczas zapisywania pliku: {ex.Message}");
             }
         }
-    
         
         [HttpPut("update/{id}")]
         public ActionResult<Models.Report.Report> Edit(Guid id, string? Url = null, Guid? TeamEntity_FK2 = null)

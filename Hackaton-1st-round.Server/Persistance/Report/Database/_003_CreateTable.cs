@@ -21,7 +21,7 @@ namespace Hackaton_1st_round.Server.Models.Report.Database
             {
                 Create.Table(tableName)
                     .WithColumn(nameof(Report.id)).AsGuid().NotNullable().PrimaryKey()
-                    .WithColumn(nameof(Report.Url)).AsString().NotNullable()
+                    .WithColumn(nameof(Report.Base64)).AsString(Int32.MaxValue).NotNullable()
                     .WithColumn(nameof(Report.accepted)).AsBoolean().NotNullable()
                     .WithColumn("TeamEntity_FK2").AsGuid().NotNullable();
                 ;

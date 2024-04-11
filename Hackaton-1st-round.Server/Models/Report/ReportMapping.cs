@@ -8,7 +8,7 @@ namespace Hackaton_1st_round.Server.Models.Report
         public ReportMapping()
         {
             Id(x => x.id).GeneratedBy.Guid();
-            Map(x => x.Url);
+            Map(x => x.Base64);
             Map(x => x.TeamEntity_FK2);
             Map(x => x.accepted);
         
