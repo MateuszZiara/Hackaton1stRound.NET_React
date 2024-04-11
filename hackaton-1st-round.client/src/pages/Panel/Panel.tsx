@@ -7,7 +7,7 @@ import {UserSettings} from "../../components/PanelComponents/Both/Settings/UserS
 import YourTeam from "../../components/PanelComponents/User/YourTeam/YourTeam";
 import {AllTeams} from "../../components/PanelComponents/Admin/AllTeams/AllTeams";
 import {AllUsers} from "../../components/PanelComponents/Admin/AllUsers/AllUsers";
-import {AllFiles} from "../../components/PanelComponents/Admin/AllFiles/AllFiles";
+import {AllRequests} from "../../components/PanelComponents/Admin/AllRequests/AllRequests";
 
 
 export default function Panel() {
@@ -57,8 +57,8 @@ export default function Panel() {
                 return <AllTeams />;
             case "users":
                 return <AllUsers />;
-            case "files":
-                return <AllFiles />;
+            case "requests":
+                return <AllRequests />;
             case "settings":
                 return <UserSettings />;
             default:

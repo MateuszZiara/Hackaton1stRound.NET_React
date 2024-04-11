@@ -1,8 +1,9 @@
 import {Button, Card, Checkbox, Divider, Flex, Group, rem, Space, Switch, Table} from "@mantine/core";
 import { useState, useEffect } from "react";
+// @ts-ignore
 import classes from "./AllTeams.module.css";
 import cx from 'clsx';
-import {IconArrowRight, IconDownload, IconMinus, IconPhoto, IconPlus} from "@tabler/icons-react";
+import { IconMinus, IconPlus } from "@tabler/icons-react";
 import {useDisclosure} from "@mantine/hooks";
 export function AllTeams() {
     const [teams, setTeams] = useState([]);
@@ -85,6 +86,7 @@ export function AllTeams() {
                     <Table.Th>Nazwa zespołu</Table.Th>
                     <Table.Th>Opis zespołu</Table.Th>
                     <Table.Th>Ilość osób w zespole</Table.Th>
+                    <Table.Th>Stan zgłoszenia</Table.Th>
                     {/* TODO Czekamy na pole Accepted w bazie */}
                     <Table.Th>Stan zespołu</Table.Th>
                 </Table.Tr>
