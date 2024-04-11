@@ -252,8 +252,8 @@ export function YourTeam() {
     }
 
     //logika z fetchTeamDetails
-    var numberOfTeammates = 2;
-    const addUser = (numberOfTeammates < 4 ?
+
+    const addUser = (number < 4 ?
             (
                 <div>
                 <Title order={2} pb={30}>Dodaj członków do zespołu</Title>

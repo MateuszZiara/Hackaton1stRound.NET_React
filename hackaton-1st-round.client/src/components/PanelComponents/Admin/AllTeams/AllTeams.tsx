@@ -22,8 +22,15 @@ export function AllTeams() {
             try {
                 const responseTeamDetails = await fetch("https://localhost:7071/api/TeamEntity/");
                 const dataTeamDetails = await responseTeamDetails.json();
-                setTeams(dataTeamDetails);
-                console.log(dataTeamDetails);
+
+                const requests = dataTeamDetails.map(async (team) => {
+                    const numberResponse = await fetch(`https://localhost:7071/api/TeamEntity/AmmountOfMembers/${team.id}`);
+                    const dataNumberResponse = await numberResponse.json();
+                    return { ...team, amountOfMembers: dataNumberResponse }; // Dodajemy nowe pole amountOfMembers
+                });
+
+                const teamsWithDataNumberResponse = await Promise.all(requests);
+                setTeams(teamsWithDataNumberResponse);
             } catch (error) {
                 console.error('Error fetching team details:', error);
             }
@@ -41,6 +48,7 @@ export function AllTeams() {
                 </Table.Td>
                 <Table.Td>{team.teamName}</Table.Td>
                 <Table.Td>{team.teamDesc}</Table.Td>
+                <Table.Td>{team.amountOfMembers}</Table.Td>
             </Table.Tr>
         )
     });
@@ -49,9 +57,11 @@ export function AllTeams() {
         <Flex
             gap="sm"
             justify="flex-start"
-            align="stretch"
+            align="center"
+            alignItems="stretch"
             direction="column"
             wrap="nowrap"
+            style={{ height: '100%' }}
         >
             //TODO Funkcja do akceptowania/odrzucania zespołów
             <Card withBorder radius="md" p="xs">
@@ -74,6 +84,9 @@ export function AllTeams() {
                     </Table.Th>
                     <Table.Th>Nazwa zespołu</Table.Th>
                     <Table.Th>Opis zespołu</Table.Th>
+                    <Table.Th>Ilość osób w zespole</Table.Th>
+                    {/* TODO Czekamy na pole Accepted w bazie */}
+                    <Table.Th>Stan zespołu</Table.Th>
                 </Table.Tr>
             </Table.Thead>
             <Table.Tbody>{rows}</Table.Tbody>

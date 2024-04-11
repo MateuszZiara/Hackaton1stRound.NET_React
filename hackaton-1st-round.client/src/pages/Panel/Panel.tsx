@@ -68,9 +68,9 @@ export default function Panel() {
 
     return (
         <Flex
-            gap="sm"
-            justify="flex-end"
-            align="start"
+            gap="lg"
+            justify="center"
+            align="flex-start"
             direction="row"
             wrap="nowrap"
         >
