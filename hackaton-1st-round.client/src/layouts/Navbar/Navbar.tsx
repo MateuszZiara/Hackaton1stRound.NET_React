@@ -1,12 +1,12 @@
 // Navbar.tsx
 import { useEffect, useState } from 'react';
-import { Center, Tooltip, UnstyledButton, Stack, rem, Avatar } from '@mantine/core';
+import {Center, Tooltip, UnstyledButton, Stack, rem, Avatar, Image} from '@mantine/core';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import {IconHome2, IconUsers, IconSettings, IconLogout, IconFiles, IconUsersGroup} from '@tabler/icons-react';
 import classes from './Navbar.module.css';
 import { logout } from "../../features/getCookies/getCookies";
 import { checkUserLoggedIn } from "../../features/getCookies/getCookies";
-
+import logoBig from "../../../public/logoBig.jpg";
 interface NavbarLinkProps {
     icon: typeof IconHome2;
     label: string;
@@ -89,7 +89,7 @@ export function Navbar({ setActivePage }: { setActivePage: (index: string) => vo
     return (
         <nav className={classes.navbar}>
             <Center pb={40}>
-                <MantineLogo type="mark" inverted size={30} />
+                <Image src={logoBig} />
             </Center>
 
 

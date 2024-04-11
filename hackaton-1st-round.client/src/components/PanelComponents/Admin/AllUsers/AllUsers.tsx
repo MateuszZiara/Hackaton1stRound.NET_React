@@ -24,6 +24,8 @@ export function AllUsers() {
     const [selection, setSelection] = useState([]);
     const [loading, { toggle }] = useDisclosure();
     const [addUserModalOpen, setAddUserModalOpen] = useState(false);
+    const [editUserModalOpen, setEditUserModalOpen] = useState(false);
+    const [deleteUserModalOpen, setDeleteUserModalOpen] = useState(false);
     const [rows, setRows] = useState([]);
     useEffect(() => {
         const fetchTeamDetails = async () => {
@@ -162,8 +164,8 @@ export function AllUsers() {
             <Card withBorder radius="md" p="xs">
                 <Group justify="center">
                     <Button variant={"outline"} rightSection={<IconUserPlus size={14} />} onClick={() => setAddUserModalOpen(true)} loading={loading}>Dodaj nowego użytkownika</Button>
-                    <Button variant={"outline"} rightSection={<IconUserEdit size={14} />} loading={loading}>Edytuj użytkownika</Button>
-                    <Button rightSection={<IconUserMinus size={14} />} loading={loading}>Usuń użytkownika</Button>
+                    <Button variant={"outline"} rightSection={<IconUserEdit size={14} />} onClick={() => setEditUserModalOpen(true)} loading={loading}>Edytuj użytkownika</Button>
+                    <Button rightSection={<IconUserMinus size={14} />} onClick={() => setDeleteUserModalOpen(true)} loading={loading}>Usuń użytkownika</Button>
                 </Group>
             </Card>
 
@@ -239,6 +241,85 @@ export function AllUsers() {
                     >
                         Zarejestruj się
                     </Button>
+                </div>
+            </Modal>
+
+            <Modal
+                title="Edytuj istniejącego użytkownika"
+                opened={editUserModalOpen}
+                onClose={() => setEditUserModalOpen(false)}
+                style={{ position: 'fixed', top: '50%', left: '0%'}}
+            >
+                <div style={{ textAlign: 'center' }}>
+
+                    <TextInput
+                        label="Imie"
+                        placeholder="Podaj imię"
+                        value={form.values.firstName}
+                        onChange={(event) => form.setFieldValue('firstName', event.currentTarget.value)}
+                        radius="md"
+                    />
+                    <TextInput
+                        label="Nazwisko"
+                        placeholder="Podaj nazwisko"
+                        value={form.values.lastName}
+                        onChange={(event) => form.setFieldValue('lastName', event.currentTarget.value)}
+                        radius="md"
+                    />
+                    <TextInput
+                        label="Adres e-mail"
+                        placeholder="Podaj adres e-mail"
+                        value={form.values.email}
+                        onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
+                        radius="md"
+                    />
+                    <PasswordInput
+                        label="Hasło"
+                        placeholder="Podaj hasło"
+                        value={form.values.password}
+                        onChange={(event) => form.setFieldValue('password', event.currentTarget.value)}
+                        radius="md"
+                    />
+                    <Checkbox
+                        label="Akceptuję regulamin"
+                        checked={form.values.terms}
+                        onChange={(event) => form.setFieldValue('terms', event.currentTarget.checked)}
+                        radius="md"
+                    />
+                    <Button
+                        onClick={handleRegister} //TODO NOWA FUNKCJA
+                        loading={loading}
+                        disabled={!form.values.terms || form.errors.email || form.errors.password || !form.values.firstName || !form.values.lastName}
+                    >
+                        Wprowadź zmiany
+                    </Button>
+                </div>
+            </Modal>
+
+            <Modal
+                title="Usuń wybranego użytkownika"
+                opened={deleteUserModalOpen}
+                onClose={() => setDeleteUserModalOpen(false)}
+                style={{ position: 'fixed', top: '50%', left: '0%'}}
+            >
+                <div style={{ textAlign: 'center' }}>
+                    Wybranej operacji nie da się cofnąć!
+                    <Group>
+                        <Button
+                            onClick={handleRegister} //TODO NOWA FUNKCJA
+                            loading={loading}
+
+                        >
+                            Wprowadź zmiany
+                        </Button>
+                        <Button
+                            onClick={handleRegister} //TODO NOWA FUNKCJA
+                            loading={loading}
+
+                        >
+                            Anuluj zmiany
+                        </Button>
+                    </Group>
                 </div>
             </Modal>
         </Flex>

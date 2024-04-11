@@ -31,7 +31,8 @@ using Swashbuckle.AspNetCore.Annotations;
             }
         }
 
-        [HttpGet("id/{id}")]
+    [SwaggerOperation(Summary = "Pobierz dane użytkownika o wybranym id")]
+    [HttpGet("id/{id}")]
         public ActionResult<Models.AspNetUsers.AspNetUsers> GetById(string id)
         {
             using (var session = NHibernateHelper.OpenSession())
@@ -46,15 +47,17 @@ using Swashbuckle.AspNetCore.Annotations;
             }
         }
 
-        [HttpPut("update/{id}")]
+    [SwaggerOperation(Summary = "Zaktualizuj wybranego użytkownika o danym id")]
+    [HttpPut("update/{id}")]
         public ActionResult<Models.AspNetUsers.AspNetUsers> Edit(string id, string? email = null,
             string? phoneNumber = null, string? firstName = null,
             string? lastName = null)
         {
             return _aspNetUsersService.Edit(id, email, phoneNumber, firstName,lastName);
         }
-        
-        [HttpPost("createUser")]
+
+    [SwaggerOperation(Summary = "Stwórz nowego użytkownika")]
+    [HttpPost("createUser")]
         public ActionResult<Models.AspNetUsers.AspNetUsers> CreateAddressEntity([FromBody] Models.AspNetUsers.AspNetUsers aspNetUsers)
         {
             if (aspNetUsers == null)
@@ -81,7 +84,9 @@ using Swashbuckle.AspNetCore.Annotations;
             }
 
         }
-        [HttpGet("logout")]
+
+    [SwaggerOperation(Summary = "Wyloguj użytkownika")]
+    [HttpGet("logout")]
         public async Task<IActionResult> Logout()
         {
             foreach (var cookie in Request.Cookies.Keys)
@@ -94,8 +99,9 @@ using Swashbuckle.AspNetCore.Annotations;
             
             return Ok("Identity cookies deleted successfully.");
         }
-        
-        [HttpGet("info")]
+
+    [SwaggerOperation(Summary = "Pobierz info o użytkowniku z danym tokenem sesji")]
+    [HttpGet("info")]
         public async Task<IActionResult> GetUserInfo()
         {
             // Check if user is authenticated
@@ -134,7 +140,8 @@ using Swashbuckle.AspNetCore.Annotations;
             }
         }
 
-        [HttpGet("info/object")]
+    [SwaggerOperation(Summary = "Pobierz info o użytkowniku z danym tokenem sesji jako obiekt")]
+    [HttpGet("info/object")]
         public Models.AspNetUsers.AspNetUsers GetUserInfoAsObject()
         {
             // Check if user is authenticated
