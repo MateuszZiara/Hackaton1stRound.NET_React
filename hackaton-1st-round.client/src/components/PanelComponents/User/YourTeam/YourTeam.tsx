@@ -7,6 +7,8 @@ import {useDisclosure} from "@mantine/hooks";
 import classes from "./YourTeam.module.css"
 
 export function YourTeam() {
+    const [fileName, setFileName] = useState("test");
+    const [path, setPath] = useState("");
     const [hasTeam, setHasTeam] = useState(false);
     const [teamName, setTeamName] = useState('');
     const [teamDescription, setTeamDescription] = useState('');
@@ -82,6 +84,52 @@ export function YourTeam() {
             fetchUsers();
         }
     }, []);*/
+
+
+    const [file, setFile] = useState(null);
+
+    const handleFileChange = (file: File) => {
+        setSelectedFile(file);
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault(); // Prevent default form submission
+        const responseUserDetails = await fetch("https://localhost:7071/api/AspNetUsers/info", {
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': 'true'
+            }
+
+        });
+        const data = await responseUserDetails.json();
+        var id = data.teamEntity_FK;
+        if (!selectedFile) {
+            console.error('No file selected');
+            return;
+        }
+
+        try {
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+
+            const response = await fetch('https://localhost:7071/api/Report/upload/'+teamName+"/"+id, {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (!response.ok) {
+                console.error('Failed to upload file');
+                return;
+            }
+
+            console.log('File uploaded successfully');
+        } catch (error) {
+            console.error('Error uploading file:', error);
+        }
+    };
+    
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -172,32 +220,9 @@ export function YourTeam() {
         ]);
     };*/
 
-    const handleFileChange = (file: File) => {
-        setSelectedFile(file);
-    };
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if (!selectedFile) return;
-
-        const formData = new FormData();
-        formData.append('file', selectedFile);
-        {/* //TODO ZMIANA LINKU DO API*/}
-        try {
-            const response = await fetch('https://localhost:7071/api/upload', {
-                method: 'POST',
-                body: formData,
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to upload file');
-            }
-
-            console.log('File uploaded successfully');
-        } catch (error) {
-            console.error('Error uploading file:', error);
-        }
-    };
+    
+    
+    
 
 
 
@@ -283,14 +308,15 @@ export function YourTeam() {
 <div>
     <Title order={2} pb={30}>Dodaj plik PDF</Title>
             <Text pb={20} truncate={true}>Można dodać tylko jeden plik. Jeżeli został dodany, to zostanie nadpisany.</Text>
-                    <form onSubmit={handleSubmit}>
+                <form onSubmit={form.onSubmit(() => {
+                    })}>
                         <FileInput
                             accept=".pdf"
                             label="Dodaj wniosek"
                             onChange={handleFileChange}
                             placeholder="Dozwolone rodzaje plików: .pdf"
                         />
-                        <Button type="submit">Wyślij</Button>
+                        <Button type="submit" onClick = {handleSubmit}>Wyślij</Button>
                     </form>
 </div>
                     </Flex>
