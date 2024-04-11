@@ -48,7 +48,7 @@ export function Hero() {
     
     
     return (
-        <Container size="md">
+        <Container size="md" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <div className={classes.inner}>
                 <div className={classes.content}>
                     <Title className={classes.title}>
