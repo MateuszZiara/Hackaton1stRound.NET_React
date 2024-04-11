@@ -6,7 +6,7 @@ import {IconMinus, IconPlus} from "@tabler/icons-react";
 import {useDisclosure} from "@mantine/hooks";
 export function AllRequests() {
     const [requests, setRequests] = useState([]);
-    const [selection, setSelection] = useState(['1']);
+    const [selection, setSelection] = useState([]);
     const [loading, { toggle }] = useDisclosure();
     const toggleRow = (id: string) =>
         setSelection((current) =>
@@ -21,12 +21,18 @@ export function AllRequests() {
             try {
                 const responseTeamDetails = await fetch("https://localhost:7071/api/Report");
                 const dataTeamDetails = await responseTeamDetails.json();
-
+                
                 const requests = dataTeamDetails.map(async (team) => {
-                    console.log(team.TeamEntity_FK2);
-                    const teamResponse = await fetch(`https://localhost:7071/api/TeamEntity/id/${team.TeamEntity_FK2}`);
+                    let str;
+                    if(team.accepted == false)
+                    {
+                        str = "NIE";
+                    }
+                    else
+                        str = "TAK";
+                    const teamResponse = await fetch(`https://localhost:7071/api/TeamEntity/id/`+team.teamEntity_FK2);
                     const dataNumberResponse = await teamResponse.json(); // Poprawka tutaj
-                    return { ...team, amountOfMembers: dataNumberResponse }; // Dodajemy nowe pole amountOfMembers
+                    return { ...team, teamName: dataNumberResponse.teamName, accepted: str }; // Dodajemy nowe pole amountOfMembers
                 });
 
                 const requestsDetails = await Promise.all(requests);
@@ -38,6 +44,19 @@ export function AllRequests() {
 
         fetchTeamDetails();
     }, []);
+    async function buttonLogic() {
+        const selectedIds = selection.filter(id => id); 
+        for (let id in selectedIds) {
+            const url = "https://localhost:7071/api/Report/acccept/" + id;
+            const response = await fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            window.location.href = "/panel";
+        }
+    }
 
     const rows = requests.map((request) => {
         const selected = selection.includes(request.id);
@@ -66,7 +85,7 @@ export function AllRequests() {
         >
             <Card withBorder radius="md" p="xs">
                 <Group justify="center">
-                    <Button variant={"outline"} rightSection={<IconPlus size={14}/>} loading={loading}>Akceptuj wniosek</Button>
+                    <Button variant={"outline"} rightSection={<IconPlus size={14}/>} loading={loading} onClick = {buttonLogic}>Akceptuj wniosek</Button>
                     <Button rightSection={<IconMinus size={14} />} loading={loading}>Odrzuć wniosek</Button>
                 </Group>
             </Card>
