@@ -1,12 +1,12 @@
 import React, {useContext, useEffect, useState} from "react";
-import {Menu, Group, Center, Burger, Container, Button, Avatar, Text, parseColor} from '@mantine/core';
+import {Menu, Group, Center, Burger, Container, Button, Avatar, Text, parseColor, Image} from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconChevronDown } from '@tabler/icons-react';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import classes2 from './HeaderMenu.module.css';
 import { checkUserLoggedIn } from "../../features/getCookies/getCookies";
 import { logout } from "../../features/getCookies/getCookies";
-
+import logoSmall from "../../../public/logoSmallC.png";
 
 const handleGetStartedClick = () => {
     window.location.href = "/pag";
@@ -67,9 +67,10 @@ export function HeaderMenu() {
 
     return (
         <header className={classes2.header}>
-                <div className={classes2.inner}>
-                    <MantineLogo size={28}/>
+                <div className={classes2.inner} >
+                    <Image src={logoSmall} w={70} radius={10}/>
                     <UserField />
+
                 </div>
         </header>
     );
