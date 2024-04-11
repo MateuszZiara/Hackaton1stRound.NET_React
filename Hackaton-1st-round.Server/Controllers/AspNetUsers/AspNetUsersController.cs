@@ -180,7 +180,8 @@ using Swashbuckle.AspNetCore.Annotations;
             }
         }
 
-        [HttpPut("LeaveTeam")]
+    [SwaggerOperation(Summary = "Usunięcie użytkownika z zespołu")]
+    [HttpPut("LeaveTeam")]
         public ActionResult<Models.AspNetUsers.AspNetUsers> LeaveTeam()
         {
             using (var session = NHibernateHelper.OpenSession())
@@ -207,7 +208,8 @@ using Swashbuckle.AspNetCore.Annotations;
             }
         }
 
-        [HttpGet("GetUsersFromTeamCookies")]
+    [SwaggerOperation(Summary = "Pobranie listy użytkowników należących do tego samego zespołu co zalogowany użytkownik")]
+    [HttpGet("GetUsersFromTeamCookies")]
 
         public ActionResult<IEnumerable<Models.AspNetUsers.AspNetUsers>> GetFromTeam()
         {
@@ -224,7 +226,9 @@ using Swashbuckle.AspNetCore.Annotations;
 
             return null;
         }
-        [HttpGet("GetUsersFromTeamId/{id}")]
+
+    [SwaggerOperation(Summary = "Pobranie listy użytkowników na podstawie identyfikatora zespołu")]
+    [HttpGet("GetUsersFromTeamId/{id}")]
 
         public ActionResult<IEnumerable<Models.AspNetUsers.AspNetUsers>> GetFromTeamId(Guid id)
         {
@@ -240,8 +244,9 @@ using Swashbuckle.AspNetCore.Annotations;
 
             return null;
         }
-        
-        [HttpPut("addToTeam/{email}")]
+
+    [SwaggerOperation(Summary = "Dodanie nowego użytkownika do zespołu")]
+    [HttpPut("addToTeam/{email}")]
         public ActionResult<Models.AspNetUsers.AspNetUsers> AddToTeam(string email)
         {
             using (var session = NHibernateHelper.OpenSession())
@@ -274,7 +279,9 @@ using Swashbuckle.AspNetCore.Annotations;
                 }
             }
         }
-        [HttpPost("registerCustom")]
+
+    [SwaggerOperation(Summary = "Rejestracja nowego uzytkownika")]
+    [HttpPost("registerCustom")]
         public ActionResult<Models.AspNetUsers.AspNetUsers> Register([FromBody] Models.AspNetUsers.AspNetUsers testEntity)
         {
             if (testEntity == null)
@@ -324,7 +331,9 @@ using Swashbuckle.AspNetCore.Annotations;
             }
 
         }
-        [HttpGet("checkEmail/{email}")]
+
+    [SwaggerOperation(Summary = "Sprawdzenie czy e-mail istnieje w bazie danych")]
+    [HttpGet("checkEmail/{email}")]
         public ActionResult<bool> CheckEmailExists(string email)
         {
             using (var session = NHibernateHelper.OpenSession())
@@ -333,10 +342,10 @@ using Swashbuckle.AspNetCore.Annotations;
                 return existingUser != null;
             }
         }
-        
-        
-        
-        [HttpDelete("{id}")]
+
+
+    [SwaggerOperation(Summary = "Usuwanie użytkownika")]
+    [HttpDelete("{id}")]
         public ActionResult DeleteAddressEntity(string id)
         {
             using (var session = NHibernateHelper.OpenSession())
@@ -369,7 +378,9 @@ using Swashbuckle.AspNetCore.Annotations;
                 }
             }
         }
-        [HttpPut("updateToAdmin/{id}")]
+
+    [SwaggerOperation(Summary = "Nadanie statusu Admina")]
+    [HttpPut("updateToAdmin/{id}")]
         public ActionResult<Models.AspNetUsers.AspNetUsers> UpdateToAdmin(string id)
         {
             using (var session = NHibernateHelper.OpenSession())
@@ -389,7 +400,9 @@ using Swashbuckle.AspNetCore.Annotations;
                 }
             }
         }
-        [HttpPut("updateToUser/{id}")]
+
+    [SwaggerOperation(Summary = "Nadanie statusu Usera")]
+    [HttpPut("updateToUser/{id}")]
         public ActionResult<Models.AspNetUsers.AspNetUsers> updateToUser(string id)
         {
             using (var session = NHibernateHelper.OpenSession())

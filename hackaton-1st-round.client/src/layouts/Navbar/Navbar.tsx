@@ -6,7 +6,7 @@ import {IconHome2, IconUsers, IconSettings, IconLogout, IconFiles, IconUsersGrou
 import classes from './Navbar.module.css';
 import { logout } from "../../features/getCookies/getCookies";
 import { checkUserLoggedIn } from "../../features/getCookies/getCookies";
-import logoBig from "../../../public/logoBig.jpg";
+import logoSmall from "../../../public/logoSmall.png";
 interface NavbarLinkProps {
     icon: typeof IconHome2;
     label: string;
@@ -89,7 +89,7 @@ export function Navbar({ setActivePage }: { setActivePage: (index: string) => vo
     return (
         <nav className={classes.navbar}>
             <Center pb={40}>
-                <Image src={logoBig} />
+                <Image src={logoSmall} />
             </Center>
 
 
