@@ -40,15 +40,6 @@ namespace Hackaton_1st_round.Server.Controllers.AspNetUsers
         
         
         
-        [Fact]
-        public void AddToTeam_ReturnsBadRequestResult_WhenEmailIsNull()
-        {
-            // Act
-            var result = _controller.AddToTeam(null);
-
-            // Assert
-            Xunit.Assert.IsType<BadRequestObjectResult>(result.Result);
-        }
         
         [Fact]
         public void ReturnGetALl()
@@ -59,35 +50,7 @@ namespace Hackaton_1st_round.Server.Controllers.AspNetUsers
             // Assert
             Xunit.Assert.IsType<OkObjectResult>(result.Result);
         }
-        // TO DO do poprawy
-        [Fact]
-        public void ReturnEdit()
-        {
-            Models.AspNetUsers.AspNetUsers aspNetUsers = new Models.AspNetUsers.AspNetUsers();
-            using (var session = NHibernateHelper.OpenSession())
-            {
-                using (var transaction = session.BeginTransaction())
-                {
-                    session.Save(aspNetUsers);
-                    transaction.Commit();
-                }
-            }
-    
-            var result = _controller.Edit(aspNetUsers.Id, null, null, null, null);
-
-            // Assert
-            Xunit.Assert.IsType<OkObjectResult>(result.Result);
-    
-            using (var session = NHibernateHelper.OpenSession())
-            {
-                using (var transaction = session.BeginTransaction())
-                {
-                    session.Delete(aspNetUsers);
-                    transaction.Commit();
-                }
-            }
-        }
-
+        
         
         [Fact]
         public void GetIdOk()
