@@ -124,7 +124,7 @@ export function Navbar({ setActivePage }: { setActivePage: (index: string) => vo
 
             <Stack justify="center" gap={10}>
                 <Avatar variant={"outline"} color={"white"} w={50} h={50}>{initials}</Avatar>
-                <NavbarLink icon={IconLogout} label="Logout" onClick={logout} />
+                <NavbarLink icon={IconLogout} label="Wyloguj" onClick={logout} />
             </Stack>
         </nav>
     );

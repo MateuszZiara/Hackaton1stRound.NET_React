@@ -352,4 +352,8 @@ using Microsoft.AspNetCore.Mvc;
             }
         }
 
+    public object CreateAddressEntity(AspNetUsersController aspNetUser)
+    {
+        throw new NotImplementedException();
     }
+}

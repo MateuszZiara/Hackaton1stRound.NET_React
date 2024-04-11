@@ -251,24 +251,12 @@ export function YourTeam() {
         setUsers(users);
     }
 
-    /*const fetchUsers = () => {
-        setUsers([
-            { id: 1, name: 'John', surname: 'Doe' },
-            { id: 2, name: 'Jane', surname: 'Doe' },
-        ]);
-    };*/
-
-    
-    
-    
-
-
-
+    //logika z fetchTeamDetails
     var numberOfTeammates = 2;
     const addUser = (numberOfTeammates < 4 ?
             (
                 <div>
-                <Title order={2} pb={30}>Dodaj członków do zespołu.</Title>
+                <Title order={2} pb={30}>Dodaj członków do zespołu</Title>
             <form onSubmit={form.onSubmit(() => {
             })}>
                 <div style={{marginBottom: '16px'}}>
@@ -321,18 +309,24 @@ export function YourTeam() {
                 <>
                     <CloseButton onClick = {leaveteam}></CloseButton>
                     <Title order={2} pb={"30"}>Oto twój zespół!</Title>
-                    <div style={{textAlign: "left"}}>
-                    <Text style={{ marginBottom: '16px' }}>Nazwa zespołu: {teamName}</Text>
-                    <Text style={{ marginBottom: '16px' }}>Opis zespołu: {teamDescription}</Text>
-                        <Title order={3} pb={"30"}>Członkowie zespołu</Title>
-                        <List style={{ marginBottom: '16px' }}>
-                        {users.map((user) => (
-                            <ListItem key={user.id}>
-                                <Avatar style={{ marginRight: '8px' }}>{user.name.charAt(0)}</Avatar>
-                                {user.name} {user.surname}
-                            </ListItem>
-                        ))}
-                        </List>
+                    <div style={{textAlign: "left", display: "grid", gridTemplateColumns: "repeat(2, 50%)"}}>
+                        <div style={{marginBottom: '16px'}}>
+                            <Text style={{marginBottom: '16px'}}>Nazwa zespołu: {teamName}</Text>
+                            <Text style={{marginBottom: '16px'}}>Opis zespołu: {teamDescription}</Text>
+                            <Title order={3} pb={"30"}>Członkowie zespołu</Title>
+                            <div style={{
+                                display: "grid",
+                                gridTemplateColumns: "repeat(auto-fit, minmax(100px, 1fr))",
+                                gap: "8px"
+                            }}>
+                                {users.map((user) => (
+                                    <div key={user.id} style={{display: "flex", alignItems: "center"}}>
+                                        <Avatar style={{marginRight: '8px'}}>{user.name.charAt(0)}</Avatar>
+                                        <div>{user.name} {user.surname}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </div>
                     <Flex
                         gap="xl"
@@ -342,18 +336,19 @@ export function YourTeam() {
                         wrap="wrap"
                     >
                         <div>
-                    {addUser}
+                            {addUser}
                         </div>
-<div>
-    <Title order={2} pb={30}>Dodaj plik PDF</Title>
-            <Text pb={20} truncate={true}>Można dodać tylko jeden plik. Jeżeli został dodany, to zostanie nadpisany.</Text>
-                <form onSubmit={form.onSubmit(() => {
-                    })}>
-                        <FileInput
-                            accept=".pdf"
-                            label="Dodaj wniosek"
-                            onChange={handleFileChange}
-                            placeholder="Dozwolone rodzaje plików: .pdf"
+                        <div>
+                            <Title order={2} pb={30}>Dodaj plik PDF</Title>
+                            <Text pb={20} truncate={true}>Można dodać tylko jeden plik. Jeżeli został dodany, to
+                                zostanie nadpisany.</Text>
+                            <form onSubmit={form.onSubmit(() => {
+                            })}>
+                                <FileInput
+                                    accept=".pdf"
+                                    label="Dodaj wniosek"
+                                    onChange={handleFileChange}
+                                    placeholder="Dozwolone rodzaje plików: .pdf"
                         />
                         <Button type="submit" onClick = {handleSubmit}>Wyślij</Button>
                     </form>
