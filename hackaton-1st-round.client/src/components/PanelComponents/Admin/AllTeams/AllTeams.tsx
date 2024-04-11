@@ -24,7 +24,6 @@ export function AllTeams() {
 
                     const responseAccepted = await fetch(`https://localhost:7071/api/Report/CheckAccepted/${team.id}`);
                     const dataAccepted = await responseAccepted.json();
-                    console.log(dataAccepted);
                     let str;
                     if(dataAccepted == false)
                     {

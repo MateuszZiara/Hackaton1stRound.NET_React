@@ -144,6 +144,37 @@ namespace Hackaton_1st_round.Server.Controllers.Report
 
             return _ReportService.Edit(id, Url, TeamEntity_FK2);
         }
+        
+        [HttpPut("acccept/{id}")]
+        public ActionResult<Models.Report.Report> Accept(Guid id)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    var query = session.Get<Models.Report.Report>(id);
+                    query.accepted = true;
+                    session.SaveOrUpdate(query);
+                    transaction.Commit();
+                    return query;
+                }
+            }
+        }
+        [HttpPut("reject/{id}")]
+        public ActionResult<Models.Report.Report> Reject(Guid id)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    var query = session.Get<Models.Report.Report>(id);
+                    query.accepted = false;
+                    session.SaveOrUpdate(query);
+                    transaction.Commit();
+                    return query;
+                }
+            }
+        }
 
         [HttpDelete("{id}")]
         public ActionResult DeleteAddressEntity(Guid id)
