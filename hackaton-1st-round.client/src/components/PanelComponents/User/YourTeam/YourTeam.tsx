@@ -162,6 +162,7 @@ export function YourTeam() {
             }
 
             console.log('File uploaded successfully');
+            window.location.href = "/panel";
         } catch (error) {
             console.error('Error uploading file:', error);
         }
