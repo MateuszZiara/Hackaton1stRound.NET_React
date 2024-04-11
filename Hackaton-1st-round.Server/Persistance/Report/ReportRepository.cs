@@ -17,7 +17,7 @@ namespace Hackaton_1st_round.Server.Persistance.Report
                     }
                     if(Url != null)
                     {
-                        query[0].Url = Url;
+                        //query[0].Url = Url;
                     }
                     if(TeamEntity_FK2 != null)
                     {

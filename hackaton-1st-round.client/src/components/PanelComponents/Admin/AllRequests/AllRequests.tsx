@@ -72,6 +72,32 @@ export function AllRequests() {
         }
         window.location.href = "/panel";
     }
+    const downloadPDF = (base64Data) => {
+        // Convert base64 to binary
+        const byteCharacters = atob(base64Data);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+
+        // Create Blob and URL
+        const blob = new Blob([byteArray], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+
+        // Create temporary link element
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'file.pdf');
+
+        // Simulate click to trigger download
+        document.body.appendChild(link);
+        link.click();
+
+        // Cleanup
+        URL.revokeObjectURL(url);
+        document.body.removeChild(link);
+    };
 
     const rows = requests.map((request) => {
         const selected = selection.includes(request.id);
@@ -81,7 +107,9 @@ export function AllRequests() {
                     <Checkbox checked={selection.includes(request.id)} onChange={() => toggleRow(request.id)} />
                 </Table.Td>
                 <Table.Td>{request.id}</Table.Td>
-                <Table.Td><Button onClick = {() => window.location.href = request.url}></Button> </Table.Td>
+                <Table.Td>
+                    <Button onClick={() => downloadPDF(request.base64)}>Download PDF</Button>
+                </Table.Td>
                 <Table.Td>{request.teamName}</Table.Td>
                 <Table.Td>{request.accepted}</Table.Td>
             </Table.Tr>

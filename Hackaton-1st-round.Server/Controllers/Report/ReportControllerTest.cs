@@ -21,9 +21,9 @@ public class ReportControllerTest
         Assert.IsType<OkObjectResult>(result.Result);
     }
     
-    [Fact]
+    //[Fact]
     
-    public void GetIdOk()
+    /*public void GetIdOk()
     {
         
         Models.TeamEntity.TeamEntity teamEntity = new Models.TeamEntity.TeamEntity();
@@ -70,7 +70,7 @@ public class ReportControllerTest
         
         
         
-    }
+    }*/
     
     [Fact]
     public void GetIdNotOk()

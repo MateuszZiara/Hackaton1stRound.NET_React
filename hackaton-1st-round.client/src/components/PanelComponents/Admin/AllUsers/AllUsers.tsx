@@ -2,7 +2,6 @@ import {Button, Card, Checkbox, Flex, Group, rem, Space, Switch, Table} from "@m
 import {IconMinus, IconPlus, IconUserEdit, IconUserMinus, IconUserPlus} from "@tabler/icons-react";
 import {useDisclosure} from "@mantine/hooks";
 import {useState} from "react";
-import ModalDeleteUser from "../../../ModalDeleteUser/ModalDeleteUser";
 
 export function AllUsers(){
     const [selection, setSelection] = useState(['1']);
@@ -31,7 +30,6 @@ export function AllUsers(){
                     <Button variant={"outline"} rightSection={<IconUserPlus size={14}/>} loading={loading}>Dodaj nowego użytkownika</Button>
                     <Button variant={"outline"} rightSection={<IconUserEdit size={14} />} loading={loading}>Edytuj użytkownika</Button>
                     <Button rightSection={<IconUserMinus size={14} />} loading={loading}>Usuń użytkownika</Button>
-                    <ModalDeleteUser />
                 </Group>
             </Card>
 
