@@ -80,7 +80,7 @@ namespace Hackaton_1st_round.Server.Controllers.Report
             {
                 string _uploadsDirectory = @"uploads\" + name;
                 var uploadsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _uploadsDirectory);
-                var filePath = Path.Combine(uploadsPath, file.FileName);
+                var filePath = Path.Combine(uploadsPath, "zgloszenie.pdf");
                 // Jeśli katalog nie istnieje, utwórz go
                 if (!Directory.Exists(uploadsPath))
                 {

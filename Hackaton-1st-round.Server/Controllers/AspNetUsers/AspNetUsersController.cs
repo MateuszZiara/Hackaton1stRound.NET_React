@@ -26,7 +26,7 @@ using Microsoft.AspNetCore.Mvc;
         }
 
         [HttpGet("id/{id}")]
-        public ActionResult<Models.AspNetUsers.AspNetUsers> GetById(Guid id)
+        public ActionResult<Models.AspNetUsers.AspNetUsers> GetById(string id)
         {
             using (var session = NHibernateHelper.OpenSession())
             {
@@ -48,7 +48,7 @@ using Microsoft.AspNetCore.Mvc;
             return _aspNetUsersService.Edit(id, email, phoneNumber, firstName,lastName);
         }
         
-        [HttpPost]
+        [HttpPost("createUser")]
         public ActionResult<Models.AspNetUsers.AspNetUsers> CreateAddressEntity([FromBody] Models.AspNetUsers.AspNetUsers aspNetUsers)
         {
             if (aspNetUsers == null)
@@ -351,5 +351,4 @@ using Microsoft.AspNetCore.Mvc;
                 }
             }
         }
-
-    }
+}
