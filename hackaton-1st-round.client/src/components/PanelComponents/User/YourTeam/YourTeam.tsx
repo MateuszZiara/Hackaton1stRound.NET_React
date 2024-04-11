@@ -13,13 +13,15 @@ import {
     FileInput,
     Flex,
     Card,
-    CloseButton
+    CloseButton,
+    useMantineTheme
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import {checkUserLoggedIn, gethasTeam} from "../../../../features/getCookies/getCookies";
 import {Await} from "react-router";
 import {useDisclosure} from "@mantine/hooks";
 import classes from "./YourTeam.module.css"
+import {IconUsersMinus} from "@tabler/icons-react";
 
 export function YourTeam() {
     const [fileName, setFileName] = useState("test");
@@ -44,6 +46,7 @@ export function YourTeam() {
 
         }
     )
+
     async function leaveteam() {
         const url = "https://localhost:7071/api/AspNetUsers/LeaveTeam/" + form.values.invitation;
         const response = await fetch(url, {
@@ -254,11 +257,14 @@ export function YourTeam() {
     const addUser = (number < 4 ?
             (
                 <div>
-                <Title order={2} pb={30}>Dodaj członków do zespołu</Title>
+                    <Title order={3} >Dodaj członków do zespołu</Title>
+                    <Text fz="md" c="dimmed" mt={0} mb="xl" pb={"10"}>
+                        Zespół składa się maksymalnie z 4 członków. <br /> Aby dodać członka, musi mieć on konto na portalu.
+                    </Text>
             <form onSubmit={form.onSubmit(() => {
             })}>
                 <div style={{marginBottom: '16px'}}>
-                    <Text pb={20}>Aby dodać członka, musi mieć on konto na portalu.</Text>
+                    <Text pb={20}></Text>
                     <TextInput
                         required
                         label="Dodaj adres email członka zespołu"
@@ -305,18 +311,37 @@ export function YourTeam() {
 
             ) : (
                 <>
-                    <CloseButton onClick = {leaveteam}></CloseButton>
-                    <Title order={2} pb={"30"}>Oto twój zespół!</Title>
+                    <Title order={2} >Oto twój zespół</Title>
+                    <Text fz="md" c="dimmed" mt={0} mb="xl"  pb={"10"}>
+                        Stwórz ekipę i sięgnijcie po zwycięstwo!
+                    </Text>
                     <div style={{textAlign: "left", display: "grid", gridTemplateColumns: "repeat(2, 50%)"}}>
                         <div style={{marginBottom: '16px'}}>
-                            <Text style={{marginBottom: '16px'}}>Nazwa zespołu: {teamName}</Text>
-                            <Text style={{marginBottom: '16px'}}>Opis zespołu: {teamDescription}</Text>
-                            <Title order={3} pb={"30"}>Członkowie zespołu</Title>
+                            <Flex
+                                justify="flex-start"
+                                align="stretch"
+                                direction="row"
+                                wrap="wrap"
+                                style={{ width: '100%' }}
+                            >
+                                <div style={{ width: '50%', flex: '1' }}>
+                                    <Text style={{ marginBottom: '16px' }}>Nazwa zespołu: {teamName}</Text>
+                                    <Text style={{ marginBottom: '16px' }}>Opis zespołu: {teamDescription}</Text>
+                                </div>
+                                <div style={{ width: '50%', flex: '1' }}>
+                                    <Button className={classes.button} rightSection={<IconUsersMinus size={14} />} onClick={leaveteam}>Wyjdź z zespołu</Button>
+                                </div>
+                            </Flex>
+
                             <div style={{
                                 display: "grid",
                                 gridTemplateColumns: "repeat(auto-fit, minmax(100px, 1fr))",
-                                gap: "8px"
+                                gap: "8px",
+                                marginBottom: "25px"
                             }}>
+                                <div>
+                                    Członkowie:
+                                </div>
                                 {users.map((user) => (
                                     <div key={user.id} style={{display: "flex", alignItems: "center"}}>
                                         <Avatar style={{marginRight: '8px'}}>{user.name.charAt(0)}</Avatar>
@@ -337,9 +362,11 @@ export function YourTeam() {
                             {addUser}
                         </div>
                         <div>
-                            <Title order={2} pb={30}>Dodaj plik PDF</Title>
-                            <Text pb={20} truncate={true}>Można dodać tylko jeden plik. Jeżeli został dodany, to
-                                zostanie nadpisany.</Text>
+                            <Title order={2} >Dodaj plik PDF</Title>
+                            <Text fz="md" c="dimmed" mt={0} mb="xl"  pb={"10"}>
+                                Można dodać tylko jeden plik. <br />Jeżeli został dodany, to
+                                zostanie nadpisany.
+                            </Text>
                             <form onSubmit={form.onSubmit(() => {
                             })}>
                                 <FileInput
