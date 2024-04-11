@@ -261,6 +261,7 @@ using Microsoft.AspNetCore.Mvc;
                             testEntity.NormalizedEmail = testEntity.Email.ToUpper();
                             testEntity.UserName = testEntity.Email;
                             testEntity.NormalizedUserName = testEntity.UserName.ToUpper();
+                            
                         }
 
                         testEntity.UserRank = UserRank.User;
