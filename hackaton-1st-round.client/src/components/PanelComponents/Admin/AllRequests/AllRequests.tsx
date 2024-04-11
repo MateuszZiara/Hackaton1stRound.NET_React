@@ -46,7 +46,8 @@ export function AllRequests() {
     }, []);
     async function buttonLogic() {
         const selectedIds = selection.filter(id => id); 
-        for (let id in selectedIds) {
+        console.log(selectedIds);
+        for (let id of selectedIds) {
             const url = "https://localhost:7071/api/Report/acccept/" + id;
             const response = await fetch(url, {
                 method: 'PUT',
@@ -54,8 +55,22 @@ export function AllRequests() {
                     'Content-Type': 'application/json',
                 }
             });
-            window.location.href = "/panel";
         }
+        window.location.href = "/panel";
+    }
+    async function buttonLogicReject() {
+        const selectedIds = selection.filter(id => id);
+        console.log(selectedIds);
+        for (let id of selectedIds) {
+            const url = "https://localhost:7071/api/Report/reject/" + id;
+            const response = await fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+        }
+        window.location.href = "/panel";
     }
 
     const rows = requests.map((request) => {
@@ -66,7 +81,7 @@ export function AllRequests() {
                     <Checkbox checked={selection.includes(request.id)} onChange={() => toggleRow(request.id)} />
                 </Table.Td>
                 <Table.Td>{request.id}</Table.Td>
-                <Table.Td>{request.url}</Table.Td>
+                <Table.Td><Button onClick = {() => window.location.href = request.url}></Button> </Table.Td>
                 <Table.Td>{request.teamName}</Table.Td>
                 <Table.Td>{request.accepted}</Table.Td>
             </Table.Tr>
@@ -86,7 +101,7 @@ export function AllRequests() {
             <Card withBorder radius="md" p="xs">
                 <Group justify="center">
                     <Button variant={"outline"} rightSection={<IconPlus size={14}/>} loading={loading} onClick = {buttonLogic}>Akceptuj wniosek</Button>
-                    <Button rightSection={<IconMinus size={14} />} loading={loading}>Odrzuć wniosek</Button>
+                    <Button rightSection={<IconMinus size={14} />} loading={loading} onClick = {buttonLogicReject}>Odrzuć wniosek</Button>
                 </Group>
             </Card>
             <div>
