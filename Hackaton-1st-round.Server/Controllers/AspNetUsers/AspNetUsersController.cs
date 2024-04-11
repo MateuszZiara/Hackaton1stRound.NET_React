@@ -311,7 +311,15 @@ using Microsoft.AspNetCore.Mvc;
             }
 
         }
-        
+        [HttpGet("checkEmail/{email}")]
+        public ActionResult<bool> CheckEmailExists(string email)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                var existingUser = session.Query<Models.AspNetUsers.AspNetUsers>().FirstOrDefault(u => u.Email == email);
+                return existingUser != null;
+            }
+        }
         
         
         
