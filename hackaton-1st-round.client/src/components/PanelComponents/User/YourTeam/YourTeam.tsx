@@ -1,5 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import {TextInput, Textarea, Button, Paper, Text, List, ListItem, Avatar, Modal, Title, FileInput, Flex, Card} from '@mantine/core';
+import {
+    TextInput,
+    Textarea,
+    Button,
+    Paper,
+    Text,
+    List,
+    ListItem,
+    Avatar,
+    Modal,
+    Title,
+    FileInput,
+    Flex,
+    Card,
+    CloseButton
+} from '@mantine/core';
 import { useForm } from '@mantine/form';
 import {checkUserLoggedIn, gethasTeam} from "../../../../features/getCookies/getCookies";
 import {Await} from "react-router";
@@ -29,6 +44,25 @@ export function YourTeam() {
 
         }
     )
+    async function leaveteam() {
+        const url = "https://localhost:7071/api/AspNetUsers/LeaveTeam/" + form.values.invitation;
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to add user to team');
+        }
+
+        // Handle successful response here if needed
+        console.log('User left team');
+
+        window.location.href = "/panel";
+    }
 
     async function SendInvite() {
         const url = "https://localhost:7071/api/AspNetUsers/addToTeam/" + form.values.invitation;
@@ -285,6 +319,7 @@ export function YourTeam() {
 
             ) : (
                 <>
+                    <CloseButton onClick = {leaveteam}></CloseButton>
                     <Title order={2} pb={"30"}>Oto twój zespół!</Title>
                     <div style={{textAlign: "left"}}>
                     <Text style={{ marginBottom: '16px' }}>Nazwa zespołu: {teamName}</Text>

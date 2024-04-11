@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using Hackaton_1st_round.Server.Controllers.TeamEntity;
 using Hackaton_1st_round.Server.Models.AspNetUsers;
 using Hackaton_1st_round.Server.Persistance.AspNetUsers;
 using Microsoft.AspNetCore.Identity;
@@ -163,6 +164,33 @@ using Microsoft.AspNetCore.Mvc;
             {
                 // User is not authenticated
                 throw new Exception("Not authorized");
+            }
+        }
+
+        [HttpPut("LeaveTeam")]
+        public ActionResult<Models.AspNetUsers.AspNetUsers> LeaveTeam()
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    Models.AspNetUsers.AspNetUsers userCookies = GetUserInfoAsObject();
+                    Guid? id = userCookies.TeamEntity_FK;
+                    if (id == null)
+                    {
+                        throw new Exception("Something is wrong with your TeamEntity id.");
+                    }
+                    
+                    userCookies.TeamEntity_FK = null;
+                    if (session.Query<Models.AspNetUsers.AspNetUsers>().Count(x => x.TeamEntity_FK == id) == 1)
+                    {
+                        var teamEntity = session.Get<Models.TeamEntity.TeamEntity>(id);
+                        session.Delete(teamEntity);
+                    }
+                    session.Update(userCookies);
+                    transaction.Commit();
+                    return userCookies;
+                }
             }
         }
 
