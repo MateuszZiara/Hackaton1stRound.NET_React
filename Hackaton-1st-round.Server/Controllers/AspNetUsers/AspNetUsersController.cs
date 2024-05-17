@@ -1,7 +1,11 @@
-﻿using System.Security.Claims;
+﻿using System.Net.Http.Headers;
+using System.Security.Claims;
+using FluentNHibernate.Conventions;
+using Google.Apis.Auth;
 using Hackaton_1st_round.Server.Controllers.TeamEntity;
 using Hackaton_1st_round.Server.Models.AspNetUsers;
 using Hackaton_1st_round.Server.Persistance.AspNetUsers;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 
 namespace Hackaton_1st_round.Server.Controllers.AspNetUsers;
@@ -16,6 +20,9 @@ using Swashbuckle.AspNetCore.Annotations;
     public class AspNetUsersController : ControllerBase
     {
         private AspNetUsersService _aspNetUsersService = new AspNetUsersService();
+
+        private SignInManager<Models.AspNetUsers.AspNetUsers> _signInManager;
+        
     [SwaggerOperation(Summary = "Pobierz wszystkich użytkowników")]
     [HttpGet]
         public ActionResult<IEnumerable<Models.AspNetUsers.AspNetUsers>> GetAll()
@@ -30,7 +37,7 @@ using Swashbuckle.AspNetCore.Annotations;
                 return Ok(aspNetUsers);
             }
         }
-
+        
     [SwaggerOperation(Summary = "Pobierz dane użytkownika o wybranym id")]
     [HttpGet("id/{id}")]
         public ActionResult<Models.AspNetUsers.AspNetUsers> GetById(string id)
@@ -46,7 +53,7 @@ using Swashbuckle.AspNetCore.Annotations;
                 return Ok(aspNetUsers);
             }
         }
-
+    
     [SwaggerOperation(Summary = "Zaktualizuj wybranego użytkownika o danym id")]
     [HttpPut("update/{id}")]
         public ActionResult<Models.AspNetUsers.AspNetUsers> Edit(string id, string? email = null,
@@ -280,6 +287,109 @@ using Swashbuckle.AspNetCore.Annotations;
             }
         }
 
+        
+        [HttpPost("Facebook")]
+        public ActionResult<Models.AspNetUsers.AspNetUsers> Facebook([FromBody] Models.AspNetUsers.AspNetUsers facebookEntity)
+        {
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                var query = session.Query<Models.AspNetUsers.AspNetUsers>().Where(x => x.Email == facebookEntity.Email)
+                    .ToList();
+                if (query.Count() > 0) // Created user
+                {
+                    return StatusCode(201);
+                }
+                else
+                {
+                    using (var transaction = session.BeginTransaction())
+                    {
+                        
+                            if (facebookEntity.Email != null)
+                            {
+                                facebookEntity.NormalizedEmail = facebookEntity.Email.ToUpper();
+                                facebookEntity.UserName = facebookEntity.Email;
+                                facebookEntity.NormalizedUserName = facebookEntity.UserName.ToUpper();
+                            
+                            }
+
+                            var passwordHasher = new PasswordHasher<Models.AspNetUsers.AspNetUsers>();
+                            string hashedPassword = passwordHasher.HashPassword(null, "");
+                            facebookEntity.PasswordHash = hashedPassword;
+                            facebookEntity.UserRank = UserRank.User;
+                            facebookEntity.Provider = "Facebook";
+                            try
+                            {
+                                session.Save(facebookEntity);
+                                transaction.Commit();
+                                session.Close();
+                                return StatusCode(201);
+                            }
+                            catch (Exception ex)
+                            {
+                                transaction.Rollback();
+                                return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+                            }
+                    }
+                }
+
+            }
+        }
+        
+        
+        [HttpPost("Google")]        
+public async Task<ActionResult<Models.AspNetUsers.AspNetUsers>> Google([FromBody] Models.AspNetUsers.AspNetUsers googleEntity)
+{
+   
+    try
+    {
+        using (var session = NHibernateHelper.OpenSession())    
+        {
+            var query = session.Query<Models.AspNetUsers.AspNetUsers>().Where(x => x.Email == googleEntity.Email).ToList();
+            if (query.Count() > 0) // Created user
+            {
+                return StatusCode(201);
+            }
+            else
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    if (!string.IsNullOrEmpty(googleEntity.Email))
+                    {
+                        googleEntity.NormalizedEmail = googleEntity.Email.ToUpper();
+                        googleEntity.UserName = googleEntity.Email;
+                        googleEntity.NormalizedUserName = googleEntity.UserName.ToUpper();
+                    }
+
+                    var passwordHasher = new PasswordHasher<Models.AspNetUsers.AspNetUsers>();
+                    string hashedPassword = passwordHasher.HashPassword(null, "");
+                    googleEntity.PasswordHash = hashedPassword;
+                    googleEntity.UserRank = UserRank.User;
+                    if (string.IsNullOrEmpty(googleEntity.LastName))
+                    {
+                        googleEntity.LastName = googleEntity.FirstName;
+                    }
+                    googleEntity.Provider = "Google";
+
+                    try
+                    {
+                        session.Save(googleEntity);
+                        transaction.Commit();
+                        return StatusCode(201);
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+                    }
+                }
+            }
+        }
+    }
+    catch (InvalidJwtException)
+    {
+        return Unauthorized("Invalid Google token.");
+    }
+}
     [SwaggerOperation(Summary = "Rejestracja nowego uzytkownika")]
     [HttpPost("registerCustom")]
         public ActionResult<Models.AspNetUsers.AspNetUsers> Register([FromBody] Models.AspNetUsers.AspNetUsers testEntity)
@@ -302,7 +412,7 @@ using Swashbuckle.AspNetCore.Annotations;
                         var passwordHasher = new PasswordHasher<Models.AspNetUsers.AspNetUsers>();
                         string hashedPassword = passwordHasher.HashPassword(null, testEntity.PasswordHash);
                         testEntity.PasswordHash = hashedPassword;
-                        
+                        testEntity.Provider = "Website";
                         if (testEntity.Email != null)
                         {
                             testEntity.NormalizedEmail = testEntity.Email.ToUpper();
@@ -312,12 +422,6 @@ using Swashbuckle.AspNetCore.Annotations;
                         }
 
                         testEntity.UserRank = UserRank.User;
-
-                        if (testEntity.FirstName != null)
-                            testEntity.FirstName = testEntity.FirstName;
-                        if (testEntity.LastName != null)
-                            testEntity.LastName = testEntity.LastName;
-                        
                         session.Save(testEntity);
                         transaction.Commit();
                         return CreatedAtAction(nameof(GetById), new { id = testEntity.Id }, testEntity);

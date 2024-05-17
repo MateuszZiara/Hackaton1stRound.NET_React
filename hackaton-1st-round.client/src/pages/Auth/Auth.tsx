@@ -16,7 +16,8 @@ import {
 import './Auth.css';
 import '@mantine/core/styles.css';
 import {checkUserLoggedIn} from "../../features/getCookies/getCookies";
-
+import {LoginSocialFacebook, LoginSocialGoogle} from 'reactjs-social-login'    
+import {FacebookLoginButton, GoogleLoginButton} from "react-social-login-buttons";
 
 export default function Auth(props) {
     const [type, toggle] = useToggle(['login', 'register']);
@@ -61,12 +62,13 @@ export default function Auth(props) {
                 return;
             }
 
-            // Jeśli email nie istnieje, zarejestruj użytkownika
+   
             const registerData = {
                 FirstName: form.values.firstName,
                 LastName: form.values.lastName,
                 Email: form.values.email,
                 PasswordHash: form.values.password,
+                Provider: ''
             };
 
             const registerResponse = await fetch(registerUrl, {
@@ -90,7 +92,7 @@ export default function Auth(props) {
             console.error('Error during registration:', error);
         }
     }
-
+    
     async function handleLogin() {
         const url = "https://localhost:7071/login?useCookies=true&useSessionCookies=true";
         const data = {
@@ -156,10 +158,15 @@ export default function Auth(props) {
             } else {
 
             }
+            
         };
         
     },[]);
+    
+    const [profile, setProfile] = useState(null);
     return (
+        <>
+            
         <Paper radius="md" p="xl" withBorder {...props}>
             <Text size="lg" fw={500}>
                 {type === 'register'
@@ -216,7 +223,142 @@ export default function Auth(props) {
                             onChange={(event) => form.setFieldValue('terms', event.currentTarget.checked)}
                         />
                     )}
+                    <LoginSocialFacebook appId="310778082068786" onReject={(error) => {console.log(error)}} onResolve={async (response) => {
+                        setProfile(response.data);
+                        console.log(response.data);
+                        const registerData = {
+                            FirstName: response.data.short_name,
+                            LastName: response.data.last_name,
+                            Email: response.data.email,
+                            Provider: ""
+                        };
+                     
+                        const registerUrl = "https://localhost:7071/api/AspNetUsers/Facebook";
+                        const registerResponse = await fetch(registerUrl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(registerData),
+                        });
 
+                        if (!registerResponse.ok) {
+                            const errorMessage = await registerResponse.text();
+                            throw new Error(`HTTP error! Status: ${registerResponse.status}, Message: ${errorMessage}`);
+                        }
+                        if(registerResponse.status === 201) 
+                        {
+                            const url = "https://localhost:7071/loginCustomFacebook?useCookies=true&useSessionCookies=true";
+                            const data = {
+                                email: response.data.email,
+                                token: response.data.accessToken
+                            }
+
+                            try {
+                                const response = await fetch(url, {
+                                    credentials: 'include',
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type':
+                                            'application/json',
+                                        'Cookie': 'cookieName=cookieValue'
+                                    },
+                                    body: JSON.stringify(data),
+                                });
+                                if (!response.ok) {
+
+                                    const errorMessage = await response.text();
+                                    throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorMessage}`);
+                                } else {
+                                    window.location.href = "/";
+                                }
+
+                            } catch (error) {
+                                console.error('Error creating entity:', error);
+                            }
+                        }
+
+                    }}>
+                        <FacebookLoginButton />
+                    </LoginSocialFacebook>
+                    <LoginSocialGoogle client_id="372766842250-7qrb11fd04g9n9p7v3o32tqo1l6s424q.apps.googleusercontent.com" scope="profile email" onReject={(error) => {console.log(error)}} onResolve={async (response) => {
+                        const userInfoUrl = 'https://www.googleapis.com/oauth2/v3/userinfo';
+                        const accessToken = response.data.access_token;
+                        let userInfo;
+
+                        try {
+                            const userInfoResponse = await fetch(userInfoUrl, {
+                                headers: {
+                                    'Authorization': `Bearer ${accessToken}`,
+                                },
+                            });
+
+                            if (!userInfoResponse.ok) {
+                                const errorMessage = await userInfoResponse.text();
+                                throw new Error(`Failed to fetch user info. Status: ${userInfoResponse.status}, Message: ${errorMessage}`);
+                            }
+
+                            userInfo = await userInfoResponse.json();
+                            console.log(userInfo); // Check the user info
+
+                        } catch (error) {
+                            console.error('Error fetching user info:', error);
+                            return;
+                        }
+
+                        const registerData = {
+                            FirstName: response.data.given_name,
+                            LastName: response.data.family_name,
+                            Email: userInfo.email,
+                            Provider: ""
+                        };
+                        const registerUrl = "https://localhost:7071/api/AspNetUsers/Google";
+                        const registerResponse = await fetch(registerUrl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(registerData),
+                        });
+                        if (!registerResponse.ok) {
+                            const errorMessage = await registerResponse.text();
+                            throw new Error(`HTTP error! Status: ${registerResponse.status}, Message: ${errorMessage}`);
+                        }
+                        if(registerResponse.status === 201)
+                        {
+                            const url = "https://localhost:7071/loginCustomGoogle?useCookies=true&useSessionCookies=true";
+                            const data = {
+                                email: userInfo.email,
+                                token: response.data.access_token
+                            }
+
+                            try {
+                                const response = await fetch(url, {
+                                    credentials: 'include',
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type':
+                                            'application/json',
+                                        'Cookie': 'cookieName=cookieValue'
+                                    },
+                                    body: JSON.stringify(data),
+                                });
+                                if (!response.ok) {
+
+                                    const errorMessage = await response.text();
+                                    throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorMessage}`);
+                                } else {
+                                    window.location.href = "/";
+                                }
+
+                            } catch (error) {
+                                console.error('Error creating entity:', error);
+                            }
+                        }
+                    }}>
+                        <GoogleLoginButton />
+                    </LoginSocialGoogle>
+                    
                     {error && <Text style={{ color: 'red', fontSize: '0.75rem' }}>{error}</Text>} {/* Wyświetlenie komunikatu o błędzie */}
                 </Stack>
 
@@ -231,6 +373,8 @@ export default function Auth(props) {
                     </Button>
                 </Group>
             </form>
+            
         </Paper>
+            </>
     );
 }

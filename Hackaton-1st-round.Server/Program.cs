@@ -11,8 +11,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Diagnostics;
 using Hackaton_1st_round.Server.Models.AspNetUsers;
+using Hackaton_1st_round.Server.Models.IdentityCustom;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication.Google;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,7 +47,7 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(
         "Server=localhost\\SQLEXPRESS;Database=Hackaton;Integrated Security=SSPI;Application Name=Hackaton; TrustServerCertificate=true;"));
-builder.Services.AddAuthorization();
+
 builder.Services.AddIdentityApiEndpoints<AspNetUsers>()
     .AddEntityFrameworkStores<DataContext>();
 
@@ -56,9 +59,22 @@ builder.Services.AddFluentMigratorCore() // Move FluentMigrator registration her
             .ScanIn(Assembly.GetExecutingAssembly()).For.All();
     })
     .AddLogging(config => config.AddFluentMigratorConsole());
-
+var services = builder.Services;
+var configuration = builder.Configuration;
+builder.Services.AddAuthentication()
+    .AddFacebook(options =>
+    {
+        options.AppId = configuration["Authentication:Facebook:AppId"];
+        options.AppSecret = configuration["Authentication:Facebook:AppSecret"];
+    })
+    .AddGoogle(options =>
+    {
+        options.ClientId = configuration["Authentication:Google:ClientId"];
+        options.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+    });
 var app = builder.Build();
 app.MapIdentityApi<AspNetUsers>();
+app.MapIdentityApiCustom<AspNetUsers>();
 using var scope = app.Services.CreateScope();
 var migrator = scope.ServiceProvider.GetService<IMigrationRunner>();
 
@@ -84,6 +100,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -21,9 +21,10 @@ public class _002_CreateTable : Migration
             .WithColumn("LockoutEnd").AsDateTimeOffset().Nullable()
             .WithColumn("LockoutEnabled").AsBoolean().Nullable()
             .WithColumn("AccessFailedCount").AsInt32().Nullable()
-            .WithColumn(nameof(Models.AspNetUsers.AspNetUsers.FirstName)).AsString().Nullable()
-            .WithColumn(nameof(Models.AspNetUsers.AspNetUsers.LastName)).AsString().Nullable()
-            .WithColumn(nameof(Models.AspNetUsers.AspNetUsers.UserRank)).AsInt32().Nullable()
+            .WithColumn(nameof(Models.AspNetUsers.AspNetUsers.FirstName)).AsString().NotNullable()
+            .WithColumn(nameof(Models.AspNetUsers.AspNetUsers.LastName)).AsString().NotNullable()
+            .WithColumn(nameof(Models.AspNetUsers.AspNetUsers.UserRank)).AsInt32().NotNullable()
+            .WithColumn(nameof(Models.AspNetUsers.AspNetUsers.Provider)).AsString().NotNullable()
             .WithColumn("TeamEntity_FK").AsGuid().Nullable();
             Create.ForeignKey("TeamEntity_FK").FromTable("AspNetUsers").ForeignColumn("TeamEntity_FK").ToTable("TeamEntity").PrimaryColumn("id");
 

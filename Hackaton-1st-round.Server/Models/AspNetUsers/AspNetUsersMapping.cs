@@ -8,6 +8,7 @@ public class AspNetUsersMapping : ClassMap<AspNetUsers>
     public AspNetUsersMapping()
     {
         Id(x => x.Id);
+        Map(x => x.Provider);
         Map(x => x.FirstName);
         Map(x => x.LastName);
         Map(x => x.TeamEntity_FK);

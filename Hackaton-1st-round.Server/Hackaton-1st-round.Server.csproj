@@ -8,6 +8,7 @@
     <SpaRoot>..\hackaton-1st-round.client</SpaRoot>
     <SpaProxyLaunchCommand>npm run dev</SpaProxyLaunchCommand>
     <SpaProxyServerUrl>https://localhost:5173</SpaProxyServerUrl>
+    <UserSecretsId>176268ba-c273-488c-b5bc-d34067d9408b</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,12 +16,16 @@
     <PackageReference Include="FluentMigrator" Version="5.2.0" />
     <PackageReference Include="FluentMigrator.Runner" Version="5.2.0" />
     <PackageReference Include="FluentNHibernate" Version="3.3.0" />
+    <PackageReference Include="Google.Apis.Auth" Version="1.68.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="8.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy">
       <Version>8.*-*</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.3" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NHibernate" Version="5.5.1" />
     <PackageReference Include="NUnit" Version="4.1.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
@@ -40,9 +45,6 @@
 
   <ItemGroup>
     <Folder Include="Models\AspNetUsers\" />
-    <Folder Include="Models\AttachmentEntity\" />
-    <Folder Include="Models\ContestantEntity\" />
-    <Folder Include="Nowy folder\" />
   </ItemGroup>
 
 </Project>

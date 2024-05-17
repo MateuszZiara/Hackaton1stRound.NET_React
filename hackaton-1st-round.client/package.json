@@ -1,5 +1,5 @@
 {
-  "name": "flowershop.client",
+  "name": "hackaton-1st-round.client",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,18 +10,23 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^1.6.8",
     "cors": "^2.8.5",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-facebook-login": "^4.1.1",
+    "react-social-login-buttons": "^4.1.0",
+    "reactjs-social-login": "^2.6.3"
   },
   "devDependencies": {
     "@mantine/core": "7.7.1",
-    "@mantine/modals": "7.7.1",
     "@mantine/form": "7.7.1",
     "@mantine/hooks": "7.7.1",
+    "@mantine/modals": "7.7.1",
     "@mantinex/dev-icons": "^1.0.2",
     "@mantinex/mantine-logo": "^1.0.1",
     "@tabler/icons-react": "^3.1.0",
+    "@types/facebook-js-sdk": "^3.3.11",
     "@types/react": "^18.2.56",
     "@types/react-dom": "^18.2.19",
     "@vitejs/plugin-react": "^4.2.1",
