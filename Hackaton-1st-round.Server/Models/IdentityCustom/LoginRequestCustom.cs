@@ -25,4 +25,6 @@ public class LoginRequestCustom
     
     public string? Token { get; init; }
     
+    public string? UserId { get; init; }
+    
 }

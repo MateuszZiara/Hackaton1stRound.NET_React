@@ -224,8 +224,6 @@ export default function Auth(props) {
                         />
                     )}
                     <LoginSocialFacebook appId="310778082068786" onReject={(error) => {console.log(error)}} onResolve={async (response) => {
-                        setProfile(response.data);
-                        console.log(response.data);
                         const registerData = {
                             FirstName: response.data.short_name,
                             LastName: response.data.last_name,
@@ -251,7 +249,8 @@ export default function Auth(props) {
                             const url = "https://localhost:7071/loginCustomFacebook?useCookies=true&useSessionCookies=true";
                             const data = {
                                 email: response.data.email,
-                                token: response.data.accessToken
+                                token: response.data.accessToken,
+                                UserId: response.data.userID
                             }
 
                             try {
@@ -299,7 +298,6 @@ export default function Auth(props) {
                             }
 
                             userInfo = await userInfoResponse.json();
-                            console.log(userInfo); // Check the user info
 
                         } catch (error) {
                             console.error('Error fetching user info:', error);
@@ -329,7 +327,8 @@ export default function Auth(props) {
                             const url = "https://localhost:7071/loginCustomGoogle?useCookies=true&useSessionCookies=true";
                             const data = {
                                 email: userInfo.email,
-                                token: response.data.access_token
+                                token: response.data.access_token,
+                                UserId: response.data.sub
                             }
 
                             try {
@@ -348,7 +347,7 @@ export default function Auth(props) {
                                     const errorMessage = await response.text();
                                     throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorMessage}`);
                                 } else {
-                                    window.location.href = "/";
+                                   window.location.href = "/";
                                 }
 
                             } catch (error) {

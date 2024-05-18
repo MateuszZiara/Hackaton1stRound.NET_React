@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc;
+
 
 namespace Hackaton_1st_round.Server.Models.IdentityCustom;
 
@@ -68,6 +71,13 @@ public static class IdentityApiEndpointRouteBuilderExtensions
             if (!response.IsSuccessStatusCode)
             {
                 return TypedResults.Problem("Invalid Facebook access token.", statusCode: StatusCodes.Status400BadRequest);
+            }
+            var responseContent = await response.Content.ReadAsStringAsync();
+            var facebookUser = JsonSerializer.Deserialize<User>(responseContent);
+
+            if (login.UserId != facebookUser.Id)
+            {
+                return TypedResults.Problem("We can't verify your token.", statusCode: StatusCodes.Status400BadRequest);
             }
             
             using (var session = NHibernateHelper.OpenSession())
@@ -190,7 +200,12 @@ public static class IdentityApiEndpointRouteBuilderExtensions
             {
                 return TypedResults.Problem("Invalid Facebook access token.", statusCode: StatusCodes.Status400BadRequest);
             }
-            
+            var responseContent = await response.Content.ReadAsStringAsync();
+            var google = JsonSerializer.Deserialize<User>(responseContent);
+            if (login.UserId != google.user_id)
+            {
+                return TypedResults.Problem("We can't verify your token.", statusCode: StatusCodes.Status400BadRequest);
+            }
             using (var session = NHibernateHelper.OpenSession())
             {
                 var query = session.Query<AspNetUsers.AspNetUsers>().First(x => x.Email == login.Email);
@@ -239,6 +254,16 @@ public static class IdentityApiEndpointRouteBuilderExtensions
             // The signInManager already produced the needed response in the form of a cookie or bearer token.
             return TypedResults.Empty;
         });
+          
         return null;
+        
+        
+    }
+    public class User
+    {
+        [JsonPropertyName("id")]
+        public string Id { get; set; }
+        [JsonPropertyName("user_id")]
+        public string user_id { get; set; }
     }
 }
