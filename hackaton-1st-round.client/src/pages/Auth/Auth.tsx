@@ -249,8 +249,7 @@ export default function Auth(props) {
                             const url = "https://localhost:7071/loginCustomFacebook?useCookies=true&useSessionCookies=true";
                             const data = {
                                 email: response.data.email,
-                                token: response.data.accessToken,
-                                UserId: response.data.userID
+                                token: response.data.accessToken
                             }
 
                             try {
@@ -327,8 +326,7 @@ export default function Auth(props) {
                             const url = "https://localhost:7071/loginCustomGoogle?useCookies=true&useSessionCookies=true";
                             const data = {
                                 email: userInfo.email,
-                                token: response.data.access_token,
-                                UserId: response.data.sub
+                                token: response.data.access_token
                             }
 
                             try {
