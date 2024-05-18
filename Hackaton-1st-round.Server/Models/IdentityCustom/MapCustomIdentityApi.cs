@@ -67,19 +67,17 @@ public static class IdentityApiEndpointRouteBuilderExtensions
             [FromServices] IServiceProvider sp) =>
         {
             var httpClient = new HttpClient();
-            var response = await httpClient.GetAsync($"https://graph.facebook.com/me?access_token={login.Token}");
+            var response = await httpClient.GetAsync($"https://graph.facebook.com/me?fields=id,name,email&access_token={login.Token}");
             if (!response.IsSuccessStatusCode)
             {
                 return TypedResults.Problem("Invalid Facebook access token.", statusCode: StatusCodes.Status400BadRequest);
             }
             var responseContent = await response.Content.ReadAsStringAsync();
-            var facebookUser = JsonSerializer.Deserialize<User>(responseContent);
-
-            if (login.UserId != facebookUser.Id)
+            var facebookUser = JsonSerializer.Deserialize<FacebookUser>(responseContent);
+            if (facebookUser.email != login.Email)
             {
-                return TypedResults.Problem("We can't verify your token.", statusCode: StatusCodes.Status400BadRequest);
+                return TypedResults.Problem("We can't verify your data", statusCode: StatusCodes.Status400BadRequest);
             }
-            
             using (var session = NHibernateHelper.OpenSession())
             {
                 var query = session.Query<AspNetUsers.AspNetUsers>().First(x => x.Email == login.Email);
@@ -201,10 +199,10 @@ public static class IdentityApiEndpointRouteBuilderExtensions
                 return TypedResults.Problem("Invalid Facebook access token.", statusCode: StatusCodes.Status400BadRequest);
             }
             var responseContent = await response.Content.ReadAsStringAsync();
-            var google = JsonSerializer.Deserialize<User>(responseContent);
-            if (login.UserId != google.user_id)
+            var googleUser = JsonSerializer.Deserialize<GoogleUser>(responseContent);
+            if (googleUser.email != login.Email)
             {
-                return TypedResults.Problem("We can't verify your token.", statusCode: StatusCodes.Status400BadRequest);
+                return TypedResults.Problem("We can't verify your data", statusCode: StatusCodes.Status400BadRequest);
             }
             using (var session = NHibernateHelper.OpenSession())
             {
@@ -259,11 +257,16 @@ public static class IdentityApiEndpointRouteBuilderExtensions
         
         
     }
-    public class User
+    public class FacebookUser
     {
-        [JsonPropertyName("id")]
-        public string Id { get; set; }
-        [JsonPropertyName("user_id")]
-        public string user_id { get; set; }
+        [JsonPropertyName("email")]
+        public string email { get; set; }
+       
+    }
+    public class GoogleUser
+    {
+        [JsonPropertyName("email")]
+        public string email { get; set; }
+       
     }
 }
