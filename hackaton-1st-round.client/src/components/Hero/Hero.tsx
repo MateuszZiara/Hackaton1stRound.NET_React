@@ -28,7 +28,7 @@ export function Hero() {
        
             if(loggedIn)
             {
-                window.location.href = "/panel";
+                window.location.href = "/home";
             }
             else
                 window.location.href = "/pag";
@@ -39,7 +39,7 @@ export function Hero() {
 
         if(loggedIn)
         {
-            window.location.href = "/panel";
+            window.location.href = "/home";
         }
         else
             window.location.href = "/pag";

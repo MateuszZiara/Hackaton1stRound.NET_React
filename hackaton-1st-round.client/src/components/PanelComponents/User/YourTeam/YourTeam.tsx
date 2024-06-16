@@ -63,7 +63,6 @@ export function YourTeam() {
 
         // Handle successful response here if needed
         console.log('User left team');
-
         window.location.href = "/panel";
     }
 
@@ -106,8 +105,8 @@ export function YourTeam() {
         }catch (error) {
             console.error('Error creating entity:', error);
         }
-        window.location.href = "/panel";
-
+        //window.location.href = "/panel";
+        window.location.reload();
 
 
     }

@@ -31,7 +31,7 @@ export default function Auth(props) {
         },
         validate: {
             email: (val) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
-            password: (val) => (val.length <= 4 ? 'Password should include at least 4 characters' : null),
+            password: (val) => (val.length <= 8 ? 'Password should include at least 8 characters' : null),
         },
     });
 
@@ -223,7 +223,7 @@ export default function Auth(props) {
                             onChange={(event) => form.setFieldValue('terms', event.currentTarget.checked)}
                         />
                     )}
-                    <LoginSocialFacebook appId="310778082068786" onReject={(error) => {console.log(error)}} onResolve={async (response) => {
+                    <LoginSocialFacebook appId="1021529359650680" onReject={(error) => {console.log(error)}} onResolve={async (response) => {
                         const registerData = {
                             FirstName: response.data.short_name,
                             LastName: response.data.last_name,

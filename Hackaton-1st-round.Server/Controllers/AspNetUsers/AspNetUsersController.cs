@@ -9,12 +9,15 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 
 namespace Hackaton_1st_round.Server.Controllers.AspNetUsers;
+
+using Hackaton_1st_round.Server.Models.TeamEntity;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Text.RegularExpressions;
+using static NHibernate.Engine.Query.CallableParser;
 
-
-    [EnableCors("AllowAllOrigins")]
+[EnableCors("AllowAllOrigins")]
     [Route("api/[controller]")]
     [ApiController]
     public class AspNetUsersController : ControllerBase
@@ -527,4 +530,75 @@ public async Task<ActionResult<Models.AspNetUsers.AspNetUsers>> Google([FromBody
             }
         }
 
+
+    [SwaggerOperation(Summary = "Zmiana hasła użytkownika")]
+    [HttpPut("changePassword")]
+    public ActionResult<Models.AspNetUsers.AspNetUsers> ChangePassword([FromBody] ChangePasswordDTO request)
+    {
+        using (var session = NHibernateHelper.OpenSession())
+        {
+            using (var transaction = session.BeginTransaction())
+            {
+                var query = session.Query<Models.AspNetUsers.AspNetUsers>().Where(x => x.Id == request.Id).ToList();
+                if (query.Count == 1)
+                {
+                    var passwordHasher = new PasswordHasher<Models.AspNetUsers.AspNetUsers>();
+                    // Sprawdź hasło
+                    if (passwordHasher.VerifyHashedPassword(null, query[0].PasswordHash, request.OldPassword) != PasswordVerificationResult.Success)
+                    {
+                        return Unauthorized("Wrong password. Try again");
+                    }
+                    if (request.NewPassword.Length >= 8 || request.NewPassword == null)
+                    {
+                        return Unauthorized("New password doesn't meet criteria. Password must be at least 8 characters long.");
+                    }
+                    // Zaktualizuj hasło
+                    query[0].PasswordHash = passwordHasher.HashPassword(null, request.NewPassword);
+                    session.SaveOrUpdate(query[0]);
+                    transaction.Commit();
+                    return query[0];
+                }
+
+                return NotFound("No user with this id");
+            }
+        }
+    }
+
+
+    [SwaggerOperation(Summary = "Zmiana maila użytkownika")]
+    [HttpPut("changeEmail")]
+    public ActionResult<Models.AspNetUsers.AspNetUsers> ChangeEmail([FromBody] ChangePasswordDTO request)
+    {
+        using (var session = NHibernateHelper.OpenSession())
+        {
+            using (var transaction = session.BeginTransaction())
+            {
+                var query = session.Query<Models.AspNetUsers.AspNetUsers>().Where(x => x.Id == request.Id).ToList();
+                if (query.Count == 1)
+                {
+                    var passwordHasher = new PasswordHasher<Models.AspNetUsers.AspNetUsers>();
+                    // Sprawdź hasło czy się zgadza, czy mail jest poprawny, czy mail istnieje
+                    if (
+                        (passwordHasher.VerifyHashedPassword(null, query[0].PasswordHash, request.OldPassword) != PasswordVerificationResult.Success) ||
+                        (!Regex.IsMatch(request.NewEmail, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) ||
+                        (session.Query<Models.AspNetUsers.AspNetUsers>().FirstOrDefault(u => u.Email == request.NewEmail).IsAny())
+                        )
+                    {
+                        return Unauthorized("Wrong data. Try again");
+                    }
+                    
+                    // Zaktualizuj hasło
+                    query[0].Email = request.NewEmail;
+                    query[0].NormalizedEmail = request.NewEmail.ToUpper();
+                    query[0].UserName = request.NewEmail;
+                    query[0].NormalizedUserName = request.NewEmail.ToUpper();
+                    session.SaveOrUpdate(query[0]);
+                    transaction.Commit();
+                    return query[0];
+                }
+
+                return NotFound("No user with this id");
+            }
+        }
+    }
 }

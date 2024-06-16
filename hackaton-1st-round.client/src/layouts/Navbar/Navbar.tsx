@@ -1,32 +1,41 @@
-// Navbar.tsx
 import { useEffect, useState } from 'react';
-import {Center, Tooltip, UnstyledButton, Stack, rem, Avatar, Image} from '@mantine/core';
-import { MantineLogo } from '@mantinex/mantine-logo';
-import {IconHome2, IconUsers, IconSettings, IconLogout, IconFiles, IconUsersGroup} from '@tabler/icons-react';
+import { Center, Tooltip, UnstyledButton, Stack, rem, Avatar, Image } from '@mantine/core';
+import { Link } from 'react-router-dom';
+import {
+    IconHome2,
+    IconUsers,
+    IconSettings,
+    IconLogout,
+    IconFiles,
+    IconUsersGroup,
+    IconCreditCardPay
+} from '@tabler/icons-react';
 import classes from './Navbar.module.css';
 import { logout } from "../../features/getCookies/getCookies";
 import { checkUserLoggedIn } from "../../features/getCookies/getCookies";
 import logoSmall from "../../../public/logoSmall.png";
+
 interface NavbarLinkProps {
     icon: typeof IconHome2;
     label: string;
-    onClick?(): void;
+    path: string;
 }
 
-
-function NavbarLink({ icon: Icon, label, onClick }: NavbarLinkProps) {
+function NavbarLink({ icon: Icon, label, path }: NavbarLinkProps) {
     return (
         <Tooltip label={label} position="right" transitionProps={{ duration: 0 }}>
-            <UnstyledButton onClick={onClick} className={classes.link}>
-                <Icon style={{ width: rem(30), height: rem(30) }} stroke={1} />
-            </UnstyledButton>
+            <Link to={path}>
+                <UnstyledButton className={classes.link}>
+                    <Icon style={{ width: rem(30), height: rem(30) }} stroke={1} />
+                </UnstyledButton>
+            </Link>
         </Tooltip>
     );
 }
 
-export function Navbar({ setActivePage }: { setActivePage: (index: string) => void }) {
+export function Navbar() {
     const [initials, setInitials] = useState("");
-    const [userRank, setUserRank] = useState(null);
+    const [userRank, setUserRank] = useState<number | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -44,7 +53,6 @@ export function Navbar({ setActivePage }: { setActivePage: (index: string) => vo
                 const lastInitial = data.lastName.charAt(0);
                 setInitials(firstInitial + lastInitial);
                 setUserRank(data.userRank);
-                console.log(initials); // Zauważ, że wartość initials może być niezaktualizowana na tym etapie
             } catch (error) {
                 console.error('Error fetching team details:', error);
             }
@@ -53,8 +61,7 @@ export function Navbar({ setActivePage }: { setActivePage: (index: string) => vo
         fetchData();
     }, []);
 
-
-    const [loggedIn, setLoggedIn] = useState(null);
+    const [loggedIn, setLoggedIn] = useState<boolean | null>(null);
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -65,7 +72,7 @@ export function Navbar({ setActivePage }: { setActivePage: (index: string) => vo
                 }
             } catch (error) {
                 console.error('Error checking user login status:', error);
-                setLoggedIn(false); // Ustawienie na false w przypadku błędu
+                setLoggedIn(false);
             }
         };
 
@@ -73,17 +80,18 @@ export function Navbar({ setActivePage }: { setActivePage: (index: string) => vo
     }, []);
 
     const linksUser = [
-        { icon: IconHome2, label: 'Strona główna', path: 'home' },
-        { icon: IconUsers, label: 'Twój zespół', path: 'teams' },
-        { icon: IconSettings, label: 'Ustawienia', path: 'settings' },
+        { icon: IconHome2, label: 'Strona główna', path: '/home' },
+        { icon: IconUsers, label: 'Twój zespół', path: '/myteam' },
+        { icon: IconCreditCardPay, label: 'Płatności', path: '/payment' },
+        { icon: IconSettings, label: 'Ustawienia', path: '/settings' },
     ];
 
     const linksAdmin = [
-        { icon: IconHome2, label: 'Strona główna', path: 'home' },
-        { icon: IconUsersGroup, label: 'Zespoły', path: 'teams' },
-        { icon: IconUsers, label: 'Uczestnicy', path: 'users' },
-        { icon: IconFiles, label: 'Zgłoszenia', path: 'requests' },
-        { icon: IconSettings, label: 'Ustawienia', path: 'settings' },
+        { icon: IconHome2, label: 'Strona główna', path: '/home' },
+        { icon: IconUsersGroup, label: 'Zespoły', path: '/teams' },
+        { icon: IconUsers, label: 'Uczestnicy', path: '/users' },
+        { icon: IconFiles, label: 'Zgłoszenia', path: '/requests' },
+        { icon: IconSettings, label: 'Ustawienia', path: '/settings' },
     ];
 
     return (
@@ -92,39 +100,39 @@ export function Navbar({ setActivePage }: { setActivePage: (index: string) => vo
                 <Image src={logoSmall} />
             </Center>
 
-
             <div className={classes.navbarMain}>
-                {
-                    userRank === 2 ? (
-                            <Stack justify="center" gap={20}>
-                                {linksAdmin.map((link) => (
-                                    <NavbarLink
-                                        key={link.label}
-                                        icon={link.icon}
-                                        label={link.label}
-                                        onClick={() => setActivePage(link.path)}
-                                    />
-                                ))}
-                            </Stack>
-                    ) : (
-                        <Stack justify="center" gap={20}>
-                            {linksUser.map((link) => (
-                                <NavbarLink
-                                    key={link.label}
-                                    icon={link.icon}
-                                    label={link.label}
-                                    onClick={() => setActivePage(link.path)}
-                                />
-                            ))}
-                        </Stack>
-                    )
-                }
-
+                {userRank === 2 ? (
+                    <Stack justify="center" gap={20}>
+                        {linksAdmin.map((link) => (
+                            <NavbarLink
+                                key={link.label}
+                                icon={link.icon}
+                                label={link.label}
+                                path={link.path}
+                            />
+                        ))}
+                    </Stack>
+                ) : (
+                    <Stack justify="center" gap={20}>
+                        {linksUser.map((link) => (
+                            <NavbarLink
+                                key={link.label}
+                                icon={link.icon}
+                                label={link.label}
+                                path={link.path}
+                            />
+                        ))}
+                    </Stack>
+                )}
             </div>
 
             <Stack justify="center" gap={10}>
                 <Avatar variant={"outline"} color={"white"} w={50} h={50}>{initials}</Avatar>
-                <NavbarLink icon={IconLogout} label="Wyloguj" onClick={logout} />
+                <UnstyledButton className={classes.link} onClick={logout}>
+                    <Tooltip label="Wyloguj" position="right" transitionProps={{ duration: 0 }}>
+                        <IconLogout style={{ width: rem(30), height: rem(30) }} stroke={1} />
+                    </Tooltip>
+                </UnstyledButton>
             </Stack>
         </nav>
     );

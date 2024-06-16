@@ -1,5 +1,4 @@
-import {Container, Text, Button, Group, Flex} from '@mantine/core';
-import classes from "./Home.module.css";
+import {Flex} from '@mantine/core';
 import { HeaderMenu } from "../../layouts/Header/HeaderMenu";
 import {useEffect} from "react";
 import {Footer} from "../../layouts/Footer/Footer";
@@ -20,10 +19,8 @@ export default function Home() {
         });
 
         if (response.ok) {
-
             return true;
         } else {
-
             return false;
         }
 
@@ -33,7 +30,7 @@ export default function Home() {
         const checkCookies = async () => {
             const isLoggedIn = await getCookies();
             if (isLoggedIn) {
-                window.location.href = "/main";
+                window.location.href = "/home";
             }
         };
         checkCookies();
