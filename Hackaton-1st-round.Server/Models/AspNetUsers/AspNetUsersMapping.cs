@@ -27,6 +27,7 @@ public class AspNetUsersMapping : ClassMap<AspNetUsers>
         Map(x => x.LockoutEnd);
         Map(x => x.LockoutEnabled);
         Map(x => x.AccessFailedCount);
+        Map(x => x.Cash);
         Table(_tablename);
     }
 }

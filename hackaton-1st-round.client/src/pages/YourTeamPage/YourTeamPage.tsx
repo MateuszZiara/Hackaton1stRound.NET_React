@@ -15,6 +15,7 @@ export default function YourTeamPage() {
                 <Navbar />
             </div>
             <div style={{ zIndex: 0 }}>
+                
                 <YourTeam />
             </div>
         </Flex>

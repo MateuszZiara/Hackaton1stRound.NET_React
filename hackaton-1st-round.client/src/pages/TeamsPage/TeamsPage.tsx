@@ -16,6 +16,7 @@ export default function TeamsPage() {
                 <Navbar />
             </div>
             <div style={{ zIndex: 0 }}>
+                
                 <AllTeams />
             </div>
         </Flex>

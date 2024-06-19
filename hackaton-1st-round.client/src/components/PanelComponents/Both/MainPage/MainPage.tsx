@@ -1,34 +1,38 @@
 import React from "react";
-import {Button, Container, Group, Image, List, rem, Text, ThemeIcon, Title} from "@mantine/core";
-import {IconCheck} from "@tabler/icons-react";
-import mainPage from "../../../../../public/mainPage.webp"
-import classes from "./MainPage.module.css"
-export function MainPage(){
+import { Button, Container, Image, Text, Title } from "@mantine/core";
+import mainPage from "../../../../../public/mainPage.webp";
+import classes from "./MainPage.module.css";
 
-    return(
-        <Container size="md">
+
+function ButtonMyTeam() {
+        window.location.href = "/myteam";
+}
+function ButtonPayment() {
+    window.location.href = "/payment";
+}
+export function MainPage() {
+    return (
+        <Container size="md" className={classes.container}>
             <div className={classes.inner}>
                 <div className={classes.content}>
                     <Title className={classes.title}>
-                        Dodaj swój zespół na <span className={classes.highlight}>hackatonu</span> <br/> na Politechnice
+                        Dodaj swój zespół na <span className={classes.highlight}>hackatonu</span> <br /> na Politechnice
                         Świętokrzyskiej.
                     </Title>
-                    <Text c="dimmed" mt="md">
+                    <Text color="dimmed" mt="md">
                         Sprawdź się w programowaniu ...
                     </Text>
-                    <Group mt={30}>
-                        <Button radius="xl" size="md" className={classes.control} >
-                            Zarejestruj zespół
+                    <div className={classes.buttons}>
+                        <Button radius="xl" size="md" className={classes.control} onClick={ButtonMyTeam}>
+                            Stwórz zespół!
                         </Button>
-                        <Button variant="default" radius="xl" size="md" className={classes.control}
-                                >
-                            Wyślij zgłoszenie
+                        <Button variant="default" radius="xl" size="md" className={classes.control} onClick={ButtonPayment}>
+                            Przejdź do płatności!
                         </Button>
-                    </Group>
+                    </div>
                 </div>
-                <Image src={mainPage} className={classes.image}/>
+                <Image src={mainPage} className={classes.image} />
             </div>
         </Container>
-
     );
 }

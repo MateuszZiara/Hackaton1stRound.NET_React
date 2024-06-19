@@ -12,8 +12,6 @@ export default function Home() {
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Credentials':'true'
             }
 
         });
@@ -49,11 +47,13 @@ export default function Home() {
         >
             <div>
                 <HeaderMenu />
+                
             </div>
             <div>
                 <Hero/>
             </div>
             <div style={{textAlign: "center", width: "100%"}}>
+                
                 <Footer/>
             </div>
         </Flex>
