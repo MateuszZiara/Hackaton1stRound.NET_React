@@ -63,7 +63,7 @@ export function YourTeam() {
 
         // Handle successful response here if needed
         console.log('User left team');
-        window.location.href = "/panel";
+        window.location.reload();
     }
 
     async function SendInvite() {
@@ -106,8 +106,17 @@ export function YourTeam() {
             console.error('Error creating entity:', error);
         }
         //window.location.href = "/panel";
+        const url2 = "https://localhost:7071/api/AspNetUsers/addCash?money=29.99";
+        try {
+            const response = await fetch(url2, {
+                credentials: 'include',
+                method: 'PUT',
+            });
+        }catch (error) {
+            console.error('Error adding cash:', error);
+        }
         window.location.reload();
-
+        
 
     }
 
@@ -307,6 +316,7 @@ export function YourTeam() {
                         style={{ marginBottom: '16px' }}
                     />
                     <Button type="submit" onClick = {handleRegister}>Załóż zespół</Button>
+                    <div>Założenie zespołu kosztuje 29.99zł!</div> 
                 </form>
 
             ) : (
