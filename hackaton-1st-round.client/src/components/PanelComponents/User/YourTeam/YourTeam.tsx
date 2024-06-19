@@ -82,7 +82,7 @@ export function YourTeam() {
 
         // Handle successful response here if needed
 
-        window.location.href = "/panel";
+        window.location.reload();
     }
 
     async function handleRegister() {
@@ -350,12 +350,17 @@ export function YourTeam() {
                                 <div>
                                     Członkowie:
                                 </div>
-                                {users.map((user) => (
-                                    <div key={user.id} style={{display: "flex", alignItems: "center"}}>
-                                        <Avatar style={{marginRight: '8px'}}>{user.name.charAt(0)}</Avatar>
-                                        <div>{user.name} {user.surname}</div>
-                                    </div>
-                                ))}
+                                <div style={{display: "flex", flexDirection: "column"}}>
+                                    {users.map((user) => (
+                                        <div key={user.id}
+                                             style={{display: "flex", alignItems: "center", marginBottom: '8px'}}>
+                                            <Avatar style={{marginRight: '8px'}}>{user.name.charAt(0)}</Avatar>
+                                            <div>{user.name} {user.surname}</div>
+                                            <Button style={{marginLeft: 'auto'}} variant="outline" color="red" size="xs" radius="xl"> x </Button>
+                                        </div>
+                                    ))}
+                                </div>
+
                             </div>
                         </div>
                     </div>
