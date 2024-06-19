@@ -15,4 +15,6 @@ public class AspNetUsers: IdentityUser
     public virtual UserRank UserRank { get; set; }
     
     public virtual string Provider { get; set; }
+    
+    public virtual float Cash { get; set; }
 }

@@ -41,6 +41,7 @@ using static NHibernate.Engine.Query.CallableParser;
             }
         }
         
+        
     [SwaggerOperation(Summary = "Pobierz dane użytkownika o wybranym id")]
     [HttpGet("id/{id}")]
         public ActionResult<Models.AspNetUsers.AspNetUsers> GetById(string id)
@@ -149,7 +150,30 @@ using static NHibernate.Engine.Query.CallableParser;
                 return Unauthorized();
             }
         }
-
+        [SwaggerOperation(Summary = "Pobierz Pieniadze uzytkownika do zaplaty po ciasteczkach")]
+        [HttpGet("getcash")]
+        public float GetCash()
+        {
+            var user = GetUserInfoAsObject();
+            return user.Cash;
+        }
+        [SwaggerOperation(Summary = "Dodaj do zaplaty uzytkownikowi w ciasteczkach")]
+        [HttpPut("addCash")]
+        public bool AddCash(float money)
+        {
+            var user = GetUserInfoAsObject();
+            user.Cash += money;
+            user.Cash = (float)Math.Round(user.Cash, 2);
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    session.SaveOrUpdate(user);
+                    transaction.Commit();
+                    return true;
+                }
+            }
+        }
     [SwaggerOperation(Summary = "Pobierz info o użytkowniku z danym tokenem sesji jako obiekt")]
     [HttpGet("info/object")]
         public Models.AspNetUsers.AspNetUsers GetUserInfoAsObject()
@@ -320,6 +344,7 @@ using static NHibernate.Engine.Query.CallableParser;
                             facebookEntity.PasswordHash = hashedPassword;
                             facebookEntity.UserRank = UserRank.User;
                             facebookEntity.Provider = "Facebook";
+                            facebookEntity.Cash = 0.0f;
                             try
                             {
                                 session.Save(facebookEntity);
@@ -367,6 +392,7 @@ public async Task<ActionResult<Models.AspNetUsers.AspNetUsers>> Google([FromBody
                     string hashedPassword = passwordHasher.HashPassword(null, "");
                     googleEntity.PasswordHash = hashedPassword;
                     googleEntity.UserRank = UserRank.User;
+                    googleEntity.Cash = 0.0f;
                     if (string.IsNullOrEmpty(googleEntity.LastName))
                     {
                         googleEntity.LastName = googleEntity.FirstName;
@@ -424,6 +450,7 @@ public async Task<ActionResult<Models.AspNetUsers.AspNetUsers>> Google([FromBody
                             
                         }
 
+                        testEntity.Cash = 0.0f;
                         testEntity.UserRank = UserRank.User;
                         session.Save(testEntity);
                         transaction.Commit();
