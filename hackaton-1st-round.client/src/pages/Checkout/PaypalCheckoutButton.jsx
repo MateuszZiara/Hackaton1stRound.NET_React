@@ -7,13 +7,10 @@ async function reset()
     window.location.reload();
 }
 const PaypalCheckoutButton = (props) => {
-    const { product } = props;
+    const { product } = props.product;
 
     const [paidFor, setPaidFor] = useState(false);
     const [error, setError] = useState(null);
-    const [user, setUserId] = useState();
-    const [team, setTeamId] = useState();
-    const [isDataLoaded, setIsDataLoaded] = useState(false);
 
     const handleApprove = (orderId) => {
         setPaidFor(true);
@@ -24,29 +21,6 @@ const PaypalCheckoutButton = (props) => {
         reset();
         console.log("elo");
     }
-    const fetchData = async () => {
-        try {
-            const responseUserDetails = await fetch("https://localhost:7071/api/AspNetUsers/info", {
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Credentials': 'true'
-                }
-            });
-            const data = await responseUserDetails.json();
-            setUserId(data.id);
-            setTeamId(data.teamEntity_FK);
-            setIsDataLoaded(true);
-        } catch (error) {
-            console.error('Error fetching user details:', error);
-        }
-    };
-    useEffect(() => {
-        
-
-        fetchData();
-    }, []);
 
     const id = import.meta.env.REACT_APP_PAYPAL_CLIENT_ID;
     return (
@@ -61,13 +35,14 @@ const PaypalCheckoutButton = (props) => {
                         return actions.resolve();
                     }
                 }}
+
                 createOrder={(data, actions) => {
                     return actions.order.create({
                         purchase_units: [
                             {
-                                description: product.description,
+                                description: props.product.description,
                                 amount: {
-                                    value: product.price
+                                    value: props.product.price
                                 },
                             },
                         ],
@@ -84,22 +59,20 @@ const PaypalCheckoutButton = (props) => {
                         console.error('Error adding cash:', error);
                     }
                     const order = await action.order.capture();
-                    if (!isDataLoaded) {
-                        await fetchData();
-                    }
+
                     console.log("order", order);
                     
                     //tutaj wstawić logikę dodawania entity
-                    const props = {
+                    const prps = {
                         name: order.id,
-                        price: product.price, // corrected to use product.price
-                        description: product.description,
+                        price: props.product.price, // corrected to use product.price
+                        description: props.product.description,
                         isApproved: order.status === "APPROVED", // simpler boolean check
-                        userId : user,
-                        teamId : team
+                        userId : props.user,
+                        teamId : props.team
                     };
-                    console.log('x'+props);
-                    await postNewPaypal(props);
+                    console.log('x'+prps);
+                    await postNewPaypal(prps);
                     handleApprove(data.orderID);
                     
                 }}

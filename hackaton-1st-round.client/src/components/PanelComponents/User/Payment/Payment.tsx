@@ -7,16 +7,22 @@ import {
     Card,
     Radio,
     Group,
-    Alert, rem
+    Alert, rem, Modal
 } from '@mantine/core';
 import { checkUserLoggedIn } from '../../../../features/getCookies/getCookies';
 import classes from './Payment.module.css';
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import PaypalCheckoutButton from "../../../../pages/Checkout/PaypalCheckoutButton";
-import {j} from "vite/dist/node/types.d-aGj9QkWt";
-import {get} from "axios";
+import postNewPaypal from "../../../../features/payment/postNewPaypal";
+import postNewOfflinePayment from "../../../../features/payment/postNewOfflinePayment";
+import checkIfPaymentEntityExists from "../../../../features/payment/checkIfPaymentEntityExists";
 
 export function Payment() {
+    const [user, setUserId] = useState(null);
+    const [team, setTeamId] = useState(null);
+    const [isDataLoaded, setIsDataLoaded] = useState(false);
+    const [isModalOpen, setModalOpen] = useState(false);
+    const [pendingPayment, setPendingPayment] = useState(false);
     const gameId = Math.floor(Math.random() * 1000000); // potem jako parametr wywolanej funkcji wraz z resztą wartości odnosnie gry
     const [product, setProduct] = useState({
         description: "Rejestracja na hackaton",
@@ -25,6 +31,7 @@ export function Payment() {
     const id = import.meta.env.REACT_APP_PAYPAL_CLIENT_ID; //zepsute
 
     const [isScriptLoaded, setIsScriptLoaded] = useState(false);
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -46,12 +53,10 @@ export function Payment() {
                     headers: {
                         'Content-Type': 'application/json',
                     }
-                    
+
                 });
                 const json = await response.json();
-                console.log(json);
                 product.price = json;
-                console.log(product.price);
                 setProduct(prevProduct => ({ ...prevProduct, price: json }));
             }catch (error) {
                 console.error('Error checking user cash to pay:', error);
@@ -61,8 +66,77 @@ export function Payment() {
         getMoney();
     }, []);
 
+    const fetchData = async () => {
+        try {
+            const responseUserDetails = await fetch("https://localhost:7071/api/AspNetUsers/info", {
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Credentials': 'true'
+                }
+            });
+            const data = await responseUserDetails.json();
+            setUserId(data.id);
+            setTeamId(data.teamEntity_FK);
+        } catch (error) {
+            console.error('Error fetching user details:', error);
+        }
+    };
+
+    const checkPaymentStatus = async () => {
+        try {
+            const isLoggedIn = await checkIfPaymentEntityExists(team);
+            console.log(isLoggedIn);
+            if (isLoggedIn) {
+                setPendingPayment(true);
+            }
+        } catch (error) {
+            console.error('Error checking payment status:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        if (team !== null) {
+            checkPaymentStatus();
+        }
+    }, [team]);
+
+        const props = {
+            price: product.price, // corrected to use product.price
+            description: product.description,
+            isApproved: false, // simpler boolean check
+            userId : user,
+            teamId : team,
+            name: ''
+        };
+
+        const classicPayment = async () => {
+            await postNewOfflinePayment(props);
+            setModalOpen(true);
+        }
+
     return (
         <Card withBorder radius="md" p="xl" m="md" className={classes.card}>
+            <Modal
+                opened={pendingPayment}
+                onClose={() => setPendingPayment(false)}
+                style={{ position: 'fixed', top: '50%', left: '0%'}}
+                withCloseButton={false}
+                closeOnClickOutside={false}
+                closeOnEscape={false}
+            >
+                <Text fz="lg" className={classes.title} fw={500}>
+                    Płatność została wykonana
+                </Text>
+                <Text fz="xs" c="dimmed" mt={3} mb="xl">
+                    W razie jakichkolwiek problemów, skontaktuj się z administratorem.
+                </Text>
+            </Modal>
             <Title order={2}>Płatność</Title>
             <Text fz="md" c="dimmed" mt={0} mb="xl" pb={"10"}>
                 Dokonaj płatności aby móc pobrać wygenerowaną grę miejską
@@ -108,7 +182,19 @@ export function Payment() {
                         </PayPalScriptProvider>
                     )}
                     <div className="paypal-button-container">
-                    <Button h={50} fullWidth>Płatność przelewem tradycyjnym</Button>
+                    <Button h={50} fullWidth onClick={classicPayment}>Płatność przelewem tradycyjnym</Button>
+                        <Modal
+                            opened={isModalOpen}
+                            onClose={() => setModalOpen(false)}
+                            style={{ position: 'fixed', top: '50%', left: '0%'}}
+                        >
+                            <Text fz="lg" className={classes.title} fw={500}>
+                                Przyjęto płatność
+                            </Text>
+                            <Text fz="xs" c="dimmed" mt={3} mb="xl">
+                                Płatności dokonasz stacjonarnie na PŚK.
+                            </Text>
+                        </Modal>
                     </div>
                     </div>
                 </div>
