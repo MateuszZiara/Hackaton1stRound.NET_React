@@ -49,11 +49,13 @@ export default function Home() {
         >
             <div>
                 <HeaderMenu />
+                
             </div>
             <div>
                 <Hero/>
             </div>
             <div style={{textAlign: "center", width: "100%"}}>
+                
                 <Footer/>
             </div>
         </Flex>

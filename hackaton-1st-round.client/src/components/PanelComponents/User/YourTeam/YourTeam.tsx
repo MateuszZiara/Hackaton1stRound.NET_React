@@ -252,8 +252,6 @@ export function YourTeam() {
         setUsers(users);
     }
 
-    //logika z fetchTeamDetails
-
     const addUser = (number < 4 ?
             (
                 <div>
