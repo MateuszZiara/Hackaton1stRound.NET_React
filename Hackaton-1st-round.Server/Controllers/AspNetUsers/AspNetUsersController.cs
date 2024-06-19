@@ -174,6 +174,22 @@ using static NHibernate.Engine.Query.CallableParser;
                 }
             }
         }
+        [SwaggerOperation(Summary = "Dodaj do zaplaty uzytkownikowi w ciasteczkach")]
+        [HttpPut("resetCash")]
+        public bool resetCash()
+        {
+            var user = GetUserInfoAsObject();
+            user.Cash = 0;
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    session.SaveOrUpdate(user);
+                    transaction.Commit();
+                    return true;
+                }
+            }
+        }
     [SwaggerOperation(Summary = "Pobierz info o użytkowniku z danym tokenem sesji jako obiekt")]
     [HttpGet("info/object")]
         public Models.AspNetUsers.AspNetUsers GetUserInfoAsObject()

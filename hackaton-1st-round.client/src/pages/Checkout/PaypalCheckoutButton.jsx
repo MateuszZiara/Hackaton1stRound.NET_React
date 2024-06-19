@@ -1,6 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import postNewPaypal from "../../features/payment/postNewPaypal.tsx"
+async function reset()
+{
+    await fetch("https://localhost:7071/api/AspNetUsers/resetCash");
+    window.location.reload();
+}
 const PaypalCheckoutButton = (props) => {
     const { product } = props;
 
@@ -16,31 +21,29 @@ const PaypalCheckoutButton = (props) => {
 
     if (paidFor) {
         alert("Purchased");
+        reset();
+        console.log("elo");
     }
-
-    if (error) {
-        alert(error);
-    }
-
+    const fetchData = async () => {
+        try {
+            const responseUserDetails = await fetch("https://localhost:7071/api/AspNetUsers/info", {
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Credentials': 'true'
+                }
+            });
+            const data = await responseUserDetails.json();
+            setUserId(data.id);
+            setTeamId(data.teamEntity_FK);
+            setIsDataLoaded(true);
+        } catch (error) {
+            console.error('Error fetching user details:', error);
+        }
+    };
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const responseUserDetails = await fetch("https://localhost:7071/api/AspNetUsers/info", {
-                    credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': '*',
-                        'Access-Control-Allow-Credentials': 'true'
-                    }
-                });
-                const data = await responseUserDetails.json();
-                setUserId(data.id);
-                setTeamId(data.teamEntity_FK);
-                setIsDataLoaded(true);
-            } catch (error) {
-                console.error('Error fetching user details:', error);
-            }
-        };
+        
 
         fetchData();
     }, []);
@@ -71,12 +74,21 @@ const PaypalCheckoutButton = (props) => {
                     });
                 }}
                 onApprove={async (data, action) => {
-
+                    const url2 = "https://localhost:7071/api/AspNetUsers/resetCash";
+                    try {
+                        const response = await fetch(url2, {
+                            credentials: 'include',
+                            method: 'PUT',
+                        });
+                    }catch (error) {
+                        console.error('Error adding cash:', error);
+                    }
                     const order = await action.order.capture();
                     if (!isDataLoaded) {
                         await fetchData();
                     }
                     console.log("order", order);
+                    
                     //tutaj wstawić logikę dodawania entity
                     const props = {
                         name: order.id,
@@ -89,6 +101,7 @@ const PaypalCheckoutButton = (props) => {
                     console.log('x'+props);
                     await postNewPaypal(props);
                     handleApprove(data.orderID);
+                    
                 }}
                 onCancel={() => { }}
                 onError={(err) => {
