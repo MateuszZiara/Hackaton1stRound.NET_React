@@ -19,7 +19,7 @@ import YourTeamPage from "@/pages/YourTeamPage/YourTeamPage.tsx";
 import HomePage from "@/pages/HomePage/HomePage.tsx";
 import Home from "@/pages/Index/Home.tsx";
 import {ModalsProvider} from "@mantine/modals";
-import Checkout from "@/pages/Checkout/Checkout.jsx";
+
 
 
 // Tworzenie motywu Mantine
@@ -47,7 +47,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                     <Route path="/myteam" element={<YourTeamPage />} />
                     <Route path="/payment" element={<PaymentPage />} />
                     <Route path="/settings" element={<SettingsPage />} />
-                    <Route path="/checkout" element={<Checkout />} />
 
                     <Route path="/teams" element={<TeamsPage />} />
                     <Route path="/users" element={<UsersPage />} />

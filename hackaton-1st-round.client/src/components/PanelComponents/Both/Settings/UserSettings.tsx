@@ -4,7 +4,7 @@ import {
     Card,
     Group,
     Modal,
-    PasswordInput,
+    PasswordInput, rem,
     Switch,
     Text,
     TextInput,
@@ -12,6 +12,7 @@ import {
     useMantineColorScheme
 } from '@mantine/core';
 import classes from './UserSettings.module.css';
+import {IconMoon, IconSun} from "@tabler/icons-react";
 
 export function UserSettings() {
     const { setColorScheme } = useMantineColorScheme();
@@ -43,8 +44,16 @@ export function UserSettings() {
                 </Text>
             </div>
             <Switch
-                onLabel="1"
-                offLabel="0"
+                onLabel={ <IconSun
+                    style={{ width: rem(16), height: rem(16) }}
+                    stroke={2.5}
+                />}
+                offLabel={
+                    <IconMoon
+                        style={{ width: rem(16), height: rem(16) }}
+                        stroke={2.5}
+                    />
+                }
                 className={classes.switch}
                 size="lg"
                 onChange={() => item.handleSwitchChange(index)}

@@ -110,6 +110,7 @@ const PaypalCheckoutButton = (props) => {
                 }}
             />
         </PayPalScriptProvider>
+
     )
 }
 
