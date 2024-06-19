@@ -68,9 +68,6 @@ namespace Hackaton_1st_round.Server.Controllers.AspNetUsers
             // Act
             var result = _controller.GetById(aspNetUsers.Id);
             
-            // Assert
-            Xunit.Assert.IsType<OkObjectResult>(result.Result);
-            
             using (var session = NHibernateHelper.OpenSession())
             {
                 using (var transaction = session.BeginTransaction())
@@ -79,6 +76,10 @@ namespace Hackaton_1st_round.Server.Controllers.AspNetUsers
                     transaction.Commit();
                 }
             }
+            // Assert
+            Xunit.Assert.IsType<OkObjectResult>(result.Result);
+            
+            
         }
         [Fact]
         public void GetIdNotOk()

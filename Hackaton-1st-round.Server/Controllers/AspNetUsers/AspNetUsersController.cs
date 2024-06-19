@@ -28,23 +28,20 @@ using static NHibernate.Engine.Query.CallableParser;
         
     [SwaggerOperation(Summary = "Pobierz wszystkich użytkowników")]
     [HttpGet]
-        public ActionResult<IEnumerable<Models.AspNetUsers.AspNetUsers>> GetAll()
+        public ActionResult<IEnumerable<Models.AspNetUsers.AspNetUsersDTO>> GetAll()
         {
             using (var session = NHibernateHelper.OpenSession())
             {
                 var aspNetUsers = session.Query<Models.AspNetUsers.AspNetUsers>().ToList();
-                foreach (var item in aspNetUsers)
-                {
-                    item.PasswordHash = "***";
-                }
-                return Ok(aspNetUsers);
+                var aspNetUsersDtos = aspNetUsers.Select(user => user.ToDto()).ToList();
+                return Ok(aspNetUsersDtos);
             }
         }
         
         
     [SwaggerOperation(Summary = "Pobierz dane użytkownika o wybranym id")]
     [HttpGet("id/{id}")]
-        public ActionResult<Models.AspNetUsers.AspNetUsers> GetById(string id)
+        public ActionResult<Models.AspNetUsers.AspNetUsersDTO> GetById(string id)
         {
             using (var session = NHibernateHelper.OpenSession())
             {
@@ -54,13 +51,14 @@ using static NHibernate.Engine.Query.CallableParser;
                     return NotFound();
                 }
 
-                return Ok(aspNetUsers);
+                AspNetUsersDTOMapping.ToDto(aspNetUsers);
+                return Ok(aspNetUsers.ToDto());
             }
         }
     
     [SwaggerOperation(Summary = "Zaktualizuj wybranego użytkownika o danym id")]
     [HttpPut("update/{id}")]
-        public ActionResult<Models.AspNetUsers.AspNetUsers> Edit(string id, string? email = null,
+        public ActionResult<Models.AspNetUsers.AspNetUsersDTO> Edit(string id, string? email = null,
             string? phoneNumber = null, string? firstName = null,
             string? lastName = null)
         {
@@ -69,7 +67,7 @@ using static NHibernate.Engine.Query.CallableParser;
 
     [SwaggerOperation(Summary = "Stwórz nowego użytkownika")]
     [HttpPost("createUser")]
-        public ActionResult<Models.AspNetUsers.AspNetUsers> CreateAddressEntity([FromBody] Models.AspNetUsers.AspNetUsers aspNetUsers)
+        public ActionResult<Models.AspNetUsers.AspNetUsersDTO> CreateAddressEntity([FromBody] Models.AspNetUsers.AspNetUsers aspNetUsers)
         {
             if (aspNetUsers == null)
             {
@@ -84,7 +82,7 @@ using static NHibernate.Engine.Query.CallableParser;
                     {
                         session.Save(aspNetUsers);
                         transaction.Commit();
-                        return CreatedAtAction(nameof(GetById), new { id = aspNetUsers.Id }, aspNetUsers);
+                        return aspNetUsers.ToDto();
                     }
                     catch (Exception ex)
                     {
@@ -232,7 +230,7 @@ using static NHibernate.Engine.Query.CallableParser;
 
     [SwaggerOperation(Summary = "Usunięcie użytkownika z zespołu")]
     [HttpPut("LeaveTeam")]
-        public ActionResult<Models.AspNetUsers.AspNetUsers> LeaveTeam()
+        public ActionResult<Models.AspNetUsers.AspNetUsersDTO> LeaveTeam()
         {
             using (var session = NHibernateHelper.OpenSession())
             {
@@ -253,7 +251,7 @@ using static NHibernate.Engine.Query.CallableParser;
                     }
                     session.Update(userCookies);
                     transaction.Commit();
-                    return userCookies;
+                    return userCookies.ToDto();
                 }
             }
         }
@@ -261,7 +259,7 @@ using static NHibernate.Engine.Query.CallableParser;
     [SwaggerOperation(Summary = "Pobranie listy użytkowników należących do tego samego zespołu co zalogowany użytkownik")]
     [HttpGet("GetUsersFromTeamCookies")]
 
-        public ActionResult<IEnumerable<Models.AspNetUsers.AspNetUsers>> GetFromTeam()
+        public ActionResult<IEnumerable<Models.AspNetUsers.AspNetUsersDTO>> GetFromTeam()
         {
             using (var session = NHibernateHelper.OpenSession())
             {
@@ -270,7 +268,8 @@ using static NHibernate.Engine.Query.CallableParser;
                     Models.AspNetUsers.AspNetUsers userCookies = GetUserInfoAsObject();
                     var query = session.Query<Models.AspNetUsers.AspNetUsers>().Where(x => x.TeamEntity_FK == userCookies.TeamEntity_FK)
                         .ToList();
-                    return query;
+                    var aspNetUsersDtos = query.Select(user => user.ToDto()).ToList();
+                    return aspNetUsersDtos;
                 }
             }
 
@@ -280,7 +279,7 @@ using static NHibernate.Engine.Query.CallableParser;
     [SwaggerOperation(Summary = "Pobranie listy użytkowników na podstawie identyfikatora zespołu")]
     [HttpGet("GetUsersFromTeamId/{id}")]
 
-        public ActionResult<IEnumerable<Models.AspNetUsers.AspNetUsers>> GetFromTeamId(Guid id)
+        public ActionResult<IEnumerable<Models.AspNetUsers.AspNetUsersDTO>> GetFromTeamId(Guid id)
         {
             using (var session = NHibernateHelper.OpenSession())
             {
@@ -288,7 +287,8 @@ using static NHibernate.Engine.Query.CallableParser;
                 {
                     var query = session.Query<Models.AspNetUsers.AspNetUsers>().Where(x => x.TeamEntity_FK == id)
                         .ToList();
-                    return query;
+                    var aspNetUsersDtos = query.Select(user => user.ToDto()).ToList();
+                    return aspNetUsersDtos;
                 }
             }
 
@@ -297,7 +297,7 @@ using static NHibernate.Engine.Query.CallableParser;
 
     [SwaggerOperation(Summary = "Dodanie nowego użytkownika do zespołu")]
     [HttpPut("addToTeam/{email}")]
-        public ActionResult<Models.AspNetUsers.AspNetUsers> AddToTeam(string email)
+        public ActionResult<Models.AspNetUsers.AspNetUsersDTO> AddToTeam(string email)
         {
             using (var session = NHibernateHelper.OpenSession())
             {
@@ -325,14 +325,14 @@ using static NHibernate.Engine.Query.CallableParser;
                     findedUserFromEmail[0].TeamEntity_FK = cookieUser.TeamEntity_FK;
                     session.SaveOrUpdate(findedUserFromEmail[0]);
                     transaction.Commit();
-                    return findedUserFromEmail[0];
+                    return findedUserFromEmail[0].ToDto();
                 }
             }
         }
 
         
         [HttpPost("Facebook")]
-        public ActionResult<Models.AspNetUsers.AspNetUsers> Facebook([FromBody] Models.AspNetUsers.AspNetUsers facebookEntity)
+        public ActionResult<Models.AspNetUsers.AspNetUsersDTO> Facebook([FromBody] Models.AspNetUsers.AspNetUsers facebookEntity)
         {
             using (var session = NHibernateHelper.OpenSession())
             {
@@ -381,7 +381,7 @@ using static NHibernate.Engine.Query.CallableParser;
         
         
         [HttpPost("Google")]        
-public async Task<ActionResult<Models.AspNetUsers.AspNetUsers>> Google([FromBody] Models.AspNetUsers.AspNetUsers googleEntity)
+public async Task<ActionResult<Models.AspNetUsers.AspNetUsersDTO>> Google([FromBody] Models.AspNetUsers.AspNetUsers googleEntity)
 {
    
     try
@@ -437,7 +437,7 @@ public async Task<ActionResult<Models.AspNetUsers.AspNetUsers>> Google([FromBody
 }
     [SwaggerOperation(Summary = "Rejestracja nowego uzytkownika")]
     [HttpPost("registerCustom")]
-        public ActionResult<Models.AspNetUsers.AspNetUsers> Register([FromBody] Models.AspNetUsers.AspNetUsers testEntity)
+        public ActionResult<Models.AspNetUsers.AspNetUsersDTO> Register([FromBody] Models.AspNetUsers.AspNetUsers testEntity)
         {
             if (testEntity == null)
             {
@@ -531,7 +531,7 @@ public async Task<ActionResult<Models.AspNetUsers.AspNetUsers>> Google([FromBody
 
     [SwaggerOperation(Summary = "Nadanie statusu Admina")]
     [HttpPut("updateToAdmin/{id}")]
-        public ActionResult<Models.AspNetUsers.AspNetUsers> UpdateToAdmin(string id)
+        public ActionResult<Models.AspNetUsers.AspNetUsersDTO> UpdateToAdmin(string id)
         {
             using (var session = NHibernateHelper.OpenSession())
             {
@@ -543,7 +543,7 @@ public async Task<ActionResult<Models.AspNetUsers.AspNetUsers>> Google([FromBody
                         query[0].UserRank = UserRank.Admin;
                         session.SaveOrUpdate(query[0]);
                         transaction.Commit();
-                        return query[0];
+                        return query[0].ToDto();
                     }
 
                     return NotFound("No user with this id");
@@ -553,7 +553,7 @@ public async Task<ActionResult<Models.AspNetUsers.AspNetUsers>> Google([FromBody
 
     [SwaggerOperation(Summary = "Nadanie statusu Usera")]
     [HttpPut("updateToUser/{id}")]
-        public ActionResult<Models.AspNetUsers.AspNetUsers> updateToUser(string id)
+        public ActionResult<Models.AspNetUsers.AspNetUsersDTO> updateToUser(string id)
         {
             using (var session = NHibernateHelper.OpenSession())
             {
@@ -565,7 +565,7 @@ public async Task<ActionResult<Models.AspNetUsers.AspNetUsers>> Google([FromBody
                         query[0].UserRank = UserRank.User;
                         session.SaveOrUpdate(query[0]);
                         transaction.Commit();
-                        return query[0];
+                        return query[0].ToDto();
                     }
 
                     return NotFound("No user with this id");
@@ -576,7 +576,7 @@ public async Task<ActionResult<Models.AspNetUsers.AspNetUsers>> Google([FromBody
 
     [SwaggerOperation(Summary = "Zmiana hasła użytkownika")]
     [HttpPut("changePassword")]
-    public ActionResult<Models.AspNetUsers.AspNetUsers> ChangePassword([FromBody] ChangePasswordDTO request)
+    public ActionResult<Models.AspNetUsers.AspNetUsersDTO> ChangePassword([FromBody] ChangePasswordDTO request)
     {
         using (var session = NHibernateHelper.OpenSession())
         {
@@ -599,7 +599,7 @@ public async Task<ActionResult<Models.AspNetUsers.AspNetUsers>> Google([FromBody
                     query[0].PasswordHash = passwordHasher.HashPassword(null, request.NewPassword);
                     session.SaveOrUpdate(query[0]);
                     transaction.Commit();
-                    return query[0];
+                    return query[0].ToDto();
                 }
 
                 return NotFound("No user with this id");
@@ -610,7 +610,7 @@ public async Task<ActionResult<Models.AspNetUsers.AspNetUsers>> Google([FromBody
 
     [SwaggerOperation(Summary = "Zmiana maila użytkownika")]
     [HttpPut("changeEmail")]
-    public ActionResult<Models.AspNetUsers.AspNetUsers> ChangeEmail([FromBody] ChangePasswordDTO request)
+    public ActionResult<Models.AspNetUsers.AspNetUsersDTO> ChangeEmail([FromBody] ChangePasswordDTO request)
     {
         using (var session = NHibernateHelper.OpenSession())
         {
@@ -637,7 +637,7 @@ public async Task<ActionResult<Models.AspNetUsers.AspNetUsers>> Google([FromBody
                     query[0].NormalizedUserName = request.NewEmail.ToUpper();
                     session.SaveOrUpdate(query[0]);
                     transaction.Commit();
-                    return query[0];
+                    return query[0].ToDto();
                 }
 
                 return NotFound("No user with this id");
