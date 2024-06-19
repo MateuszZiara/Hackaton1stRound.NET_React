@@ -1,7 +1,16 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Pawel\\source\\repos\\hackatonPre\\team9repo\\",
-  "Documents": [],
+  "WorkspaceRootPath": "D:\\semestr6\\pro_gb\\Hackaton1stRoundNew\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{60DD4E5C-7956-46D0-AE7E-64117AF2EE7B}|Hackaton-1st-round.Server\\Hackaton-1st-round.Server.csproj|d:\\semestr6\\pro_gb\\hackaton1stroundnew\\hackaton-1st-round.server\\controllers\\teamentity\\teamentitytest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60DD4E5C-7956-46D0-AE7E-64117AF2EE7B}|Hackaton-1st-round.Server\\Hackaton-1st-round.Server.csproj|solutionrelative:hackaton-1st-round.server\\controllers\\teamentity\\teamentitytest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60DD4E5C-7956-46D0-AE7E-64117AF2EE7B}|Hackaton-1st-round.Server\\Hackaton-1st-round.Server.csproj|d:\\semestr6\\pro_gb\\hackaton1stroundnew\\hackaton-1st-round.server\\controllers\\aspnetusers\\aspnetuserscontrollertest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60DD4E5C-7956-46D0-AE7E-64117AF2EE7B}|Hackaton-1st-round.Server\\Hackaton-1st-round.Server.csproj|solutionrelative:hackaton-1st-round.server\\controllers\\aspnetusers\\aspnetuserscontrollertest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 134,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -22,6 +31,31 @@
             {
               "$type": "Bookmark",
               "Name": "ST:130:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TeamEntityTest.cs",
+              "DocumentMoniker": "D:\\semestr6\\pro_gb\\Hackaton1stRoundNew\\Hackaton-1st-round.Server\\Controllers\\TeamEntity\\TeamEntityTest.cs",
+              "RelativeDocumentMoniker": "Hackaton-1st-round.Server\\Controllers\\TeamEntity\\TeamEntityTest.cs",
+              "ToolTip": "D:\\semestr6\\pro_gb\\Hackaton1stRoundNew\\Hackaton-1st-round.Server\\Controllers\\TeamEntity\\TeamEntityTest.cs",
+              "RelativeToolTip": "Hackaton-1st-round.Server\\Controllers\\TeamEntity\\TeamEntityTest.cs",
+              "ViewState": "AQIAAC0AAAAAAAAAAAAqwCcAAAA5AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-17T08:27:40.773Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AspNetUsersControllerTest.cs",
+              "DocumentMoniker": "D:\\semestr6\\pro_gb\\Hackaton1stRoundNew\\Hackaton-1st-round.Server\\Controllers\\AspNetUsers\\AspNetUsersControllerTest.cs",
+              "RelativeDocumentMoniker": "Hackaton-1st-round.Server\\Controllers\\AspNetUsers\\AspNetUsersControllerTest.cs",
+              "ToolTip": "D:\\semestr6\\pro_gb\\Hackaton1stRoundNew\\Hackaton-1st-round.Server\\Controllers\\AspNetUsers\\AspNetUsersControllerTest.cs",
+              "RelativeToolTip": "Hackaton-1st-round.Server\\Controllers\\AspNetUsers\\AspNetUsersControllerTest.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-17T08:27:33.276Z"
             }
           ]
         }

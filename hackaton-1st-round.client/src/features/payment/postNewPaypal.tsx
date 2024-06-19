@@ -18,7 +18,7 @@ export default async function postNewPaypal(props) {
                 'Content-Type':
                     'application/json',
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify(props),
         });
         console.log(response);
         if (!response.ok) {

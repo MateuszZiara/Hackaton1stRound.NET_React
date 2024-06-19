@@ -3,7 +3,7 @@
 "ServerUrl": "https://localhost:5173",
 "RedirectUrl": "",
 "LaunchCommand": "npm run dev",
-"WorkingDirectory": "C:\\Users\\coons\\Desktop\\Hackaton\\team9repo\\Hackaton-1st-round.Server\\..\\hackaton-1st-round.client",
+"WorkingDirectory": "D:\\semestr6\\pro_gb\\Hackaton1stRoundNew\\Hackaton-1st-round.Server\\..\\hackaton-1st-round.client",
 "MaxTimeoutInSeconds": "120",
 "KeepRunning": "false"
 }

@@ -10,11 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@paypal/react-paypal-js": "^8.3.0",
     "axios": "^1.6.8",
     "cors": "^2.8.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-facebook-login": "^4.1.1",
     "react-social-login-buttons": "^4.1.0",
     "reactjs-social-login": "^2.6.3"
   },

@@ -6,8 +6,10 @@ const PaypalCheckoutButton = (props) => {
 
     const [paidFor, setPaidFor] = useState(false);
     const [error, setError] = useState(null);
-    const [user, setUserId] = useState('');
-    const [team, setTeamId] = useState('');
+    const [user, setUserId] = useState();
+    const [team, setTeamId] = useState();
+    const [isDataLoaded, setIsDataLoaded] = useState(false);
+
     const handleApprove = (orderId) => {
         setPaidFor(true);
     }
@@ -34,6 +36,7 @@ const PaypalCheckoutButton = (props) => {
                 const data = await responseUserDetails.json();
                 setUserId(data.id);
                 setTeamId(data.teamEntity_FK);
+                setIsDataLoaded(true);
             } catch (error) {
                 console.error('Error fetching user details:', error);
             }
@@ -41,9 +44,10 @@ const PaypalCheckoutButton = (props) => {
 
         fetchData();
     }, []);
+
     const id = import.meta.env.REACT_APP_PAYPAL_CLIENT_ID;
     return (
-        <PayPalScriptProvider>
+        <PayPalScriptProvider options={{ currency: "PLN", clientId: 'ATGo_MyHThm6dXYw-mkIk78YSYa7tNzWCfUDM6rIqm7aNTic61DwwN5eNaxy-ljpQqIGprjrdrWxZFxj', locale: 'pl_PL' }}>
             <PayPalButtons
                 onClick={(data, actions) => {
                     const hasAlreadyBoughtCourse = false;
@@ -67,9 +71,11 @@ const PaypalCheckoutButton = (props) => {
                     });
                 }}
                 onApprove={async (data, action) => {
-                    console.log(user);
-                    console.log(team);
+
                     const order = await action.order.capture();
+                    if (!isDataLoaded) {
+                        await fetchData();
+                    }
                     console.log("order", order);
                     //tutaj wstawić logikę dodawania entity
                     const props = {

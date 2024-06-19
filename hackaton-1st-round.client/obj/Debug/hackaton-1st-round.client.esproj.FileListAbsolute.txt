@@ -1,2 +1,6 @@
 C:\Users\Pawel\source\repos\hackatonPre\team9repo\hackaton-1st-round.client\obj\Debug\hackaton-1st-round.client.esproj.CoreCompileInputs.cache
 C:\Users\coons\Desktop\Hackaton\team9repo\hackaton-1st-round.client\obj\Debug\hackaton-1st-round.client.esproj.CoreCompileInputs.cache
+C:\Users\Pawel\source\repos\Hackaton1stRoundNew\hackaton-1st-round.client\obj\Debug\hackaton-1st-round.client.esproj.CoreCompileInputs.cache
+D:\semestr6\Logowanie_paypal\Hackaton1stRoundNew\hackaton-1st-round.client\obj\Debug\hackaton-1st-round.client.esproj.CoreCompileInputs.cache
+C:\Users\Pawel\source\PAI2\Hackaton1stRoundNew\hackaton-1st-round.client\obj\Debug\hackaton-1st-round.client.esproj.CoreCompileInputs.cache
+D:\semestr6\pro_gb\Hackaton1stRoundNew\hackaton-1st-round.client\obj\Debug\hackaton-1st-round.client.esproj.CoreCompileInputs.cache

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\coons\\Desktop\\Hackaton\\team9repo\\Hackaton-1st-round.Server\\Hackaton-1st-round.Server.csproj": {}
+    "C:\\Users\\coons\\Downloads\\Hackaton_1\\Hackaton_1\\Hackaton1stRoundNew\\Hackaton1stRoundNew\\Hackaton-1st-round.Server\\Hackaton-1st-round.Server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\coons\\Desktop\\Hackaton\\team9repo\\Hackaton-1st-round.Server\\Hackaton-1st-round.Server.csproj": {
+    "C:\\Users\\coons\\Downloads\\Hackaton_1\\Hackaton_1\\Hackaton1stRoundNew\\Hackaton1stRoundNew\\Hackaton-1st-round.Server\\Hackaton-1st-round.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\coons\\Desktop\\Hackaton\\team9repo\\Hackaton-1st-round.Server\\Hackaton-1st-round.Server.csproj",
+        "projectUniqueName": "C:\\Users\\coons\\Downloads\\Hackaton_1\\Hackaton_1\\Hackaton1stRoundNew\\Hackaton1stRoundNew\\Hackaton-1st-round.Server\\Hackaton-1st-round.Server.csproj",
         "projectName": "Hackaton-1st-round.Server",
-        "projectPath": "C:\\Users\\coons\\Desktop\\Hackaton\\team9repo\\Hackaton-1st-round.Server\\Hackaton-1st-round.Server.csproj",
+        "projectPath": "C:\\Users\\coons\\Downloads\\Hackaton_1\\Hackaton_1\\Hackaton1stRoundNew\\Hackaton1stRoundNew\\Hackaton-1st-round.Server\\Hackaton-1st-round.Server.csproj",
         "packagesPath": "C:\\Users\\coons\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\coons\\Desktop\\Hackaton\\team9repo\\Hackaton-1st-round.Server\\obj\\",
+        "outputPath": "C:\\Users\\coons\\Downloads\\Hackaton_1\\Hackaton_1\\Hackaton1stRoundNew\\Hackaton1stRoundNew\\Hackaton-1st-round.Server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\coons\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -61,6 +61,18 @@
               "target": "Package",
               "version": "[3.3.0, )"
             },
+            "Google.Apis.Auth": {
+              "target": "Package",
+              "version": "[1.68.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.Facebook": {
+              "target": "Package",
+              "version": "[8.0.5, )"
+            },
+            "Microsoft.AspNetCore.Authentication.Google": {
+              "target": "Package",
+              "version": "[8.0.5, )"
+            },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.3, )"
@@ -69,17 +81,53 @@
               "target": "Package",
               "version": "[8.*-*, )"
             },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.3, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.9.0, )"
+            },
             "NHibernate": {
               "target": "Package",
               "version": "[5.5.1, )"
+            },
+            "NUnit": {
+              "target": "Package",
+              "version": "[4.1.0, )"
+            },
+            "NUnit3TestAdapter": {
+              "target": "Package",
+              "version": "[4.5.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.4.0, )"
             },
+            "Swashbuckle.AspNetCore.Annotations": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            },
             "System.Data.SqlClient": {
               "target": "Package",
               "version": "[4.8.6, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[7.5.1, )"
+            },
+            "System.Net.Http": {
+              "target": "Package",
+              "version": "[4.3.4, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.7.0, )"
             }
           },
           "imports": [

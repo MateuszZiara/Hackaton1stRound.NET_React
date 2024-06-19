@@ -12,7 +12,7 @@ function Checkout() {
     const id = import.meta.env.REACT_APP_PAYPAL_CLIENT_ID;
     return (
         
-        <PayPalScriptProvider options={{ "client-id": "ATGo_MyHThm6dXYw-mkIk78YSYa7tNzWCfUDM6rIqm7aNTic61DwwN5eNaxy-ljpQqIGprjrdrWxZFxj" }}>
+        <PayPalScriptProvider options={{ currency: "PLN", clientId: 'ATGo_MyHThm6dXYw-mkIk78YSYa7tNzWCfUDM6rIqm7aNTic61DwwN5eNaxy-ljpQqIGprjrdrWxZFxj'}}>
 
             <div className="checkout">
                 <h1>PayPal Checkout</h1>

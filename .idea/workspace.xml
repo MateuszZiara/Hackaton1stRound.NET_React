@@ -5,13 +5,53 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="751470c8-dcf2-4bf8-bbc8-9a6326df1478" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/hackaton-1st-round.client/src/layouts/Navbar/Navbar.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hackaton-1st-round.client/src/layouts/Navbar/Navbar.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hackaton-1st-round.client/src/pages/UserPanel/Panel.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hackaton-1st-round.client/src/pages/UserPanel/Panel.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hackaton-1st-round.client/src/main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/hackaton-1st-round.client/src/main.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Hackaton-1st-round/DesignTimeBuild/.dtbcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Hackaton-1st-round/DesignTimeBuild/.dtbcache.v2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Hackaton-1st-round/v17/.futdcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Hackaton-1st-round/v17/.futdcache.v2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Hackaton-1st-round/v17/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Hackaton-1st-round/v17/.suo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/Hackaton-1st-round/v17/DocumentLayout.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/Hackaton-1st-round/v17/DocumentLayout.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/hackaton-1st-round.metadata.v7.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/hackaton-1st-round.metadata.v7.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/hackaton-1st-round.projects.v7.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/ProjectEvaluation/hackaton-1st-round.projects.v7.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/Hackaton-1st-round.Server.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/Hackaton-1st-round.Server.deps.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/Hackaton-1st-round.Server.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/Hackaton-1st-round.Server.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/Hackaton-1st-round.Server.exe" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/Hackaton-1st-round.Server.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/Hackaton-1st-round.Server.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/Hackaton-1st-round.Server.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/Microsoft.AspNetCore.SpaProxy.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/Microsoft.AspNetCore.SpaProxy.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/Microsoft.IdentityModel.Abstractions.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/Microsoft.IdentityModel.Abstractions.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/Microsoft.IdentityModel.JsonWebTokens.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/Microsoft.IdentityModel.JsonWebTokens.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/Microsoft.IdentityModel.Logging.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/Microsoft.IdentityModel.Logging.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/Microsoft.IdentityModel.Tokens.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/Microsoft.IdentityModel.Tokens.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/Swashbuckle.AspNetCore.Swagger.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/Swashbuckle.AspNetCore.Swagger.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/Swashbuckle.AspNetCore.SwaggerGen.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/Swashbuckle.AspNetCore.SwaggerGen.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/System.IdentityModel.Tokens.Jwt.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/System.IdentityModel.Tokens.Jwt.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/spa.proxy.json" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/bin/Debug/net8.0/spa.proxy.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/Hackaton-1st-round.Server.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/Hackaton-1st-round.Server.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/Hackaton-1st-round.Server.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/Hackaton-1st-round.Server.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/Hackaton-1st-round.Server.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/Hackaton-1st-round.Server.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/Hackaton-1st-round.Server.MvcApplicationPartsAssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/Hackaton-1st-round.Server.MvcApplicationPartsAssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/Hackaton-1st-round.Server.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/Hackaton-1st-round.Server.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/Hackaton-1st-round.Server.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/Hackaton-1st-round.Server.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/Hackaton-1st-round.Server.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/Hackaton-1st-round.Server.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/Hackaton-1st-round.Server.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/Hackaton-1st-round.Server.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/Hackaton-1st-round.Server.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/Hackaton-1st-round.Server.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/Hackaton-1st-round.Server.genruntimeconfig.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/Hackaton-1st-round.Server.genruntimeconfig.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/Hackaton-1st-round.Server.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/Hackaton-1st-round.Server.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/apphost.exe" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/apphost.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/ref/Hackaton-1st-round.Server.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/ref/Hackaton-1st-round.Server.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/refint/Hackaton-1st-round.Server.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/refint/Hackaton-1st-round.Server.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/spa.proxy.json" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/spa.proxy.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/staticwebassets.build.json" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Debug/net8.0/staticwebassets.build.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Hackaton-1st-round.Server.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Hackaton-1st-round.Server.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Hackaton-1st-round.Server.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Hackaton-1st-round.Server.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Hackaton-1st-round.Server.csproj.nuget.g.targets" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/Hackaton-1st-round.Server.csproj.nuget.g.targets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Hackaton-1st-round.Server/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hackaton-1st-round.client/obj/Debug/hackaton-1st-round.client.esproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/hackaton-1st-round.client/obj/Debug/hackaton-1st-round.client.esproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hackaton-1st-round.client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/hackaton-1st-round.client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hackaton-1st-round.client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/hackaton-1st-round.client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hackaton-1st-round.client/src/layouts/Navbar/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/hackaton-1st-round.client/src/layouts/Navbar/Navbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hackaton-1st-round.client/src/pages/Auth/Auth.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/hackaton-1st-round.client/src/pages/Auth/Auth.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hackaton-1st-round.client/src/pages/Panel/Panel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/hackaton-1st-round.client/src/pages/Panel/Panel.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,30 +75,30 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2esC7I1XQytcIw4R1PniN0JoPPU" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/Pawel/source/repos/hackatonPre/team9repo/hackaton-1st-round.client/src/pages/UserPanel",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2023.2.5\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Pawel/source/repos/hackatonPre/team9repo/hackaton-1st-round.client/src/pages/UserPanel&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm 2023.2.5\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Pawel\source\repos\hackatonPre\team9repo\hackaton-1st-round.client\src\pages\UserPanel" />
@@ -83,6 +123,8 @@
       <option name="presentableId" value="Default" />
       <updated>1712683730029</updated>
       <workItem from="1712683731085" duration="18242000" />
+      <workItem from="1716145373175" duration="1000" />
+      <workItem from="1716154653876" duration="1351000" />
     </task>
     <servers />
   </component>
