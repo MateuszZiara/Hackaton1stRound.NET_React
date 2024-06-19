@@ -548,7 +548,7 @@ public async Task<ActionResult<Models.AspNetUsers.AspNetUsers>> Google([FromBody
                     {
                         return Unauthorized("Wrong password. Try again");
                     }
-                    if (request.NewPassword.Length >= 8 || request.NewPassword == null)
+                    if (request.NewPassword.Length < 8 || request.NewPassword == null)
                     {
                         return Unauthorized("New password doesn't meet criteria. Password must be at least 8 characters long.");
                     }

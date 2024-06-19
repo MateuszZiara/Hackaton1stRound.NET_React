@@ -7,7 +7,7 @@ import {
     Card,
     Radio,
     Group,
-    Alert
+    Alert, rem
 } from '@mantine/core';
 import { checkUserLoggedIn } from '../../../../features/getCookies/getCookies';
 import classes from './Payment.module.css';
@@ -76,6 +76,7 @@ export function Payment() {
                     <Text fz="md" c="dimmed" mt={0} mb="xl" pb={"10"}>
                         Wykorzystujemy usługę PayPal. Wybierając metody płatności online zgadasz się na warunki korzystania z usługi
                     </Text>
+                    <div style={{backgroundColor: 'white', padding:rem(10), borderRadius:rem(10)}}>
                     {isScriptLoaded && (
                         <PayPalScriptProvider options={{currency: "PLN", clientId: 'ATGo_MyHThm6dXYw-mkIk78YSYa7tNzWCfUDM6rIqm7aNTic61DwwN5eNaxy-ljpQqIGprjrdrWxZFxj', locale: 'pl_PL'}}>
                             <div className="checkout">
@@ -86,7 +87,8 @@ export function Payment() {
                         </PayPalScriptProvider>
                     )}
                     <div className="paypal-button-container">
-                    <Button>Płatność przelewem tradycyjnym</Button>
+                    <Button h={50} fullWidth>Płatność przelewem tradycyjnym</Button>
+                    </div>
                     </div>
                 </div>
             </Flex>

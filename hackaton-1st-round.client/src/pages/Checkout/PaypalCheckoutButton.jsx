@@ -97,6 +97,7 @@ const PaypalCheckoutButton = (props) => {
                 }}
             />
         </PayPalScriptProvider>
+
     )
 }
 
