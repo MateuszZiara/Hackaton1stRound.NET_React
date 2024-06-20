@@ -1,15 +1,6 @@
-export default async function postNewPaypal(props) {
-    const url = "https://localhost:7071/api/Payment/paypal";
-    const data = {
-            name: props.name,
-            description: props.description,
-            price: props.price, // corrected to use product.price
-            isApproved: props.status,
-            userId : props.user,
-            teamId : props.team,
-        };
+export default async function postNewOfflinePayment(props) {
+    const url = "https://localhost:7071/api/Payment/offlinepayment";
     console.log(JSON.stringify(props));
-    console.log(JSON.stringify(data));
     try {
         const response = await fetch(url, {
             credentials: 'include',
