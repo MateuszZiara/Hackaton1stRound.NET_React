@@ -223,7 +223,7 @@ export default function Auth(props) {
                             onChange={(event) => form.setFieldValue('terms', event.currentTarget.checked)}
                         />
                     )}
-                    <LoginSocialFacebook appId="1021529359650680" onReject={(error) => {console.log(error)}} onResolve={async (response) => {
+                    <LoginSocialFacebook appId="310778082068786" onReject={(error) => {console.log(error)}} onResolve={async (response) => {
                         const registerData = {
                             FirstName: response.data.short_name,
                             LastName: response.data.last_name,
