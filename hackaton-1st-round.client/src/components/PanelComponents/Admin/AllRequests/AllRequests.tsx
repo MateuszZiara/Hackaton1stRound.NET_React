@@ -55,7 +55,7 @@ export function AllRequests() {
                 }
             });
         }
-        window.location.href = "/panel";
+        window.location.reload();
     }
     async function buttonLogicReject() {
         const selectedIds = selection.filter(id => id);
@@ -69,7 +69,7 @@ export function AllRequests() {
                 }
             });
         }
-        window.location.href = "/panel";
+        window.location.reload();
     }
     const downloadPDF = (base64Data) => {
         // Convert base64 to binary

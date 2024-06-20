@@ -143,7 +143,7 @@ export function AllUsers() {
                 throw new Error(`HTTP error! Status: ${registerResponse.status}, Message: ${errorMessage}`);
             }
 
-            window.location.href = "/panel";
+            window.location.reload();
 
         } catch (error) {
             console.error('Error during registration:', error);
@@ -167,7 +167,7 @@ export function AllUsers() {
                 }
             });
         }
-        window.location.href = "/panel";
+        window.location.reload();
     }
     async function buttonLogicDelete() {
         const selectedIds = selection.filter(id => id);
@@ -178,7 +178,7 @@ export function AllUsers() {
                 method: 'DELETE',
             });
         }
-        window.location.href = "/panel";
+        window.location.reload();
     }
 
     return (

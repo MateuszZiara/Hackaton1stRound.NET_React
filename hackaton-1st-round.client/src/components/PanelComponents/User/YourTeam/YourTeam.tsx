@@ -170,7 +170,7 @@ export function YourTeam() {
             }
 
             console.log('File uploaded successfully');
-            window.location.href = "/panel";
+            window.location.reload();
         } catch (error) {
             console.error('Error uploading file:', error);
         }

@@ -484,7 +484,7 @@ public async Task<ActionResult<Models.AspNetUsers.AspNetUsersDTO>> Google([FromB
 
     [SwaggerOperation(Summary = "Sprawdzenie czy e-mail istnieje w bazie danych")]
     [HttpGet("checkEmail/{email}")]
-        public ActionResult<bool> CheckEmailExists(string email)
+        public bool CheckEmailExists(string email)
         {
             using (var session = NHibernateHelper.OpenSession())
             {
