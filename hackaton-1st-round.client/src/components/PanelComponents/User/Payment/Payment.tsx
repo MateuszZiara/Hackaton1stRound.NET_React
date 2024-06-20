@@ -7,7 +7,7 @@ import {
     Card,
     Radio,
     Group,
-    Alert, rem, Modal
+    Alert, rem, Modal, MantineProvider
 } from '@mantine/core';
 import { checkUserLoggedIn } from '../../../../features/getCookies/getCookies';
 import classes from './Payment.module.css';
@@ -28,7 +28,7 @@ export function Payment() {
         description: "Rejestracja na hackaton",
         price: 0,
     });
-    const id = import.meta.env.REACT_APP_PAYPAL_CLIENT_ID; //zepsute
+   // const id = import.meta.env.REACT_APP_PAYPAL_CLIENT_ID; //zepsute
 
     const [isScriptLoaded, setIsScriptLoaded] = useState(false);
 
@@ -121,7 +121,9 @@ export function Payment() {
         }
 
     return (
+        <MantineProvider>
         <Card withBorder radius="md" p="xl" m="md" className={classes.card}>
+            
             <Modal
                 opened={pendingPayment}
                 onClose={() => setPendingPayment(false)}
@@ -199,7 +201,9 @@ export function Payment() {
                     </div>
                 </div>
             </Flex>
+         
         </Card>
+        </MantineProvider>
     );
 }
 export default Payment;
