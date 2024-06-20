@@ -9,7 +9,8 @@ public static class AspNetUsersDTOMapping
             user.LastName,
             user.UserRank,
             user.Provider,
-            user.Id
+            user.Id,
+            user.Email
         );
     }
 }

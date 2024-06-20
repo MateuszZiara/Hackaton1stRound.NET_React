@@ -356,7 +356,7 @@ export function YourTeam() {
                                              style={{display: "flex", alignItems: "center", marginBottom: '8px'}}>
                                             <Avatar style={{marginRight: '8px'}}>{user.name.charAt(0)}</Avatar>
                                             <div>{user.name} {user.surname}</div>
-                                            <Button style={{marginLeft: 'auto'}} variant="outline" color="red" size="xs" radius="xl"> x </Button>
+                                            
                                         </div>
                                     ))}
                                 </div>

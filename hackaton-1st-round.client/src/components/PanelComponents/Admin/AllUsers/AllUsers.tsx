@@ -128,6 +128,7 @@ export function AllUsers() {
                 LastName: form.values.lastName,
                 Email: form.values.email,
                 PasswordHash: form.values.password,
+                Provider: "Website",
             };
 
             const registerResponse = await fetch(registerUrl, {
@@ -158,8 +159,9 @@ export function AllUsers() {
     async function buttonLogic() {
         const selectedIds = selection.filter(id => id);
         console.log(selectedIds);
+        console.log(form.values.firstName);
         for (let id of selectedIds) {
-            const url = "https://localhost:7071/api/AspNetUsers/update/"+id+"?"+"email="+form.values.email+"&"+"firstName"+form.values.firstName+"&lastName="+form.values.lastName;
+            const url = "https://localhost:7071/api/AspNetUsers/update/"+id+"?"+"email="+form.values.email+"&"+"firstName="+form.values.firstName+"&lastName="+form.values.lastName;
             const response = await fetch(url, {
                 method: 'PUT',
                 headers: {
