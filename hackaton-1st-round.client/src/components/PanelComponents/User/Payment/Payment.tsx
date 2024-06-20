@@ -136,6 +136,11 @@ export function Payment() {
                 withCloseButton={false}
                 closeOnClickOutside={false}
                 closeOnEscape={false}
+                overlayProps={{
+                    backgroundOpacity: 0.55,
+                    color: '#ffffff',
+                    blur: 6
+                }}
             >
                 <Text fz="lg" className={classes.title} fw={500}>
                     Płatność została wykonana
@@ -151,6 +156,11 @@ export function Payment() {
                 withCloseButton={false}
                 closeOnClickOutside={false}
                 closeOnEscape={false}
+                overlayProps={{
+                    backgroundOpacity: 0.55,
+                    color: '#ffffff',
+                    blur: 6
+                }}
             >
                 <Text fz="lg" className={classes.title} fw={500}>
                    Utwórz zespół aby móc dokonać płatności
