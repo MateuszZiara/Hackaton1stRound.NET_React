@@ -25,6 +25,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.3" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+    <PackageReference Include="Moq" Version="4.20.70" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NHibernate" Version="5.5.1" />
     <PackageReference Include="NUnit" Version="4.1.0" />
@@ -43,8 +44,5 @@
     </ProjectReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\AspNetUsers\" />
-  </ItemGroup>
 
 </Project>

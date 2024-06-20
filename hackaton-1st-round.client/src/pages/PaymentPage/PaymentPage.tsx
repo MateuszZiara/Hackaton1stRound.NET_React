@@ -2,6 +2,16 @@ import { Flex } from "@mantine/core";
 import { Navbar } from "../../layouts/Navbar/Navbar";
 import YourTeam from "../../components/PanelComponents/User/YourTeam/YourTeam";
 import Payment from "../../components/PanelComponents/User/Payment/Payment";
+import React, { useState, useEffect } from 'react';
+import {
+    Button,
+    Text,
+    Card,
+    Title,
+    Radio,
+    Group,
+    Alert, rem
+} from '@mantine/core';
 
 export default function PaymentPage() {
     return (
