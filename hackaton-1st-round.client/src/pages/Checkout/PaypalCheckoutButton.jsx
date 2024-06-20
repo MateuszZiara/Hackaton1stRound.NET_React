@@ -48,7 +48,7 @@ const PaypalCheckoutButton = (props) => {
         fetchData();
     }, []);
 
-    const id = import.meta.env.REACT_APP_PAYPAL_CLIENT_ID;
+    //const id = import.meta.env.REACT_APP_PAYPAL_CLIENT_ID;
     return (
         <PayPalScriptProvider options={{ currency: "PLN", clientId: 'ATGo_MyHThm6dXYw-mkIk78YSYa7tNzWCfUDM6rIqm7aNTic61DwwN5eNaxy-ljpQqIGprjrdrWxZFxj', locale: 'pl_PL' }}>
             <PayPalButtons

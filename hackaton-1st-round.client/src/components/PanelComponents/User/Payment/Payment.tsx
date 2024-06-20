@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import {
     Button,
     Text,
-    Title,
     Flex,
     Card,
+    Title,
     Radio,
     Group,
     Alert, rem
@@ -13,16 +13,18 @@ import { checkUserLoggedIn } from '../../../../features/getCookies/getCookies';
 import classes from './Payment.module.css';
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import PaypalCheckoutButton from "../../../../pages/Checkout/PaypalCheckoutButton";
+import PaymentPage from "../../../../pages/PaymentPage/PaymentPage";
 import {j} from "vite/dist/node/types.d-aGj9QkWt";
-import {get} from "axios";
 
-export function Payment() {
+
+
+export default function Payment() {
     const gameId = Math.floor(Math.random() * 1000000); // potem jako parametr wywolanej funkcji wraz z resztą wartości odnosnie gry
     const [product, setProduct] = useState({
         description: "Rejestracja na hackaton",
         price: 0,
     });
-    const id = import.meta.env.REACT_APP_PAYPAL_CLIENT_ID; //zepsute
+   // const id = import.meta.env.REACT_APP_PAYPAL_CLIENT_ID; //zepsute
 
     const [isScriptLoaded, setIsScriptLoaded] = useState(false);
 
@@ -116,4 +118,4 @@ export function Payment() {
         </Card>
     );
 }
-export default Payment;
+
