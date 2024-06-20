@@ -22,6 +22,7 @@ export function Payment() {
     const [team, setTeamId] = useState(null);
     const [isDataLoaded, setIsDataLoaded] = useState(false);
     const [isModalOpen, setModalOpen] = useState(false);
+    const [iszero, setiszero] = useState(false);
     const [pendingPayment, setPendingPayment] = useState(false);
     const gameId = Math.floor(Math.random() * 1000000); // potem jako parametr wywolanej funkcji wraz z resztą wartości odnosnie gry
     const [product, setProduct] = useState({
@@ -57,6 +58,10 @@ export function Payment() {
                 });
                 const json = await response.json();
                 product.price = json;
+                if(product.price === 0)
+                {
+                   setiszero(true);
+                }
                 setProduct(prevProduct => ({ ...prevProduct, price: json }));
             }catch (error) {
                 console.error('Error checking user cash to pay:', error);
@@ -121,7 +126,7 @@ export function Payment() {
         }
 
     return (
-        <MantineProvider>
+
         <Card withBorder radius="md" p="xl" m="md" className={classes.card}>
             
             <Modal
@@ -139,6 +144,21 @@ export function Payment() {
                     W razie jakichkolwiek problemów, skontaktuj się z administratorem.
                 </Text>
             </Modal>
+            <Modal
+                opened={iszero}
+                onClose={() => setPendingPayment(false)}
+                style={{ position: 'fixed', top: '50%', left: '0%'}}
+                withCloseButton={false}
+                closeOnClickOutside={false}
+                closeOnEscape={false}
+            >
+                <Text fz="lg" className={classes.title} fw={500}>
+                   Utwórz zespół aby móc dokonać płatności
+                </Text>
+                <Text fz="xs" c="dimmed" mt={3} mb="xl">
+                    Przejdź do modułu tworzenia zespołu
+                </Text>
+            </Modal>
             <Title order={2}>Płatność</Title>
             <Text fz="md" c="dimmed" mt={0} mb="xl" pb={"10"}>
                 Dokonaj płatności aby móc pobrać wygenerowaną grę miejską
@@ -154,6 +174,7 @@ export function Payment() {
                         wrap="wrap"
                         style={{ width: '100%' }}
                     >
+                        
                         <div style={{ width: '50%', flex: '1' }}>
                             <Text style={{ marginBottom: '16px' }}>Nazwa produktu: {product.description}</Text>
                             <Text style={{ marginBottom: '16px' }}>Do zapłaty: {(product.price).toPrecision(4) + "zł"}</Text>
@@ -203,7 +224,7 @@ export function Payment() {
             </Flex>
          
         </Card>
-        </MantineProvider>
+        
     );
 }
 export default Payment;

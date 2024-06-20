@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
-import Payment from "../../components/PanelComponents/User/Payment/Payment";
+import { Payment } from "../../components/PanelComponents/User/Payment/Payment";
 import { checkUserLoggedIn } from '../../features/getCookies/getCookies'; // Assuming this is properly mocked
 import { MantineProvider } from '@mantine/core'; // Import MantineProvider from @mantine/core
 import { render as testingLibraryRender } from '@testing-library/react';
@@ -12,7 +12,6 @@ jest.mock('../../features/getCookies/getCookies', () => ({
 jest.mock('@mantine/core', () => ({
     MantineProvider: ({ children }) => <>{children}</>, // Simple mock component
 }));
-
 describe('Payment Component Tests', () => {
     beforeEach(() => {
         // Mock API responses or setup initial conditions as needed
@@ -101,5 +100,28 @@ describe('Payment Component Tests', () => {
         // Add assertions related to traditional payment method
         // For example, check if it triggers a modal or additional UI elements
         expect(screen.getByText(/Wybierz metodę płatności/i)).toBeInTheDocument();
+    });
+    test('simulates PayPal payment button click', async () => {
+        await act(async () => {
+            render(
+                <MantineProvider>
+                    <Payment />
+                </MantineProvider>
+            );
+        });
+
+        // Wait for state updates to complete
+        await waitFor(() => {
+            expect(screen.getByText(/Płatność/i)).toBeInTheDocument(); // Example assertion
+        });
+
+        // Simulate PayPal button click
+        const paypalButton = screen.getByRole('button', { name: /PayPal/i });
+        fireEvent.click(paypalButton);
+
+        // Ensure that PayPal Checkout button is rendered after click
+        await waitFor(() => {
+            expect(screen.getByRole('button', { name: /PayPal Checkout/i })).toBeInTheDocument();
+        });
     });
 });
