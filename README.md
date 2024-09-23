@@ -36,3 +36,7 @@ Twoim zadaniem jest stworzenie REST API w dowolnej technologii, wraz z „cienki
 Zadanie należy zakończyć i przesłać do **Czwartku tj. 11.04.2024** `(24:00 UTC)` dni od daty otrzymania dostępu do repozytorium...
 
 Powodzenia!
+
+Application preview:
+
+![gifmaker_me (2)](https://github.com/user-attachments/assets/cb9ff3a9-5e71-4a2d-ad62-3f678978e495)
